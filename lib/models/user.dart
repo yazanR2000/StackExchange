@@ -26,6 +26,5 @@ User Collection
       "Full name" : String,
       "Phone number" : Number,
       "Profile image" : String => "image url from storage",
-      "Comments" : [commentsId]
     }
 */

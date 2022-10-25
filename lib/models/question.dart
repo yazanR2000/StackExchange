@@ -24,7 +24,7 @@ Questions Collection
       "description" : String,
       "image" : [String],
       "date" : String => We will use this to check if it's new or not
-      "isClosed" : bool,
+      "isClosed" : Comment id - the comment that closed this question,
       "ifIsClosed" : String => "Comment id - the comment that closed this question",
     }
 */
