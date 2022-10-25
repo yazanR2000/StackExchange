@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "698334174862",
+    "project_id": "stackexchange-94311",
+    "storage_bucket": "stackexchange-94311.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698334174862:android:89603ed7108933ea4873df",
+        "android_client_info": {
+          "package_name": "com.example.stackexchange"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "698334174862-6gn4b2bjmo54fljpcn968apfgr4o4pgg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeI5mhJWl6GhpW1QzFt2vGsqfrWQ5kj1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "698334174862-6gn4b2bjmo54fljpcn968apfgr4o4pgg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

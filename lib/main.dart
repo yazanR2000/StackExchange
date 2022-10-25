@@ -19,6 +19,9 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 0,
           actionsIconTheme: IconThemeData(
+            color: Colors.black ,
+          ),
+          iconTheme: IconThemeData(
             color: Colors.black,
           ),
         ),
@@ -52,6 +55,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xff34B3F1),
         ),      
       ),
+      home: Scaffold(),
     );
   }
 }
