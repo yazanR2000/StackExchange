@@ -1,17 +1,16 @@
 class Comment {
-  //put requests
+  //update requests
   Future upVote() async {}
   Future downVote() async {}
-
   //only owner of question can access this method
-  Future closedComment() async {} // mean that this comment solve the problem
+  //Future closedComment() async {} // mean that this comment solve the problem
 }
 
 /*
 (Structure on firestore)
 Comments Collection
   QuestionId
-    CommentId
+    [CommentId]
       {
           "userId" : String,
           "userImage" : String,

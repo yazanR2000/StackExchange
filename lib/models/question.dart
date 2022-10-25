@@ -17,6 +17,7 @@ class Question {
 Questions Collection
   QuestionId
     {
+      "type" : "flutter",
       "userId" : String,
       "userImage" : String,
       "questionTitle" : String ({80 - 100}) => "we will user this for searching",
