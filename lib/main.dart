@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stackexchange/screens/StartScreen.dart';
+import 'package:stackexchange/screens/login_signUP/login.dart';
+import 'package:stackexchange/screens/login_signUP/signup.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +14,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: {},
+      routes: {
+        LoginPage.screenRoute: (context) => LoginPage(),
+        SignUp.screenRoute: (context) => SignUp(),
+        StartScreen.screenRoute: (context) => StartScreen()
+      },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: "OpenSans",
