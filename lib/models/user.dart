@@ -22,14 +22,15 @@ class User {
     try {
       final String questionId = DateTime.now().toLocal().toString();
       final List<XFile> images = details['images'];
+      print(images.length);
       final List<String> downUrls = [];
       if (details['images'].length > 0) {
-        final ref = FirebaseStorage.instance
-            .ref()
-            .child("Questions")
-            .child(questionId);
         await Future.wait(
           images.map((e) async {
+            Reference ref = FirebaseStorage.instance
+            .ref()
+            .child("Questions")
+            .child(questionId).child(DateTime.now().toLocal().toString());
             final UploadTask uploadTask = ref.putFile(i.File(e.path));
             String? dowurl;
             await uploadTask.whenComplete(() async {

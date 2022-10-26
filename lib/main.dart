@@ -22,14 +22,7 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
 
-  bool _isNew(DateTime date) {
-    final DateTime dateTime = DateTime.now();
-    final diffirence = dateTime.difference(date);
-    if(diffirence.inHours < 12){
-      return true;
-    }
-    return false;
-  }
+  
   
   @override
   Widget build(BuildContext context) {
@@ -55,7 +48,7 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xff034ef7),
+            backgroundColor: const Color(0xff34B3F1),
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),

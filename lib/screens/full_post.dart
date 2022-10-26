@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../widgets/Comment_component.dart';
+
 class FullPost extends StatefulWidget {
   const FullPost({super.key});
 
@@ -13,6 +14,14 @@ class _FullPostState extends State<FullPost> {
 
   final CollectionReference Comments =
       FirebaseFirestore.instance.collection('Comments');
+  bool _isNew(DateTime date) {
+    final DateTime dateTime = DateTime.now();
+    final diffirence = dateTime.difference(date);
+    if (diffirence.inHours < 12) {
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +41,7 @@ class _FullPostState extends State<FullPost> {
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
                   leading: CircleAvatar(
@@ -46,42 +56,60 @@ class _FullPostState extends State<FullPost> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Chip(
+                          backgroundColor: Color(0xff),
                           label: Text(
-                            "new",
-                            style: TextStyle(color: Colors.white),
+                            question['type'],
+                            style: TextStyle(fontSize: 15),
                           ),
-                          backgroundColor: Color(0xFFFF1e1e),
                         ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        if (_isNew(DateTime.parse(question['date'])))
+                          const Chip(
+                            label: Text(
+                              "new",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            ),
+                            backgroundColor: Color(0xFFFF1e1e),
+                          ),
                         IconButton(
                           onPressed: () {
-                            setState(() {
-                              bookmark = !bookmark;
-                            });
+                            // setState(() {
+                            //   bookmark = !bookmark;
+                            // });
                           },
                           icon: Icon(
                             Icons.bookmark,
-                            color: bookmark ? Colors.blue : Colors.black,
-                            size: 30,
+                            //color: bookmark ? Colors.blue : Colors.black,
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
+                Text(
+                  question['questionTitle'],
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 15),
                   child: Text(
-                      'testestestestetsetsetsetsetestsetestfdgsfdgsfdgfdgdgfsdgfsdgfdgfgfdgfdgsfggfasdfasdfasfsdhughgyuguyyuyu87yughuhygwre98rtyushushgestestsetsetsetsetestestestsestestesteste'),
+                    question['description'],
+                  ),
                 ),
                 Column(
                   children: List.generate(
                     question['images'].length,
                     (index) => Container(
                       height: 200,
+                      width: double.infinity,
                       margin: EdgeInsets.symmetric(vertical: 10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
+                          fit: BoxFit.fill,
                           image: NetworkImage(question['images'][index]),
                         ),
                       ),

@@ -27,46 +27,53 @@ class Profile extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           backgroundColor: const Color(0xff34B3F1),
-          body: SingleChildScrollView(
-            //padding: const EdgeInsets.all(15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ListTile(
-                  title: Text(
-                    "Yazan Radaideh",
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                  leading: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
+          body: FutureBuilder(
+            future: _getUserInfo(userId),
+            builder: (ctx, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return SingleChildScrollView(
+                //padding: const EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListTile(
+                      title: Text(
+                        _userData!['Full name'],
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      leading: IconButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    UserInfo(_userData!['Full name'],
+                        "https://dl.memuplay.com/new_market/img/com.vicman.newprofilepic.icon.2022-06-07-21-33-07.png"),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    UserSatistic(143, 41),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    UserProblems(userId),
+                  ],
                 ),
-                const SizedBox(
-                  height: 10,
-                ),
-                UserInfo("Yazan Radaideh",
-                    "https://dl.memuplay.com/new_market/img/com.vicman.newprofilepic.icon.2022-06-07-21-33-07.png"),
-                const SizedBox(
-                  height: 20,
-                ),
-                UserSatistic(143, 41),
-                const SizedBox(
-                  height: 20,
-                ),
-                UserProblems(),
-              ],
-            ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed("/add_new_question");
+              );
             },
-            child: const Icon(Icons.add),
           ),
+          
         ),
       ),
     );

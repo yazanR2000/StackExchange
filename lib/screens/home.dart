@@ -38,8 +38,11 @@ class Home extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
                 ListView.separated(
+                  reverse: true,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   separatorBuilder: (context, index) => const SizedBox(
@@ -53,6 +56,12 @@ class Home extends StatelessWidget {
             ),
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed("/add_new_question");
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

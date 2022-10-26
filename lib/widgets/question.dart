@@ -4,6 +4,14 @@ import 'package:flutter/material.dart';
 class QuestionComponent extends StatelessWidget {
   final QueryDocumentSnapshot _post;
   QuestionComponent(this._post);
+  bool _isNew(DateTime date) {
+    final DateTime dateTime = DateTime.now();
+    final diffirence = dateTime.difference(date);
+    if (diffirence.inHours < 12) {
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +22,7 @@ class QuestionComponent extends StatelessWidget {
         color: Colors.grey.shade200,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
             onTap: () {
@@ -31,14 +40,22 @@ class QuestionComponent extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  const Chip(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                  Chip(
+                    backgroundColor: Color(0xff),
                     label: Text(
-                      "new",
-                      style: TextStyle(color: Colors.white, fontSize: 15),
+                      _post['type'],
+                      style: TextStyle(fontSize: 15),
                     ),
-                    backgroundColor: Color(0xFFFF1e1e),
                   ),
+                  SizedBox(width: 5,),
+                  if (_isNew(DateTime.parse(_post['date'])))
+                    const Chip(
+                      label: Text(
+                        "new",
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                      backgroundColor: Color(0xFFFF1e1e),
+                    ),
                   IconButton(
                     onPressed: () {
                       // setState(() {
@@ -53,6 +70,10 @@ class QuestionComponent extends StatelessWidget {
                 ],
               ),
             ),
+          ),
+          Text(
+            _post['questionTitle'],
+            style: Theme.of(context).textTheme.bodyText1,
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 15),
@@ -70,11 +91,14 @@ class QuestionComponent extends StatelessWidget {
               ),
             ],
           ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed("/FullPost",arguments: _post);
-            },
-            child: Text("See full post"),
+          Align(
+            alignment: Alignment.center,
+            child: TextButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed("/FullPost", arguments: _post);
+              },
+              child: Text("See full post"),
+            ),
           )
         ],
       ),
