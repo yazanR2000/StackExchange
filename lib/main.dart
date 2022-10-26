@@ -1,9 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:stackexchange/screens/StartScreen.dart';
+import 'package:stackexchange/screens/Test.dart';
 import 'package:stackexchange/screens/login_signUP/login.dart';
 import 'package:stackexchange/screens/login_signUP/signup.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -17,7 +24,8 @@ class MyApp extends StatelessWidget {
       routes: {
         LoginPage.screenRoute: (context) => LoginPage(),
         SignUp.screenRoute: (context) => SignUp(),
-        StartScreen.screenRoute: (context) => StartScreen()
+        StartScreen.screenRoute: (context) => StartScreen(),
+        testPage.screenRoute: (context) => testPage(),
       },
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -63,7 +71,20 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xff34B3F1),
         ),
       ),
-      home: StartScreen(),
+      home: handleAuthState(),
     );
   }
+}
+
+//Determine if the user is authenticated.
+handleAuthState() {
+  return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.hasData) {
+          return const testPage();
+        } else {
+          return const StartScreen();
+        }
+      });
 }

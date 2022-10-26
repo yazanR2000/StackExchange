@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stackexchange/models/google.dart';
+import 'package:stackexchange/screens/login_signUP/signup.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -8,8 +12,8 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-TextEditingController emailController = TextEditingController();
-TextEditingController passwordController = TextEditingController();
+TextEditingController? emailController = TextEditingController();
+TextEditingController? passwordController = TextEditingController();
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -97,7 +101,36 @@ class _LoginPageState extends State<LoginPage> {
                           minimumSize: const Size(200, 50),
                           maximumSize: const Size(350, 50),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          try {
+                            var auth = await FirebaseAuth.instance;
+
+                            UserCredential myUser =
+                                await auth.signInWithEmailAndPassword(
+                                    email: emailController!.text.trim(),
+                                    password: passwordController!.text.trim());
+                            emailController!.clear();
+                            passwordController!.clear();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("login successfully")));
+
+                            // if (myUser != null) {
+                            //   Navigator.pushReplacementNamed(
+                            //       context, Homepage.screenRoute);
+                            // }
+                          } on FirebaseAuthException catch (e) {
+                            if (e.code == 'user-not-found') {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(
+                                          "No user found for that email.")));
+                            } else if (e.code == 'wrong-password') {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                      "Wrong password provided for that user.")));
+                            }
+                          }
+                        },
                         child: Text(
                           "Login Now",
                           style: TextStyle(
@@ -142,7 +175,10 @@ class _LoginPageState extends State<LoginPage> {
                           width: 10,
                         ),
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () async {
+                            UserCredential googleUser =
+                                await signInWithGoogle();
+                          },
                           child: Container(
                             alignment: Alignment.center,
                             width: 40,
@@ -197,7 +233,9 @@ class _LoginPageState extends State<LoginPage> {
                             'Sign up',
                             style: TextStyle(fontSize: 15),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, SignUp.screenRoute);
+                          },
                         )
                       ],
                       mainAxisAlignment: MainAxisAlignment.center,

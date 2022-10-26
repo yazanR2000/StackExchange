@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:stackexchange/screens/login_signUP/login.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -148,7 +151,43 @@ class _SignUpState extends State<SignUp> {
                           minimumSize: const Size(200, 50),
                           maximumSize: const Size(350, 50),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          try {
+                            var auth = FirebaseAuth.instance;
+
+                            UserCredential myUser =
+                                await auth.createUserWithEmailAndPassword(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                            );
+                            emailController.clear();
+                            passwordController.clear();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("added successfully")));
+                            if (myUser != null) {
+                              final docUser = FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc();
+                              docUser.set({
+                                'id': docUser.id,
+                                'phone': phoneNumberController.text
+                                    .toString()
+                                    .trim(),
+                                'userEmail':
+                                    emailController.text.toString().trim(),
+                                'time': FieldValue.serverTimestamp(),
+                              });
+                              // Navigator.pushReplacementNamed(
+                              //     context, Homepage.screenRoute);
+                            }
+                          } on FirebaseAuthException catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text("${e.code.toUpperCase()}")));
+                          }
+
+                          print(emailController.text);
+                          print(passwordController.text);
+                        },
                         child: Text(
                           "Sign Up Now",
                           style: TextStyle(
@@ -162,7 +201,7 @@ class _SignUpState extends State<SignUp> {
                     Row(
                       children: <Widget>[
                         const Text(
-                          'Don\'t have an account?',
+                          'Already have an account?',
                           style: TextStyle(
                             fontSize: 15,
                             color: Colors.grey,
@@ -170,10 +209,12 @@ class _SignUpState extends State<SignUp> {
                         ),
                         TextButton(
                           child: const Text(
-                            'Sign up',
+                            'Login',
                             style: TextStyle(fontSize: 15),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, LoginPage.screenRoute);
+                          },
                         )
                       ],
                       mainAxisAlignment: MainAxisAlignment.center,
