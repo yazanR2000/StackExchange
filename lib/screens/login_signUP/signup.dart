@@ -117,27 +117,27 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(
                       height: 20,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 45, left: 45),
-                      child: ElevatedButton.icon(
-                        icon: const Icon(
-                            CupertinoIcons.photo_fill_on_rectangle_fill),
-                        onPressed: () {
-                          getImage();
-                        },
-                        label: const Text(
-                          "Upload your Photo",
-                        ),
-                      ),
-                    ),
-                    _image != null
-                        ? Image.file(
-                            _image!,
-                            width: 250,
-                            height: 250,
-                            fit: BoxFit.cover,
-                          )
-                        : Image.asset("images/person.png"),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(right: 45, left: 45),
+                    //   child: ElevatedButton.icon(
+                    //     icon: const Icon(
+                    //         CupertinoIcons.photo_fill_on_rectangle_fill),
+                    //     onPressed: () {
+                    //       getImage();
+                    //     },
+                    //     label: const Text(
+                    //       "Upload your Photo",
+                    //     ),
+                    //   ),
+                    // ),
+                    // _image != null
+                    //     ? Image.file(
+                    //         _image!,
+                    //         width: 250,
+                    //         height: 250,
+                    //         fit: BoxFit.cover,
+                    //       )
+                    //     : Image.asset("images/person.png"),
                     SizedBox(
                       height: 40,
                     ),
