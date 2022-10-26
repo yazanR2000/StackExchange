@@ -10,6 +10,7 @@ class Comment {
 (Structure on firestore)
 Comments Collection
   QuestionId
+    Comment Collection
     [CommentId]
       {
           "userId" : String,
