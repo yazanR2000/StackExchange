@@ -1,6 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-void main() {
+import 'package:stackexchange/firebase_options.dart';
+import './screens/profile.dart';
+import './screens/add_new_question.dart';
+import 'screens/login_signUP/StartScreen.dart';
+import './screens/login_signUP/signup.dart';
+import './screens/login_signUP/login.dart';
+import './screens/home.dart';
+import './screens/full_post.dart';
+import './screens/CommentsSheet.dart';
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -8,6 +21,16 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
+
+  bool _isNew(DateTime date) {
+    final DateTime dateTime = DateTime.now();
+    final diffirence = dateTime.difference(date);
+    if(diffirence.inHours < 12){
+      return true;
+    }
+    return false;
+  }
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,10 +42,15 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 0,
           actionsIconTheme: IconThemeData(
-            color: Colors.black ,
+            color: Colors.black,
           ),
           iconTheme: IconThemeData(
             color: Colors.black,
+          ),
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            //fontWeight: FontWeight.bold,
+            fontSize: 20
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -53,9 +81,34 @@ class MyApp extends StatelessWidget {
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Color(0xff34B3F1),
-        ),      
+        ),
+        textTheme: const TextTheme(
+          bodyText1: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 23,
+          ),
+        ),
       ),
-      home: Scaffold(),
+      home: handleAuthState(),
+      routes: {
+        "/profile": (context) =>  Profile(),
+        "/add_new_question" :(context) => AddNewQuestions(),
+        '/sign_up' :(context) => SignUp(),
+        '/login' :(context) => LoginPage(),
+        '/FullPost': (context) => FullPost(),
+        '/CommentSheet' : (context) => CommentSheet(),
+      },
     );
   }
+  handleAuthState() {
+  return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.hasData) {
+          return const Home();
+        } else {
+          return const StartScreen();
+        }
+      });
+}
 }

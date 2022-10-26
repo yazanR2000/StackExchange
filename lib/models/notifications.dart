@@ -1,5 +1,5 @@
 class Notifications {
-  Future fetchNotifications() async {}
+  
 }
 /*
 Notifications Collection
