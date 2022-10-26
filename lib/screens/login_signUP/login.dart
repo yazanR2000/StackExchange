@@ -8,6 +8,9 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
+TextEditingController emailController = TextEditingController();
+TextEditingController passwordController = TextEditingController();
+
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
@@ -34,102 +37,172 @@ class _LoginPageState extends State<LoginPage> {
         body: Form(
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(children: [
-                Text("Welcome Back!"),
-                Text("sign in to continue"),
-                TextFormField(),
-                TextFormField(),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(200, 50),
-                    maximumSize: const Size(350, 50),
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, LoginPage.screenRoute);
-                  },
-                  child: Text("Login"),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text("Forgot Password ?"),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.blue,
-                        ),
-                        child: FaIcon(
-                          size: 18,
-                          FontAwesomeIcons.facebookF,
-                          color: Colors.white,
+                    Text("Welcome Back!",
+                        style: TextStyle(fontSize: 35),
+                        textAlign: TextAlign.start),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5),
+                      child: Text(
+                        "Sign in to continue",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.grey,
                         ),
                       ),
                     ),
                     SizedBox(
-                      width: 10,
+                      height: 20,
                     ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.red,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        controller: emailController,
+                        decoration: const InputDecoration(
+                          labelText: 'Email',
+                          labelStyle: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 20,
+                          ),
                         ),
-                        child: FaIcon(
-                          size: 18,
-                          FontAwesomeIcons.google,
-                          color: Colors.white,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        controller: passwordController,
+                        decoration: const InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ),
                     SizedBox(
-                      width: 10,
+                      height: 50,
                     ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Color.fromARGB(255, 45, 66, 152),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 45, left: 45),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(200, 50),
+                          maximumSize: const Size(350, 50),
                         ),
-                        child: FaIcon(
-                          size: 18,
-                          FontAwesomeIcons.linkedinIn,
-                          color: Colors.white,
+                        onPressed: () {},
+                        child: Text(
+                          "Login Now",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ),
-                  ],
-                ),
-                Row(
-                  children: <Widget>[
-                    const Text('Does not have account?'),
+                    SizedBox(
+                      height: 10,
+                    ),
                     TextButton(
-                      child: const Text(
-                        'Sign up',
+                      onPressed: () {},
+                      child: Text(
+                        "Forgot Password ?",
                         style: TextStyle(fontSize: 15),
                       ),
-                      onPressed: () {},
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: const Color(0xff2D75E8),
+                            ),
+                            child: FaIcon(
+                              size: 18,
+                              FontAwesomeIcons.facebookF,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: const Color(0xffe54545),
+                            ),
+                            child: FaIcon(
+                              size: 18,
+                              FontAwesomeIcons.google,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            alignment: Alignment.center,
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: const Color(0xff3252A7),
+                            ),
+                            child: FaIcon(
+                              size: 18,
+                              FontAwesomeIcons.linkedinIn,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        const Text(
+                          'Don\'t have an account?',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.grey,
+                          ),
+                        ),
+                        TextButton(
+                          child: const Text(
+                            'Sign up',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          onPressed: () {},
+                        )
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.center,
                     )
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.center,
-                )
-              ]),
+                  ]),
             ),
           ),
         ),

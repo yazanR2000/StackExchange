@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xff34B3F1),
+            backgroundColor: const Color(0xff034ef7),
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(100),
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.circular(100),
             ),
             foregroundColor: Colors.black,
-            side: const BorderSide(color: Colors.black),
+            side: const BorderSide(color: Colors.black, width: 2),
           ),
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(

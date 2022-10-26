@@ -82,7 +82,11 @@ class _StartScreenState extends State<StartScreen> {
                       onPressed: () {
                         Navigator.pushNamed(context, LoginPage.screenRoute);
                       },
-                      child: Text("Login"),
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                      ),
                     ),
                     SizedBox(
                       width: 20,
@@ -95,7 +99,11 @@ class _StartScreenState extends State<StartScreen> {
                       onPressed: () {
                         Navigator.pushNamed(context, SignUp.screenRoute);
                       },
-                      child: Text("Sign Up"),
+                      child: Text(
+                        "Sign Up",
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ],
                 ),
@@ -117,7 +125,7 @@ class _StartScreenState extends State<StartScreen> {
                         height: 40,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.blue,
+                          color: const Color(0xff2D75E8),
                         ),
                         child: FaIcon(
                           size: 18,
@@ -137,7 +145,7 @@ class _StartScreenState extends State<StartScreen> {
                         height: 40,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.red,
+                          color: const Color(0xffe54545),
                         ),
                         child: FaIcon(
                           size: 18,
@@ -157,7 +165,7 @@ class _StartScreenState extends State<StartScreen> {
                         height: 40,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Color.fromARGB(255, 45, 66, 152),
+                          color: const Color(0xff3252A7),
                         ),
                         child: FaIcon(
                           size: 18,
