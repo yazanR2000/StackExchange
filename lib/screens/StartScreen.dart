@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stackexchange/models/google.dart';
 import 'package:stackexchange/screens/login_signUP/login.dart';
 import 'package:stackexchange/screens/login_signUP/signup.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
