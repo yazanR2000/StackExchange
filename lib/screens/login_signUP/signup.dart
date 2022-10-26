@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:stackexchange/screens/Test.dart';
 import 'package:stackexchange/screens/login_signUP/login.dart';
 
 class SignUp extends StatefulWidget {
@@ -19,6 +20,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
+  TextEditingController fullnameController = TextEditingController();
   File? _image;
   Future getImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -77,6 +79,19 @@ class _SignUpState extends State<SignUp> {
                     ),
                     SizedBox(
                       height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        controller: fullnameController,
+                        decoration: const InputDecoration(
+                          labelText: 'Full Name',
+                          labelStyle: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -165,20 +180,19 @@ class _SignUpState extends State<SignUp> {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text("added successfully")));
                             if (myUser != null) {
-                              final docUser = FirebaseFirestore.instance
-                                  .collection("users")
-                                  .doc();
-                              docUser.set({
-                                'id': docUser.id,
-                                'phone': phoneNumberController.text
-                                    .toString()
-                                    .trim(),
-                                'userEmail':
-                                    emailController.text.toString().trim(),
-                                'time': FieldValue.serverTimestamp(),
+                              final userId =
+                                  FirebaseAuth.instance.currentUser!.uid;
+                              await FirebaseFirestore.instance
+                                  .collection("Users")
+                                  .doc(userId)
+                                  .set({
+                                "Full name": fullnameController.text,
+                                "Phone number": phoneNumberController.text,
                               });
-                              // Navigator.pushReplacementNamed(
-                              //     context, Homepage.screenRoute);
+                              phoneNumberController.clear();
+                              fullnameController.clear();
+                              Navigator.pushReplacementNamed(
+                                  context, testPage.screenRoute);
                             }
                           } on FirebaseAuthException catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
