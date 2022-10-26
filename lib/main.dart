@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stackexchange/screens/StartScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,6 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {},
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: "OpenSans",
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
           elevation: 0,
           actionsIconTheme: IconThemeData(
-            color: Colors.black ,
+            color: Colors.black,
           ),
           iconTheme: IconThemeData(
             color: Colors.black,
@@ -53,9 +55,9 @@ class MyApp extends StatelessWidget {
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: Color(0xff34B3F1),
-        ),      
+        ),
       ),
-      home: Scaffold(),
+      home: StartScreen(),
     );
   }
 }
