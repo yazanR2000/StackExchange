@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io' as i;
 import '../models/question.dart';
+
 class CommentSheet extends StatefulWidget {
   const CommentSheet({super.key});
   // final String? description;
@@ -10,7 +11,7 @@ class CommentSheet extends StatefulWidget {
 }
 
 class _CommentSheetState extends State<CommentSheet> {
-  final List<XFile?> images = [];
+  final List<XFile> images = [];
   Future pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
@@ -21,13 +22,62 @@ class _CommentSheetState extends State<CommentSheet> {
     }
     return;
   }
-  final TextEditingController _solutionController = TextEditingController();
 
+  final TextEditingController _solutionController = TextEditingController();
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     final String qId = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Add solution"),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: _isLoading
+                ? const CircularProgressIndicator()
+                : ElevatedButton(
+                    style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
+                    onPressed: () async {
+                      try {
+                        setState(() {
+                          _isLoading = !_isLoading;
+                        });
+                        await Question.addNewComment(
+                          {
+                            "comment": _solutionController.text,
+                            "images": images,
+                          },
+                          qId,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.green,
+                            content: Text(
+                              "Comment Added Successfully",
+                            ),
+                          ),
+                        );
+                        Navigator.of(context).pop();
+                      } catch (err) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            backgroundColor: Colors.red,
+                            content: Text(
+                              err.toString(),
+                            ),
+                          ),
+                        );
+                      }
+                      setState(() {
+                        _isLoading = !_isLoading;
+                      });
+                    },
+                    child: const Text("Done"),
+                  ),
+          ),
+        ],
+      ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -62,39 +112,26 @@ class _CommentSheetState extends State<CommentSheet> {
                     );
                   }),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () async {
-                    await pickImage();
-                  },
-                  child: Text('Add images'),
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                TextButton.icon(
-                  onPressed: () {
-                    Question.addNewComment({}, qId);
-                  },
-                  icon: Icon(
-                    Icons.send,
-                    color: Colors.blue,
-                  ),
-                  label: Text(
-                    "Send",
-                    style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await pickImage();
+                      },
+                      child: Text('Add images'),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             )
           ],
         ),
       ),
+      
     );
   }
 }

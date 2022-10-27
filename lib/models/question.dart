@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-
+import './user.dart' as u;
 import './comment.dart';
 import 'dart:io' as i;
 
@@ -22,33 +22,38 @@ class Question {
     });
   }
 
-  static Future addNewComment(Map<String, dynamic> details,String qId) async {
+  static Future addNewComment(Map<String, dynamic> details, String qId) async {
+    if (details['images'].length == 0 && details['comment'].isEmpty) {
+      throw "Please add a text or image at least";
+    }
     try {
       final List<XFile> images = details['images'];
       final List<String> downUrls = [];
-      final ref = FirebaseStorage.instance
-          .ref()
-          .child("Questions")
-          .child(qId)
-          .child("Comments");
-      await Future.wait(
-        images.map((e) async {
-          final UploadTask uploadTask = ref.putFile(i.File(e.path));
-          String? dowurl;
-          await uploadTask.whenComplete(() async {
-            dowurl = await ref.getDownloadURL();
-          });
-          downUrls.add(dowurl!);
-        }),
-      );
+      if (details['images'].length > 0) {
+        final ref = FirebaseStorage.instance
+            .ref()
+            .child("Questions")
+            .child(qId)
+            .child("Comments");
+        await Future.wait(
+          images.map((e) async {
+            final UploadTask uploadTask = ref.putFile(i.File(e.path));
+            String? dowurl;
+            await uploadTask.whenComplete(() async {
+              dowurl = await ref.getDownloadURL();
+            });
+            downUrls.add(dowurl!);
+          }),
+        );
+      }
       await FirebaseFirestore.instance
           .collection("Comments")
           .doc(qId)
           .collection("Comments")
           .add({
         "userId": FirebaseAuth.instance.currentUser!.uid,
-        "userImage": details['userImage'],
-        "date": details['date'],
+        "userFullName": u.User.getInstance().userData['Full name'],
+        "date": DateTime.now().toLocal().toString(),
         "comment": details['comment'],
         "vote": 0,
         "images": downUrls,
@@ -59,11 +64,11 @@ class Question {
   }
 
   //only owner of the question can access these three methods
-  Future deleteQuestionFromOwner() async {
+  static Future deleteQuestionFromOwner(QueryDocumentSnapshot question) async {
     try {
       await FirebaseFirestore.instance
           .runTransaction((Transaction myTransaction) async {
-        myTransaction.delete(_question.reference);
+        myTransaction.delete(question.reference);
       });
     } catch (err) {
       throw err;

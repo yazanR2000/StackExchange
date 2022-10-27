@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 class QuestionComponent extends StatelessWidget {
   final QueryDocumentSnapshot _post;
-  QuestionComponent(this._post);
+  final bool _isProfile;
+  QuestionComponent(this._post,this._isProfile);
   bool _isNew(DateTime date) {
     final DateTime dateTime = DateTime.now();
     final diffirence = dateTime.difference(date);
@@ -26,7 +27,7 @@ class QuestionComponent extends StatelessWidget {
         children: [
           ListTile(
             dense: true,
-            onTap: () {
+            onTap: _isProfile ? null : () {
               Navigator.of(context)
                   .pushNamed('/profile', arguments: _post['userId']);
             },

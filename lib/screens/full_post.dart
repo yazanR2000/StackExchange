@@ -28,13 +28,14 @@ class _FullPostState extends State<FullPost> {
     final question =
         ModalRoute.of(context)!.settings.arguments as QueryDocumentSnapshot;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("${question['userFullName'].toString().split(' ')[0]}'s questions"),
+      ),
       body: ListView(
+        padding: EdgeInsets.all(20),
         children: [
           Container(
             padding: EdgeInsets.all(15),
-            margin: EdgeInsets.all(20),
-            width: 400,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               color: Colors.grey.shade200,
@@ -44,13 +45,14 @@ class _FullPostState extends State<FullPost> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
+                  dense: true,
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(
                         "https://cdn-icons-png.flaticon.com/512/149/149071.png"),
                   ),
                   contentPadding: EdgeInsets.zero,
-                  title: Text("ahmad"),
-                  subtitle: Text(question['date'].toString().substring(0, 10)),
+                  title: Text(question['userFullName'].toString()),
+                  subtitle: Text(question['date'].toString().substring(0,16)),
                   trailing: FittedBox(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -119,6 +121,11 @@ class _FullPostState extends State<FullPost> {
               ],
             ),
           ),
+          SizedBox(height: 5,),
+          Divider(),
+          SizedBox(height: 10,),
+          Text("Comments",style: Theme.of(context).textTheme.bodyText1,),
+          SizedBox(height: 10,),
           StreamBuilder(
               stream:
                   Comments.doc(question.id).collection('Comments').snapshots(),
@@ -134,12 +141,15 @@ class _FullPostState extends State<FullPost> {
                       child: Text("There's no comments"),
                     );
                   }
-                  return ListView.builder(
+                  return ListView.separated(
+                    separatorBuilder: (context, index) => SizedBox(height: 10,),
+                    padding: EdgeInsets.only(bottom: 50),
+                    reverse: true,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: data.length,
                     itemBuilder: ((context, index) {
-                      return CommentComponent();
+                      return CommentComponent(data[index]);
                     }),
                   );
                 }
@@ -148,6 +158,21 @@ class _FullPostState extends State<FullPost> {
                 );
               })
         ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.of(context).pushNamed(
+            '/CommentSheet',
+            arguments: question.id,
+          );
+        },
+        label: Row(
+          children: [
+            Icon(Icons.add),
+            Text("Add Comment"),
+          ],
+        ),
       ),
     );
   }

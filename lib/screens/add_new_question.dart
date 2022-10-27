@@ -51,7 +51,7 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
       try {
         await _user.addNewQuestion(_details);
         Successfull.snackBarError("New Question Added Successfully", context);
-        
+        Navigator.of(context).pop();
       } catch (err) {
         e.Error.snackBarError(err.toString(), context);
       }

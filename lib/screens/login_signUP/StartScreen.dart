@@ -31,7 +31,7 @@ class _StartScreenState extends State<StartScreen> {
               ),
               Text(
                 "Stack",
-                style: TextStyle(color: Colors.black),
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             ],
           ),

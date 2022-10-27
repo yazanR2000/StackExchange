@@ -31,7 +31,7 @@ class _forgotPasswordState extends State<forgotPassword> {
               ),
               Text(
                 "Stack",
-                style: TextStyle(color: Colors.black),
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             ],
           ),

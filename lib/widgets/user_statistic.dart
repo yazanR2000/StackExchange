@@ -28,8 +28,10 @@ class UserSatistic extends StatelessWidget {
         ),
         const SizedBox(
           height: 20,
+          width: 10,
           child: VerticalDivider(
             color: Colors.white,
+            thickness: 1,
           ),
         ),
         Column(

@@ -56,7 +56,7 @@ class UserProblems extends StatelessWidget {
                   height: 20,
                 ),
                 itemBuilder: (context, index) {
-                  return QuestionComponent(data[index]);
+                  return QuestionComponent(data[index],true);
                 },
               );
             },

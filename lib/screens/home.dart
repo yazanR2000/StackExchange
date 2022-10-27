@@ -6,6 +6,7 @@ import 'package:stackexchange/widgets/Drawer.dart';
 import '../widgets/question.dart';
 import '../models/user.dart' as u;
 import '../models/stack.dart' as s;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class Home extends StatelessWidget {
   Home({super.key});
 Future _getUserData() async {
@@ -18,7 +19,25 @@ final s.Stack _stack = s.Stack.getInstance();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leadingWidth: 0,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FaIcon(
+                size: 30,
+                FontAwesomeIcons.accusoft,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                "Stack",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
+          ),
+      ),
       drawer: AppDrawer(),
       body: FutureBuilder(
         future: _getUserData(),
@@ -67,7 +86,7 @@ final s.Stack _stack = s.Stack.getInstance();
                       ),
                       itemCount: data.length,
                       itemBuilder: (context, index) =>
-                          QuestionComponent(data[index]),
+                          QuestionComponent(data[index],false),
                     ),
                   ],
                 ),

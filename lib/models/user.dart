@@ -24,7 +24,6 @@ class User {
     try {
       final String questionId = DateTime.now().toLocal().toString();
       final List<XFile> images = details['images'];
-      print(images.length);
       final List<String> downUrls = [];
       if (details['images'].length > 0) {
         await Future.wait(
