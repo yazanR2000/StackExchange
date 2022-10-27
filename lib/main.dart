@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:stackexchange/firebase_options.dart';
+import 'package:stackexchange/screens/login_signUP/forgotPassword.dart';
 import './screens/profile.dart';
 import './screens/add_new_question.dart';
 import 'screens/login_signUP/StartScreen.dart';
@@ -89,6 +90,7 @@ class MyApp extends StatelessWidget {
         '/FullPost': (context) => FullPost(),
         '/CommentSheet': (context) => CommentSheet(),
         '/home': (context) => Home(),
+        'forgotPassword': (context) => forgotPassword(),
       },
     );
   }
