@@ -109,14 +109,3 @@ class MyApp extends StatelessWidget {
 }
 
 //Determine if the user is authenticated.
-handleAuthState() {
-  return StreamBuilder(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (BuildContext context, snapshot) {
-        if (snapshot.hasData) {
-          return const Home();
-        } else {
-          return const StartScreen();
-        }
-      });
-}

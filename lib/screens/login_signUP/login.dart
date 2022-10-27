@@ -162,8 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                                       content: Text("login successfully")));
 
                               if (myUser != null) {
-                                Navigator.pushReplacementNamed(
-                                    context, '/home');
+                                Navigator.of(context).pop();
                               }
                             } on FirebaseAuthException catch (e) {
                               if (e.code == 'user-not-found') {
@@ -226,7 +225,12 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         GestureDetector(
                           onTap: () async {
+                            try{
                             await signInWithGoogle();
+                            Navigator.of(context).pop();
+                            }catch(err){
+
+                            }
                           },
                           child: Container(
                             alignment: Alignment.center,

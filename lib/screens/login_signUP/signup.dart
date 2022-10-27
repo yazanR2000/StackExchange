@@ -251,8 +251,7 @@ class _SignUpState extends State<SignUp> {
                                 });
                                 phoneNumberController.clear();
                                 fullnameController.clear();
-                                Navigator.pushReplacementNamed(
-                                    context, '/home');
+                                Navigator.of(context).pop();
                               }
                             } on FirebaseAuthException catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(
