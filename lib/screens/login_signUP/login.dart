@@ -17,6 +17,9 @@ GlobalKey<FormState> myFormKey = GlobalKey();
 bool scureText = true;
 
 class _LoginPageState extends State<LoginPage> {
+  GlobalKey<FormState> myFormKey = GlobalKey();
+  bool scureText = true;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -162,10 +165,10 @@ class _LoginPageState extends State<LoginPage> {
                                   SnackBar(
                                       content: Text("login successfully")));
 
-                              // if (myUser != null) {
-                              //   Navigator.pushReplacementNamed(
-                              //       context, Homepage.screenRoute);
-                              // }
+                              if (myUser != null) {
+                                Navigator.pushReplacementNamed(
+                                    context, '/home');
+                              }
                             } on FirebaseAuthException catch (e) {
                               if (e.code == 'user-not-found') {
                                 ScaffoldMessenger.of(context).showSnackBar(

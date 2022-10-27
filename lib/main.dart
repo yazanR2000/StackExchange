@@ -11,6 +11,7 @@ import './screens/login_signUP/login.dart';
 import './screens/home.dart';
 import './screens/full_post.dart';
 import './screens/CommentsSheet.dart';
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -22,8 +23,6 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
 
-  
-  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -41,10 +40,9 @@ class MyApp extends StatelessWidget {
             color: Colors.black,
           ),
           titleTextStyle: TextStyle(
-            color: Colors.black,
-            //fontWeight: FontWeight.bold,
-            fontSize: 20
-          ),
+              color: Colors.black,
+              //fontWeight: FontWeight.bold,
+              fontSize: 20),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
@@ -84,26 +82,28 @@ class MyApp extends StatelessWidget {
       ),
       home: handleAuthState(),
       routes: {
-        "/profile": (context) =>  Profile(),
-        "/add_new_question" :(context) => AddNewQuestions(),
-        '/sign_up' :(context) => SignUp(),
-        '/login' :(context) => LoginPage(),
+        "/profile": (context) => Profile(),
+        "/add_new_question": (context) => AddNewQuestions(),
+        '/sign_up': (context) => SignUp(),
+        '/login': (context) => LoginPage(),
         '/FullPost': (context) => FullPost(),
-        '/CommentSheet' : (context) => CommentSheet(),
+        '/CommentSheet': (context) => CommentSheet(),
+        '/home': (context) => Home(),
       },
     );
   }
+
   handleAuthState() {
-  return StreamBuilder(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (BuildContext context, snapshot) {
-        if (snapshot.hasData) {
-          return const Home();
-        } else {
-          return const StartScreen();
-        }
-      });
-}
+    return StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (BuildContext context, snapshot) {
+          if (snapshot.hasData) {
+            return const Home();
+          } else {
+            return const StartScreen();
+          }
+        });
+  }
 }
 
 //Determine if the user is authenticated.
