@@ -108,12 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                           if (value!.isEmpty) {
                             return 'Please enter password';
                           } else {
-                            if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z]).{8,}$')
-                                .hasMatch(value)) {
-                              return 'Password must contain at least one \n"upper case, lower case and 8 characters in length"';
-                            } else {
-                              return null;
-                            }
+                            return null;
                           }
                         }),
                         controller: passwordController,
