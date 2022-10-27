@@ -20,9 +20,10 @@ final s.Stack _stack = s.Stack.getInstance();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leadingWidth: 0,
+        
+        
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+         
             children: [
               FaIcon(
                 size: 30,

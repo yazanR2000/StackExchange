@@ -23,15 +23,15 @@ class _SignUpState extends State<SignUp> {
   TextEditingController fullnameController = TextEditingController();
   GlobalKey<FormState> myFormKey = GlobalKey();
   bool scureText = true;
-  // File? _image;
-  // Future getImage() async {
-  //   final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-  //   if (image == null) return;
-  //   final imageTemporary = File(image.path);
-  //   setState(() {
-  //     this._image = imageTemporary;
-  //   });
-  // }
+  File? _image;
+  Future getImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image == null) return;
+    final imageTemporary = File(image.path);
+    setState(() {
+      this._image = imageTemporary;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -209,11 +209,15 @@ class _SignUpState extends State<SignUp> {
                     // _image != null
                     //     ? Image.file(
                     //         _image!,
-                    //         width: 250,
-                    //         height: 250,
+                    //         width: 50,
+                    //         height: 50,
                     //         fit: BoxFit.cover,
                     //       )
-                    //     : Image.asset("images/person.png"),
+                    //     : IconButton(
+                    //         onPressed: () {},
+                    //         icon: Icon(Icons.person_outline_rounded,size: 70,),
+                          
+                    //       ),
                     SizedBox(
                       height: 40,
                     ),
