@@ -43,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         body: Form(
+          key: myFormKey,
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -102,14 +103,14 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextFormField(
                         obscureText: scureText,
                         keyboardType: TextInputType.visiblePassword,
-                        textInputAction: TextInputAction.next,
+                        textInputAction: TextInputAction.done,
                         validator: ((value) {
                           if (value!.isEmpty) {
                             return 'Please enter password';
                           } else {
                             if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z]).{8,}$')
                                 .hasMatch(value)) {
-                              return 'Password must contain at least one \n"upper, lower case 8 characters in length"';
+                              return 'Password must contain at least one \n"upper case, lower case and 8 characters in length"';
                             } else {
                               return null;
                             }

@@ -144,7 +144,7 @@ class _SignUpState extends State<SignUp> {
                           } else {
                             if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z]).{8,}$')
                                 .hasMatch(value)) {
-                              return 'Password must contain at least one \n"upper, lower case 8 characters in length"';
+                              return 'Password must contain at least one \n"upper case, lower case and 8 characters in length"';
                             } else {
                               return null;
                             }
@@ -251,8 +251,8 @@ class _SignUpState extends State<SignUp> {
                                 });
                                 phoneNumberController.clear();
                                 fullnameController.clear();
-                                // Navigator.pushReplacementNamed(
-                                //     context, testPage.screenRoute);
+                                Navigator.pushReplacementNamed(
+                                    context, '/home');
                               }
                             } on FirebaseAuthException catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(
