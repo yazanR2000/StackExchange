@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io' as i;
-
+import '../models/question.dart';
 class CommentSheet extends StatefulWidget {
   const CommentSheet({super.key});
   // final String? description;
@@ -21,9 +21,11 @@ class _CommentSheetState extends State<CommentSheet> {
     }
     return;
   }
+  final TextEditingController _solutionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final String qId = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(),
       body: Container(
@@ -34,6 +36,7 @@ class _CommentSheetState extends State<CommentSheet> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(
+                controller: _solutionController,
                 maxLines: null,
                 keyboardType: TextInputType.multiline,
                 decoration: InputDecoration(
@@ -72,18 +75,21 @@ class _CommentSheetState extends State<CommentSheet> {
                   width: 20,
                 ),
                 TextButton.icon(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.send,
+                  onPressed: () {
+                    Question.addNewComment({}, qId);
+                  },
+                  icon: Icon(
+                    Icons.send,
+                    color: Colors.blue,
+                  ),
+                  label: Text(
+                    "Send",
+                    style: TextStyle(
                       color: Colors.blue,
+                      fontWeight: FontWeight.bold,
                     ),
-                    label: Text(
-                      "Send",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
+                  ),
+                ),
               ],
             )
           ],

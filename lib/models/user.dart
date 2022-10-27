@@ -12,11 +12,13 @@ class User {
   User() {}
   static User getInstance() => _user;
 
-  String? _uid;
-  String? get uid => _uid;
-  set uid(String? value) {
-    _uid = value;
+  DocumentSnapshot? _userData;
+  DocumentSnapshot get userData => _userData!;
+  set userData(DocumentSnapshot value) {
+    _userData = value;
   }
+  
+
 
   Future addNewQuestion(Map<String, dynamic> details) async {
     try {
@@ -46,6 +48,7 @@ class User {
           .set({
         "type": details['type'],
         "userId": FirebaseAuth.instance.currentUser!.uid,
+        "userFullName" : _userData!['Full name'],
         "questionTitle": details['title'],
         "description": details['description'],
         "images": downUrls,

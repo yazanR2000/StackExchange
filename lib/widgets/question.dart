@@ -25,6 +25,7 @@ class QuestionComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
+            dense: true,
             onTap: () {
               Navigator.of(context)
                   .pushNamed('/profile', arguments: _post['userId']);
@@ -34,7 +35,7 @@ class QuestionComponent extends StatelessWidget {
               size: 40,
             ),
             contentPadding: EdgeInsets.zero,
-            title: Text("ahmad"),
+            title: Text(_post['userFullName'].toString().replaceRange(12, _post['userFullName'].toString().length, '...')),
             subtitle: Text(_post['date'].toString().substring(0, 10)),
             trailing: FittedBox(
               child: Row(

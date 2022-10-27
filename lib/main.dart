@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:stackexchange/firebase_options.dart';
 import 'package:stackexchange/screens/login_signUP/forgotPassword.dart';
+import 'package:stackexchange/screens/my_questions.dart';
 import './screens/profile.dart';
 import './screens/add_new_question.dart';
 import 'screens/login_signUP/StartScreen.dart';
@@ -79,6 +80,10 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.bold,
             fontSize: 23,
           ),
+          bodyText2: TextStyle(
+            // fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
         ),
       ),
       home: handleAuthState(),
@@ -91,6 +96,7 @@ class MyApp extends StatelessWidget {
         '/CommentSheet': (context) => CommentSheet(),
         '/home': (context) => Home(),
         'forgotPassword': (context) => forgotPassword(),
+        '/my_questions' : (context) => MyQuestions(),
       },
     );
   }
@@ -100,7 +106,7 @@ class MyApp extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
-            return const Home();
+            return Home();
           } else {
             return const StartScreen();
           }
