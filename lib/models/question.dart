@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,6 +10,7 @@ import 'dart:io' as i;
 class Question {
   final QueryDocumentSnapshot<Map<String, dynamic>> _question;
   Question(this._question);
+  QueryDocumentSnapshot<Map<String, dynamic>> get question => _question;
   final List<Comment> _comments = [];
   List<Comment> get comment => _comments;
   void addComments(List<QueryDocumentSnapshot<Map<String, dynamic>>> comments) {
@@ -20,14 +22,14 @@ class Question {
     });
   }
 
-  Future addNewComment(Map<String, dynamic> details) async {
+  static Future addNewComment(Map<String, dynamic> details,String qId) async {
     try {
       final List<XFile> images = details['images'];
       final List<String> downUrls = [];
       final ref = FirebaseStorage.instance
           .ref()
           .child("Questions")
-          .child(_question.id)
+          .child(qId)
           .child("Comments");
       await Future.wait(
         images.map((e) async {
@@ -41,10 +43,10 @@ class Question {
       );
       await FirebaseFirestore.instance
           .collection("Comments")
-          .doc(_question.id)
+          .doc(qId)
           .collection("Comments")
           .add({
-        "userId": details['userId'],
+        "userId": FirebaseAuth.instance.currentUser!.uid,
         "userImage": details['userImage'],
         "date": details['date'],
         "comment": details['comment'],

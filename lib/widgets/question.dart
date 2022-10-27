@@ -85,7 +85,7 @@ class QuestionComponent extends StatelessWidget {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed("/CommentSheet");
+                    Navigator.of(context).pushNamed("/CommentSheet",arguments: _post.id);
                   },
                   child: Text("Write your solution"),
                 ),

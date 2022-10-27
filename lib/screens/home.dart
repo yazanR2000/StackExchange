@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:stackexchange/widgets/Drawer.dart';
 import '../widgets/question.dart';
 import '../models/user.dart' as u;
+import '../models/stack.dart' as s;
 class Home extends StatelessWidget {
   Home({super.key});
 Future _getUserData() async {
@@ -13,6 +14,7 @@ Future _getUserData() async {
   final u.User _user = u.User.getInstance();
   _user.userData = doc;
 }
+final s.Stack _stack = s.Stack.getInstance();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
