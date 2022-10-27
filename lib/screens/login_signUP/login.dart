@@ -13,6 +13,8 @@ class LoginPage extends StatefulWidget {
 
 TextEditingController? emailController = TextEditingController();
 TextEditingController? passwordController = TextEditingController();
+GlobalKey<FormState> myFormKey = GlobalKey();
+bool scureText = true;
 
 class _LoginPageState extends State<LoginPage> {
   @override
@@ -67,6 +69,21 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        validator: ((value) {
+                          // Check if this field is empty
+                          if (value == null || value.isEmpty) {
+                            return 'This field is required';
+                          }
+
+                          if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
+                            return "Please enter a valid email address";
+                          }
+
+                          // the email is valid
+                          return null;
+                        }),
                         controller: emailController,
                         decoration: const InputDecoration(
                           labelText: 'Email',
@@ -80,12 +97,41 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
+                        obscureText: scureText,
+                        keyboardType: TextInputType.visiblePassword,
+                        textInputAction: TextInputAction.next,
+                        validator: ((value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter password';
+                          } else {
+                            if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z]).{8,}$')
+                                .hasMatch(value)) {
+                              return 'Password must contain at least one \n"upper, lower case 8 characters in length"';
+                            } else {
+                              return null;
+                            }
+                          }
+                        }),
                         controller: passwordController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: TextStyle(
                             color: Colors.grey,
                             fontSize: 20,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              scureText
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: scureText ? Colors.grey : Colors.blue,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                scureText = !scureText;
+                              });
+                            },
                           ),
                         ),
                       ),
@@ -101,32 +147,36 @@ class _LoginPageState extends State<LoginPage> {
                           maximumSize: const Size(350, 50),
                         ),
                         onPressed: () async {
-                          try {
-                            var auth = await FirebaseAuth.instance;
+                          if (myFormKey.currentState!.validate()) {
+                            try {
+                              var auth = await FirebaseAuth.instance;
 
-                            UserCredential myUser =
-                                await auth.signInWithEmailAndPassword(
-                                    email: emailController!.text.trim(),
-                                    password: passwordController!.text.trim());
-                            emailController!.clear();
-                            passwordController!.clear();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("login successfully")));
-
-                            // if (myUser != null) {
-                            //   Navigator.pushReplacementNamed(
-                            //       context, Homepage.screenRoute);
-                            // }
-                          } on FirebaseAuthException catch (e) {
-                            if (e.code == 'user-not-found') {
+                              UserCredential myUser =
+                                  await auth.signInWithEmailAndPassword(
+                                      email: emailController!.text.trim(),
+                                      password:
+                                          passwordController!.text.trim());
+                              emailController!.clear();
+                              passwordController!.clear();
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                      content: Text(
-                                          "No user found for that email.")));
-                            } else if (e.code == 'wrong-password') {
-                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                  content: Text(
-                                      "Wrong password provided for that user.")));
+                                      content: Text("login successfully")));
+
+                              // if (myUser != null) {
+                              //   Navigator.pushReplacementNamed(
+                              //       context, Homepage.screenRoute);
+                              // }
+                            } on FirebaseAuthException catch (e) {
+                              if (e.code == 'user-not-found') {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(
+                                            "No user found for that email.")));
+                              } else if (e.code == 'wrong-password') {
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text(
+                                        "Wrong password provided for that user.")));
+                              }
                             }
                           }
                         },
@@ -175,8 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         GestureDetector(
                           onTap: () async {
-                           
-                                await signInWithGoogle();
+                            await signInWithGoogle();
                           },
                           child: Container(
                             alignment: Alignment.center,
@@ -233,7 +282,7 @@ class _LoginPageState extends State<LoginPage> {
                             style: TextStyle(fontSize: 15),
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, SignUp.screenRoute);
+                            Navigator.pushNamed(context, "/sign_up");
                           },
                         )
                       ],

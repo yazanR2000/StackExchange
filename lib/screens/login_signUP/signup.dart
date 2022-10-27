@@ -290,7 +290,7 @@ class _SignUpState extends State<SignUp> {
                             style: TextStyle(fontSize: 15),
                           ),
                           onPressed: () {
-                            Navigator.pushNamed(context, LoginPage.screenRoute);
+                            Navigator.pushNamed(context, '/login');
                           },
                         )
                       ],
