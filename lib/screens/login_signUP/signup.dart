@@ -21,15 +21,17 @@ class _SignUpState extends State<SignUp> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   TextEditingController fullnameController = TextEditingController();
-  File? _image;
-  Future getImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (image == null) return;
-    final imageTemporary = File(image.path);
-    setState(() {
-      this._image = imageTemporary;
-    });
-  }
+  GlobalKey<FormState> myFormKey = GlobalKey();
+  bool scureText = true;
+  // File? _image;
+  // Future getImage() async {
+  //   final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+  //   if (image == null) return;
+  //   final imageTemporary = File(image.path);
+  //   setState(() {
+  //     this._image = imageTemporary;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,7 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
         body: Form(
+          key: myFormKey,
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -83,6 +86,14 @@ class _SignUpState extends State<SignUp> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
+                        keyboardType: TextInputType.name,
+                        textInputAction: TextInputAction.next,
+                        validator: ((value) {
+                          // Check if this field is empty
+                          if (value == null || value.isEmpty) {
+                            return 'This field is required';
+                          }
+                        }),
                         controller: fullnameController,
                         decoration: const InputDecoration(
                           labelText: 'Full Name',
@@ -96,6 +107,21 @@ class _SignUpState extends State<SignUp> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        validator: ((value) {
+                          // Check if this field is empty
+                          if (value == null || value.isEmpty) {
+                            return 'This field is required';
+                          }
+
+                          if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
+                            return "Please enter a valid email address";
+                          }
+
+                          // the email is valid
+                          return null;
+                        }),
                         controller: emailController,
                         decoration: const InputDecoration(
                           labelText: 'Email',
@@ -109,12 +135,41 @@ class _SignUpState extends State<SignUp> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
+                        obscureText: scureText,
+                        keyboardType: TextInputType.visiblePassword,
+                        textInputAction: TextInputAction.next,
+                        validator: ((value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter password';
+                          } else {
+                            if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z]).{8,}$')
+                                .hasMatch(value)) {
+                              return 'Password must contain at least one \n"upper, lower case 8 characters in length"';
+                            } else {
+                              return null;
+                            }
+                          }
+                        }),
                         controller: passwordController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           labelText: 'Password',
                           labelStyle: TextStyle(
                             color: Colors.grey,
                             fontSize: 20,
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              scureText
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: scureText ? Colors.grey : Colors.blue,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                scureText = !scureText;
+                              });
+                            },
                           ),
                         ),
                       ),
@@ -122,6 +177,9 @@ class _SignUpState extends State<SignUp> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
+                        validator: ((value) {
+                          // Check if this field is empty
+                        }),
                         controller: phoneNumberController,
                         decoration: const InputDecoration(
                           labelText: 'Phone Number (optional)',
@@ -167,36 +225,41 @@ class _SignUpState extends State<SignUp> {
                           maximumSize: const Size(350, 50),
                         ),
                         onPressed: () async {
-                          try {
-                            var auth = FirebaseAuth.instance;
+                          if (myFormKey.currentState!.validate()) {
+                            try {
+                              var auth = FirebaseAuth.instance;
 
-                            UserCredential myUser =
-                                await auth.createUserWithEmailAndPassword(
-                              email: emailController.text.trim(),
-                              password: passwordController.text.trim(),
-                            );
-                            emailController.clear();
-                            passwordController.clear();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("added successfully")));
-                            if (myUser != null) {
-                              final userId =
-                                  FirebaseAuth.instance.currentUser!.uid;
-                              await FirebaseFirestore.instance
-                                  .collection("Users")
-                                  .doc(userId)
-                                  .set({
-                                "Full name": fullnameController.text,
-                                "Phone number": phoneNumberController.text,
-                              });
-                              phoneNumberController.clear();
-                              fullnameController.clear();
-                              // Navigator.pushReplacementNamed(
-                              //     context, testPage.screenRoute);
+                              UserCredential myUser =
+                                  await auth.createUserWithEmailAndPassword(
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                              );
+                              emailController.clear();
+                              passwordController.clear();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text("added successfully")));
+                              if (myUser != null) {
+                                final userId =
+                                    FirebaseAuth.instance.currentUser!.uid;
+                                await FirebaseFirestore.instance
+                                    .collection("Users")
+                                    .doc(userId)
+                                    .set({
+                                  "Full name": fullnameController.text,
+                                  "Phone number": phoneNumberController.text,
+                                });
+                                phoneNumberController.clear();
+                                fullnameController.clear();
+                                // Navigator.pushReplacementNamed(
+                                //     context, testPage.screenRoute);
+                              }
+                            } on FirebaseAuthException catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content:
+                                          Text("${e.code.toUpperCase()}")));
                             }
-                          } on FirebaseAuthException catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text("${e.code.toUpperCase()}")));
                           }
 
                           print(emailController.text);
