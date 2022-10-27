@@ -21,6 +21,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
+  String phonenumber = "07xxxxxx";
   TextEditingController fullnameController = TextEditingController();
   GlobalKey<FormState> myFormKey = GlobalKey();
   bool scureText = true;
@@ -84,30 +85,6 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(
                       height: 20,
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(right: 45, left: 45),
-                    //   child: ElevatedButton.icon(
-                    //     icon: const Icon(
-                    //         CupertinoIcons.photo_fill_on_rectangle_fill),
-                    //     onPressed: () {
-                    //       getImage();
-                    //     },
-                    //     label: const Text(
-                    //       "Upload your Photo",
-                    //     ),
-                    //   ),
-                    // ),
-                    // _image != null
-                    //     ? Image.file(
-                    //         _image!,
-                    //         width: 50,
-                    //         height: 50,
-                    //         fit: BoxFit.cover,
-                    //       )
-                    //     : Icon(
-                    //         Icons.person_outline_rounded,
-                    //         size: 70,
-                    //       ),
                     ListTile(
                       title: Text(
                         "Upload your Photo",
@@ -229,6 +206,9 @@ class _SignUpState extends State<SignUp> {
                         validator: ((value) {
                           // Check if this field is empty
                         }),
+                        onChanged: (value) {
+                          phonenumber = phoneNumberController.text;
+                        },
                         controller: phoneNumberController,
                         decoration: const InputDecoration(
                           labelText: 'Phone Number (optional)',
@@ -283,7 +263,7 @@ class _SignUpState extends State<SignUp> {
                                     .set({
                                   "User image": imageUrl,
                                   "Full name": fullnameController.text,
-                                  "Phone number": phoneNumberController.text,
+                                  "Phone number": phonenumber,
                                 });
                                 phoneNumberController.clear();
                                 fullnameController.clear();
