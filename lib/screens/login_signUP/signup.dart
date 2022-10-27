@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -79,6 +80,54 @@ class _SignUpState extends State<SignUp> {
                           color: Colors.grey,
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(right: 45, left: 45),
+                    //   child: ElevatedButton.icon(
+                    //     icon: const Icon(
+                    //         CupertinoIcons.photo_fill_on_rectangle_fill),
+                    //     onPressed: () {
+                    //       getImage();
+                    //     },
+                    //     label: const Text(
+                    //       "Upload your Photo",
+                    //     ),
+                    //   ),
+                    // ),
+                    // _image != null
+                    //     ? Image.file(
+                    //         _image!,
+                    //         width: 50,
+                    //         height: 50,
+                    //         fit: BoxFit.cover,
+                    //       )
+                    //     : Icon(
+                    //         Icons.person_outline_rounded,
+                    //         size: 70,
+                    //       ),
+                    ListTile(
+                      title: Text(
+                        "Upload your Photo",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      onTap: () {
+                        getImage();
+                      },
+                      // dense: true,
+                      trailing: _image != null
+                          ? Image.file(
+                              _image!,
+                              width: 70,
+                              height: 70,
+                              fit: BoxFit.cover,
+                            )
+                          : Icon(
+                              Icons.person_outline_rounded,
+                              size: 60,
+                            ),
                     ),
                     SizedBox(
                       height: 20,
@@ -193,31 +242,6 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(
                       height: 20,
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(right: 45, left: 45),
-                    //   child: ElevatedButton.icon(
-                    //     icon: const Icon(
-                    //         CupertinoIcons.photo_fill_on_rectangle_fill),
-                    //     onPressed: () {
-                    //       getImage();
-                    //     },
-                    //     label: const Text(
-                    //       "Upload your Photo",
-                    //     ),
-                    //   ),
-                    // ),
-                    // _image != null
-                    //     ? Image.file(
-                    //         _image!,
-                    //         width: 50,
-                    //         height: 50,
-                    //         fit: BoxFit.cover,
-                    //       )
-                    //     : IconButton(
-                    //         onPressed: () {},
-                    //         icon: Icon(Icons.person_outline_rounded,size: 70,),
-                          
-                    //       ),
                     SizedBox(
                       height: 40,
                     ),
@@ -246,10 +270,18 @@ class _SignUpState extends State<SignUp> {
                               if (myUser != null) {
                                 final userId =
                                     FirebaseAuth.instance.currentUser!.uid;
+                                FirebaseStorage storage =
+                                    FirebaseStorage.instance;
+                                Reference ref =
+                                    storage.ref().child("Users").child(userId);
+                                await ref.putFile(File(_image!.path));
+                                String imageUrl = await ref.getDownloadURL();
+
                                 await FirebaseFirestore.instance
                                     .collection("Users")
                                     .doc(userId)
                                     .set({
+                                  "User image": imageUrl,
                                   "Full name": fullnameController.text,
                                   "Phone number": phoneNumberController.text,
                                 });
