@@ -58,8 +58,10 @@ class Profile extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    UserInfo(_userData!['Full name'],
-                        "https://dl.memuplay.com/new_market/img/com.vicman.newprofilepic.icon.2022-06-07-21-33-07.png"),
+                    UserInfo(
+                      _userData!['Full name'],
+                      _userData!['User image'],
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -73,7 +75,6 @@ class Profile extends StatelessWidget {
               );
             },
           ),
-          
         ),
       ),
     );

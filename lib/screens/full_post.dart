@@ -29,7 +29,8 @@ class _FullPostState extends State<FullPost> {
         ModalRoute.of(context)!.settings.arguments as QueryDocumentSnapshot;
     return Scaffold(
       appBar: AppBar(
-        title: Text("${question['userFullName'].toString().split(' ')[0]}'s questions"),
+        title: Text(
+            "${question['userFullName'].toString().split(' ')[0]}'s questions"),
       ),
       body: ListView(
         padding: EdgeInsets.all(20),
@@ -52,7 +53,7 @@ class _FullPostState extends State<FullPost> {
                   ),
                   contentPadding: EdgeInsets.zero,
                   title: Text(question['userFullName'].toString()),
-                  subtitle: Text(question['date'].toString().substring(0,16)),
+                  subtitle: Text(question['date'].toString().substring(0, 16)),
                   trailing: FittedBox(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -121,11 +122,20 @@ class _FullPostState extends State<FullPost> {
               ],
             ),
           ),
-          SizedBox(height: 5,),
+          SizedBox(
+            height: 5,
+          ),
           Divider(),
-          SizedBox(height: 10,),
-          Text("Comments",style: Theme.of(context).textTheme.bodyText1,),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "Comments",
+            style: Theme.of(context).textTheme.bodyText1,
+          ),
+          SizedBox(
+            height: 10,
+          ),
           StreamBuilder(
               stream:
                   Comments.doc(question.id).collection('Comments').snapshots(),
@@ -142,7 +152,9 @@ class _FullPostState extends State<FullPost> {
                     );
                   }
                   return ListView.separated(
-                    separatorBuilder: (context, index) => SizedBox(height: 10,),
+                    separatorBuilder: (context, index) => SizedBox(
+                      height: 10,
+                    ),
                     padding: EdgeInsets.only(bottom: 50),
                     reverse: true,
                     shrinkWrap: true,

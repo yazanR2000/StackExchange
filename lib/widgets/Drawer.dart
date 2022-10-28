@@ -22,16 +22,36 @@ class _AppDrawerState extends State<AppDrawer> {
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            accountName: Text(
-              _user.userData['Full name'],
-              style: TextStyle(fontSize: 24),
-            ),
-            decoration: BoxDecoration(color: Colors.black87),
-            accountEmail: Text(FirebaseAuth.instance.currentUser!.email!),
-            currentAccountPicture: Image(
-              image: NetworkImage(imageURL),
-            ),
-          ),
+              accountName: Text(
+                _user.userData['Full name'],
+                style: TextStyle(fontSize: 24),
+              ),
+              decoration: BoxDecoration(color: Colors.black87),
+              accountEmail: Text(FirebaseAuth.instance.currentUser!.email!),
+              onDetailsPressed: () {
+                showDialog(
+                    context: context,
+                    builder: ((context) {
+                      return AlertDialog(
+                        title: Column(
+                          children: [
+                            Hero(
+                                tag: 'Full name',
+                                child: Image(
+                                  image: NetworkImage(
+                                      _user.userData['User image']),
+                                ))
+                          ],
+                        ),
+                      ); //Create item
+                    }));
+              },
+              currentAccountPicture: Hero(
+                tag: 'Full name',
+                child: Image(
+                  image: NetworkImage(_user.userData['User image']),
+                ),
+              )),
           ListTile(
             title: Text(
               "My questions",
@@ -43,7 +63,10 @@ class _AppDrawerState extends State<AppDrawer> {
             },
           ),
           ListTile(
-            title: Text("Saved posts",style: Theme.of(context).textTheme.bodyText2,),
+            title: Text(
+              "Saved posts",
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
             trailing: const Icon(Icons.bookmark),
             onTap: () {},
           ),
@@ -54,7 +77,6 @@ class _AppDrawerState extends State<AppDrawer> {
             ),
             trailing: Icon(
               Icons.logout,
-              
             ),
             onTap: () async {
               await FirebaseAuth.instance.signOut();

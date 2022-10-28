@@ -19,6 +19,7 @@ Future signInWithGoogle() async {
     await FirebaseFirestore.instance.collection("Users").doc(userId).set({
       "Full name": googleUser!.displayName,
       "Phone number": "07xxxxx",
+      "User image": googleUser.photoUrl,
     });
   } catch (err) {
     throw err;

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class QuestionComponent extends StatelessWidget {
   final QueryDocumentSnapshot _post;
   final bool _isProfile;
-  QuestionComponent(this._post,this._isProfile);
+  QuestionComponent(this._post, this._isProfile);
   bool _isNew(DateTime date) {
     final DateTime dateTime = DateTime.now();
     final diffirence = dateTime.difference(date);
@@ -27,10 +27,12 @@ class QuestionComponent extends StatelessWidget {
         children: [
           ListTile(
             dense: true,
-            onTap: _isProfile ? null : () {
-              Navigator.of(context)
-                  .pushNamed('/profile', arguments: _post['userId']);
-            },
+            onTap: _isProfile
+                ? null
+                : () {
+                    Navigator.of(context)
+                        .pushNamed('/profile', arguments: _post['userId']);
+                  },
             leading: const Icon(
               Icons.person,
               size: 40,
@@ -49,7 +51,9 @@ class QuestionComponent extends StatelessWidget {
                       style: TextStyle(fontSize: 15),
                     ),
                   ),
-                  SizedBox(width: 5,),
+                  SizedBox(
+                    width: 5,
+                  ),
                   if (_isNew(DateTime.parse(_post['date'])))
                     const Chip(
                       label: Text(
@@ -86,7 +90,8 @@ class QuestionComponent extends StatelessWidget {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed("/CommentSheet",arguments: _post.id);
+                    Navigator.of(context)
+                        .pushNamed("/CommentSheet", arguments: _post.id);
                   },
                   child: Text("Write your solution"),
                 ),

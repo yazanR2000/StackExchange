@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,6 +21,7 @@ class _SignUpState extends State<SignUp> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
+  String phonenumber = "07xxxxxx";
   TextEditingController fullnameController = TextEditingController();
   GlobalKey<FormState> myFormKey = GlobalKey();
   bool scureText = true;
@@ -79,6 +81,30 @@ class _SignUpState extends State<SignUp> {
                           color: Colors.grey,
                         ),
                       ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    ListTile(
+                      title: Text(
+                        "Upload your Photo",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                      onTap: () {
+                        getImage();
+                      },
+                      // dense: true,
+                      trailing: _image != null
+                          ? Image.file(
+                              _image!,
+                              width: 70,
+                              height: 70,
+                              fit: BoxFit.cover,
+                            )
+                          : Icon(
+                              Icons.person_outline_rounded,
+                              size: 60,
+                            ),
                     ),
                     SizedBox(
                       height: 20,
@@ -180,6 +206,9 @@ class _SignUpState extends State<SignUp> {
                         validator: ((value) {
                           // Check if this field is empty
                         }),
+                        onChanged: (value) {
+                          phonenumber = phoneNumberController.text;
+                        },
                         controller: phoneNumberController,
                         decoration: const InputDecoration(
                           labelText: 'Phone Number (optional)',
@@ -245,12 +274,20 @@ class _SignUpState extends State<SignUp> {
                               if (myUser != null) {
                                 final userId =
                                     FirebaseAuth.instance.currentUser!.uid;
+                                FirebaseStorage storage =
+                                    FirebaseStorage.instance;
+                                Reference ref =
+                                    storage.ref().child("Users").child(userId);
+                                await ref.putFile(File(_image!.path));
+                                String imageUrl = await ref.getDownloadURL();
+
                                 await FirebaseFirestore.instance
                                     .collection("Users")
                                     .doc(userId)
                                     .set({
+                                  "User image": imageUrl,
                                   "Full name": fullnameController.text,
-                                  "Phone number": phoneNumberController.text,
+                                  "Phone number": phonenumber,
                                 });
                                 phoneNumberController.clear();
                                 fullnameController.clear();
