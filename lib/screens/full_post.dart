@@ -125,6 +125,7 @@ class _FullPostState extends State<FullPost> {
                               context: context,
                               builder: ((context) {
                                 return AlertDialog(
+                                  scrollable: true,
                                   titlePadding: EdgeInsets.zero,
                                   insetPadding: EdgeInsets.zero,
                                   shape: RoundedRectangleBorder(
