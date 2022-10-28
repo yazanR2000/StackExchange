@@ -5,7 +5,6 @@ import 'package:stackexchange/widgets/comments.dart';
 import '../widgets/Comment_component.dart';
 
 class FullPost extends StatefulWidget {
-  
   const FullPost({super.key});
 
   @override
@@ -14,7 +13,6 @@ class FullPost extends StatefulWidget {
 
 class _FullPostState extends State<FullPost> {
   bool bookmark = false;
-
 
   bool _isNew(DateTime date) {
     final DateTime dateTime = DateTime.now();
@@ -28,17 +26,15 @@ class _FullPostState extends State<FullPost> {
   @override
   Widget build(BuildContext context) {
     final details =
-        ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     return Scaffold(
       appBar: AppBar(
         title: Text(
             "${details['question']['userFullName'].toString().split(' ')[0]}'s questions"),
       ),
       body: RefreshIndicator(
-        onRefresh: ()async {
-          setState(() {
-            
-          });
+        onRefresh: () async {
+          setState(() {});
         },
         child: ListView(
           padding: EdgeInsets.all(20),
@@ -62,7 +58,9 @@ class _FullPostState extends State<FullPost> {
                     ),
                     contentPadding: EdgeInsets.zero,
                     title: Text(details['question']['userFullName'].toString()),
-                    subtitle: Text(details['question']['date'].toString().substring(0, 16)),
+                    subtitle: Text(details['question']['date']
+                        .toString()
+                        .substring(0, 16)),
                     trailing: FittedBox(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -77,12 +75,13 @@ class _FullPostState extends State<FullPost> {
                           SizedBox(
                             width: 5,
                           ),
-                          if (_isNew(DateTime.parse(details['question']['date'])))
+                          if (_isNew(
+                              DateTime.parse(details['question']['date'])))
                             const Chip(
                               label: Text(
                                 "new",
-                                style:
-                                    TextStyle(color: Colors.white, fontSize: 15),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 15),
                               ),
                               backgroundColor: Color(0xFFFF1e1e),
                             ),
@@ -115,15 +114,50 @@ class _FullPostState extends State<FullPost> {
                     children: List.generate(
                       details['question']['images'].length,
                       (index) => Container(
+                        child: InkWell(
+                          child: Image(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(
+                                details['question']['images'][index]),
+                          ),
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: ((context) {
+                                return AlertDialog(
+                                  titlePadding: EdgeInsets.zero,
+                                  insetPadding: EdgeInsets.zero,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0))),
+                                  title: Column(
+                                    children: [
+                                      InteractiveViewer(
+                                        boundaryMargin:
+                                            const EdgeInsets.all(20),
+                                        child: Image(
+                                          image: NetworkImage(
+                                              details['question']['images']
+                                                  [index]),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ); //Create item
+                              }),
+                            );
+                          },
+                        ),
                         height: 200,
                         width: double.infinity,
                         margin: EdgeInsets.symmetric(vertical: 10),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                            fit: BoxFit.fill,
-                            image: NetworkImage(details['question']['images'][index]),
-                          ),
+                          // image: DecorationImage(
+                          //   fit: BoxFit.fill,
+                          //   image: NetworkImage(
+                          //       details['question']['images'][index]),
+                          // ),
                         ),
                       ),
                     ),
@@ -145,7 +179,7 @@ class _FullPostState extends State<FullPost> {
             SizedBox(
               height: 10,
             ),
-            Comments(details['question'],details['rebuild']),
+            Comments(details['question'], details['rebuild']),
           ],
         ),
       ),

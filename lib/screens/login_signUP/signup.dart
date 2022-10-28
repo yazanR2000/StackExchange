@@ -35,6 +35,7 @@ class _SignUpState extends State<SignUp> {
       this._image = imageTemporary;
     });
   }
+
   Future _getUserData() async {
     final u.User _user = u.User.getInstance();
     await _user.addUserInfo();
@@ -277,7 +278,7 @@ class _SignUpState extends State<SignUp> {
                                 password: passwordController.text.trim(),
                               );
                               _user.UserInfo = {
-                                "image" : _image == null ? "" : _image!.path,
+                                "image": _image == null ? "" : _image!.path,
                                 "Full name": fullnameController.text,
                                 "Phone number": phonenumber,
                               };

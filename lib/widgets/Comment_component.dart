@@ -40,7 +40,7 @@ class _CommentComponentState extends State<CommentComponent> {
                   await q.Question.closeQuestionFromOwner(
                       widget._question, widget._comment.id);
                   Navigator.of(context).pop();
-                  
+
                   widget._rebuild();
                 } catch (err) {}
               },
@@ -103,15 +103,46 @@ class _CommentComponentState extends State<CommentComponent> {
             children: List.generate(
               widget._comment['images'].length,
               (index) => Container(
+                child: InkWell(
+                  child: Image(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(widget._comment['images'][index]),
+                  ),
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: ((context) {
+                        return AlertDialog(
+                          titlePadding: EdgeInsets.zero,
+                          insetPadding: EdgeInsets.zero,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10.0))),
+                          title: Column(
+                            children: [
+                              InteractiveViewer(
+                                boundaryMargin: const EdgeInsets.all(20),
+                                child: Image(
+                                  image: NetworkImage(
+                                      widget._comment['images'][index]),
+                                ),
+                              )
+                            ],
+                          ),
+                        ); //Create item
+                      }),
+                    );
+                  },
+                ),
                 height: 200,
                 width: double.infinity,
                 margin: EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(widget._comment['images'][index]),
-                  ),
+                  // image: DecorationImage(
+                  //   fit: BoxFit.fill,
+                  //   image: NetworkImage(widget._comment['images'][index]),
+                  // ),
                 ),
               ),
             ),
