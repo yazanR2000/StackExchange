@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,12 +25,14 @@ class Question {
   }
 
   static Future addNewComment(Map<String, dynamic> details, String qId) async {
-    if (details['images'].length == 0 && details['comment'].isEmpty) {
+    if (details['images'].length == 0 && details['comment'] == "") {
       throw "Please add a text or image at least";
     }
     try {
+      log("1");
       final List<XFile> images = details['images'];
       final List<String> downUrls = [];
+      log("2");
       if (details['images'].length > 0) {
         final ref = FirebaseStorage.instance
             .ref()
@@ -45,19 +49,27 @@ class Question {
             downUrls.add(dowurl!);
           }),
         );
+        log("3");
       }
+      final u.User user = u.User.getInstance();
+      log("${user.userData['Full name']}");
+      log("4");
+      
+      
+      log("${details['comment']}");
       await FirebaseFirestore.instance
           .collection("Comments")
           .doc(qId)
           .collection("Comments")
           .add({
         "userId": FirebaseAuth.instance.currentUser!.uid,
-        "userFullName": u.User.getInstance().userData['Full name'],
+        "userFullName": user.userData['Full name'],
         "date": DateTime.now().toLocal().toString(),
         "comment": details['comment'],
         "vote": 0,
         "images": downUrls,
       });
+      log("5");
     } catch (err) {
       throw err;
     }
@@ -75,12 +87,13 @@ class Question {
     }
   }
 
-  Future closeQuestionFromOwner(String commentId) async {
+  static Future closeQuestionFromOwner(QueryDocumentSnapshot question,String commentId) async {
     try {
+      log("yazan");
       await FirebaseFirestore.instance
           .runTransaction((Transaction myTransaction) async {
-        myTransaction.update(_question.reference, {
-          "isClosed": commentId,
+        myTransaction.update(question.reference, {
+          "solvedComment": commentId,
         });
       });
     } catch (err) {

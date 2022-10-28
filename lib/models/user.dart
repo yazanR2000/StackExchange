@@ -12,13 +12,52 @@ class User {
   User() {}
   static User getInstance() => _user;
 
+  Map<String, dynamic>? _userInfo;
+
+  set UserInfo(Map<String, dynamic> value) {
+    _userInfo = value;
+  }
+
   DocumentSnapshot? _userData;
   DocumentSnapshot get userData => _userData!;
   set userData(DocumentSnapshot value) {
     _userData = value;
   }
-  
+  Future getUserData()async {
+    try{
+      final uid = FirebaseAuth.instance.currentUser!.uid;
+      final data = await FirebaseFirestore.instance.collection("Users").doc(uid).get();
+      _userData = data;
+    }catch(err){
+      throw err;
+    }
+  }
 
+
+  Future addUserInfo() async {
+    if (_userInfo == null) {
+      return;
+    }
+    try {
+      final userId = FirebaseAuth.instance.currentUser!.uid;
+      FirebaseStorage storage = FirebaseStorage.instance;
+      Reference ref = storage.ref().child("Users").child(userId);
+      String? imageUrl;
+      if (_userInfo!['image'].isNotEmpty) {
+        await ref.putFile(i.File(_userInfo!['image']));
+        imageUrl = await ref.getDownloadURL();
+      }
+      await FirebaseFirestore.instance.collection("Users").doc(userId).set({
+        "User image": imageUrl == null
+            ? "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
+            : imageUrl,
+        "Full name": _userInfo!['Full name'],
+        "Phone number": _userInfo!['Phone number'],
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
 
   Future addNewQuestion(Map<String, dynamic> details) async {
     try {
@@ -29,9 +68,10 @@ class User {
         await Future.wait(
           images.map((e) async {
             Reference ref = FirebaseStorage.instance
-            .ref()
-            .child("Questions")
-            .child(questionId).child(DateTime.now().toLocal().toString());
+                .ref()
+                .child("Questions")
+                .child(questionId)
+                .child(DateTime.now().toLocal().toString());
             final UploadTask uploadTask = ref.putFile(i.File(e.path));
             String? dowurl;
             await uploadTask.whenComplete(() async {
@@ -47,11 +87,13 @@ class User {
           .set({
         "type": details['type'],
         "userId": FirebaseAuth.instance.currentUser!.uid,
-        "userFullName" : _userData!['Full name'],
+        "userFullName": _userData!['Full name'],
+        "userImageUrl": _userData!['User image'],
         "questionTitle": details['title'],
         "description": details['description'],
         "images": downUrls,
-        "date": DateTime.now().toLocal().toString()
+        "date": DateTime.now().toLocal().toString(),
+        "solvedComment" : "null",
       });
     } catch (err) {
       throw err;

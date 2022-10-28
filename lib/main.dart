@@ -13,6 +13,7 @@ import './screens/login_signUP/login.dart';
 import './screens/home.dart';
 import './screens/full_post.dart';
 import './screens/CommentsSheet.dart';
+import './models/user.dart' as u;
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -96,22 +97,36 @@ class MyApp extends StatelessWidget {
         '/CommentSheet': (context) => CommentSheet(),
         '/home': (context) => Home(),
         'forgotPassword': (context) => forgotPassword(),
-        '/my_questions' : (context) => MyQuestions(),
+        '/my_questions': (context) => MyQuestions(),
       },
     );
   }
 
   handleAuthState() {
+    final u.User user = u.User.getInstance();
     return StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, snapshot) {
           if (snapshot.hasData) {
-            return Home();
+            return FutureBuilder(
+              future: user.getUserData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Scaffold(
+                    body: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
+                return Home();
+              },
+            );
           } else {
             return const StartScreen();
           }
         });
   }
 }
+
 
 //Determine if the user is authenticated.

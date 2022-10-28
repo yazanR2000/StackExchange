@@ -2,10 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../widgets/question.dart';
 
-class UserProblems extends StatelessWidget {
+class UserProblems extends StatefulWidget {
   final String _userId;
   UserProblems(this._userId);
 
+  @override
+  State<UserProblems> createState() => _UserProblemsState();
+}
+
+class _UserProblemsState extends State<UserProblems> {
+  void _rebuild() {
+    setState(() {
+      
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +40,7 @@ class UserProblems extends StatelessWidget {
           StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("Questions")
-                .where("userId", isEqualTo: _userId)
+                .where("userId", isEqualTo: widget._userId)
                 .snapshots(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -56,7 +66,7 @@ class UserProblems extends StatelessWidget {
                   height: 20,
                 ),
                 itemBuilder: (context, index) {
-                  return QuestionComponent(data[index],true);
+                  return QuestionComponent(data[index], true, _rebuild);
                 },
               );
             },

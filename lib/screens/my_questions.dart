@@ -13,6 +13,11 @@ class MyQuestions extends StatefulWidget {
 
 class _MyQuestionsState extends State<MyQuestions> {
   final uid = FirebaseAuth.instance.currentUser!.uid;
+  void _rebuild(){
+    setState(() {
+      
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,12 +86,11 @@ class _MyQuestionsState extends State<MyQuestions> {
                           );
                         },
                       );
-                      
                     },
                     icon: Icon(Icons.delete),
                     label: Text("Delete"),
                   ),
-                  QuestionComponent(data[index],false),
+                  QuestionComponent(data[index],false,_rebuild),
                 ],
               );
             },

@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:stackexchange/widgets/comments.dart';
 import '../widgets/Comment_component.dart';
 
 class FullPost extends StatefulWidget {
+  
   const FullPost({super.key});
 
   @override
@@ -12,8 +15,7 @@ class FullPost extends StatefulWidget {
 class _FullPostState extends State<FullPost> {
   bool bookmark = false;
 
-  final CollectionReference Comments =
-      FirebaseFirestore.instance.collection('Comments');
+
   bool _isNew(DateTime date) {
     final DateTime dateTime = DateTime.now();
     final diffirence = dateTime.difference(date);
@@ -25,12 +27,12 @@ class _FullPostState extends State<FullPost> {
 
   @override
   Widget build(BuildContext context) {
-    final question =
-        ModalRoute.of(context)!.settings.arguments as QueryDocumentSnapshot;
+    final details =
+        ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            "${question['userFullName'].toString().split(' ')[0]}'s questions"),
+            "${details['question']['userFullName'].toString().split(' ')[0]}'s questions"),
       ),
       body: ListView(
         padding: EdgeInsets.all(20),
@@ -49,11 +51,12 @@ class _FullPostState extends State<FullPost> {
                   dense: true,
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(
-                        "https://cdn-icons-png.flaticon.com/512/149/149071.png"),
+                      details['question']['userImageUrl'],
+                    ),
                   ),
                   contentPadding: EdgeInsets.zero,
-                  title: Text(question['userFullName'].toString()),
-                  subtitle: Text(question['date'].toString().substring(0, 16)),
+                  title: Text(details['question']['userFullName'].toString()),
+                  subtitle: Text(details['question']['date'].toString().substring(0, 16)),
                   trailing: FittedBox(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -61,14 +64,14 @@ class _FullPostState extends State<FullPost> {
                         Chip(
                           backgroundColor: Color(0xff),
                           label: Text(
-                            question['type'],
+                            details['question']['type'],
                             style: TextStyle(fontSize: 15),
                           ),
                         ),
                         SizedBox(
                           width: 5,
                         ),
-                        if (_isNew(DateTime.parse(question['date'])))
+                        if (_isNew(DateTime.parse(details['question']['date'])))
                           const Chip(
                             label: Text(
                               "new",
@@ -93,18 +96,18 @@ class _FullPostState extends State<FullPost> {
                   ),
                 ),
                 Text(
-                  question['questionTitle'],
+                  details['question']['questionTitle'],
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 15),
                   child: Text(
-                    question['description'],
+                    details['question']['description'],
                   ),
                 ),
                 Column(
                   children: List.generate(
-                    question['images'].length,
+                    details['question']['images'].length,
                     (index) => Container(
                       height: 200,
                       width: double.infinity,
@@ -113,7 +116,7 @@ class _FullPostState extends State<FullPost> {
                         borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
                           fit: BoxFit.fill,
-                          image: NetworkImage(question['images'][index]),
+                          image: NetworkImage(details['question']['images'][index]),
                         ),
                       ),
                     ),
@@ -136,39 +139,7 @@ class _FullPostState extends State<FullPost> {
           SizedBox(
             height: 10,
           ),
-          StreamBuilder(
-              stream:
-                  Comments.doc(question.id).collection('Comments').snapshots(),
-              builder: (context, streamSnapshot) {
-                if (streamSnapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (streamSnapshot.hasData) {
-                  final data = streamSnapshot.data!.docs;
-                  if (data.length == 0) {
-                    return const Center(
-                      child: Text("There's no comments"),
-                    );
-                  }
-                  return ListView.separated(
-                    separatorBuilder: (context, index) => SizedBox(
-                      height: 10,
-                    ),
-                    padding: EdgeInsets.only(bottom: 50),
-                    reverse: true,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: data.length,
-                    itemBuilder: ((context, index) {
-                      return CommentComponent(data[index]);
-                    }),
-                  );
-                }
-                return const Center(
-                  child: Text("There's no comments"),
-                );
-              })
+          Comments(details['question'],details['rebuild']),
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -176,7 +147,7 @@ class _FullPostState extends State<FullPost> {
         onPressed: () {
           Navigator.of(context).pushNamed(
             '/CommentSheet',
-            arguments: question.id,
+            arguments: details['question'].id,
           );
         },
         label: Row(

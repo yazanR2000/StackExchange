@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class QuestionComponent extends StatelessWidget {
   final QueryDocumentSnapshot _post;
   final bool _isProfile;
-  QuestionComponent(this._post, this._isProfile);
+  final Function _rebuild;
+  QuestionComponent(this._post, this._isProfile,this._rebuild);
+
   bool _isNew(DateTime date) {
     final DateTime dateTime = DateTime.now();
     final diffirence = dateTime.difference(date);
-    if (diffirence.inHours < 12) {
+    if (diffirence.inHours < 6) {
       return true;
     }
     return false;
@@ -25,6 +27,13 @@ class QuestionComponent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if(_post['solvedComment'] != "null")
+            Text(
+              "Solved",
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    color: Colors.green,
+                  ),
+            ),
           ListTile(
             dense: true,
             onTap: _isProfile
@@ -33,9 +42,10 @@ class QuestionComponent extends StatelessWidget {
                     Navigator.of(context)
                         .pushNamed('/profile', arguments: _post['userId']);
                   },
-            leading: const Icon(
-              Icons.person,
-              size: 40,
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(
+                _post['userImageUrl'],
+              ),
             ),
             contentPadding: EdgeInsets.zero,
             title: Text(_post['userFullName'].toString()),
@@ -102,7 +112,10 @@ class QuestionComponent extends StatelessWidget {
             alignment: Alignment.center,
             child: TextButton(
               onPressed: () {
-                Navigator.of(context).pushNamed("/FullPost", arguments: _post);
+                Navigator.of(context).pushNamed("/FullPost", arguments: {
+                  'question' : _post,
+                  'rebuild' : _rebuild,
+                });
               },
               child: Text("See full post"),
             ),

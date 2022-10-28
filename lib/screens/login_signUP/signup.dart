@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:stackexchange/screens/login_signUP/login.dart';
+import '../../models/user.dart' as u;
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -33,6 +34,14 @@ class _SignUpState extends State<SignUp> {
     setState(() {
       this._image = imageTemporary;
     });
+  }
+  Future _getUserData() async {
+    final u.User _user = u.User.getInstance();
+    await _user.addUserInfo();
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    final DocumentSnapshot doc =
+        await FirebaseFirestore.instance.collection("Users").doc(userId).get();
+    _user.userData = doc;
   }
 
   @override
@@ -90,8 +99,8 @@ class _SignUpState extends State<SignUp> {
                         "Upload your Photo",
                         style: TextStyle(color: Colors.grey),
                       ),
-                      onTap: () {
-                        getImage();
+                      onTap: () async {
+                        await getImage();
                       },
                       // dense: true,
                       trailing: _image != null
@@ -119,6 +128,7 @@ class _SignUpState extends State<SignUp> {
                           if (value == null || value.isEmpty) {
                             return 'This field is required';
                           }
+                          return null;
                         }),
                         controller: fullnameController,
                         decoration: const InputDecoration(
@@ -244,7 +254,7 @@ class _SignUpState extends State<SignUp> {
                     //       )
                     //     : IconButton(
                     //         onPressed: () {},
-                    //         icon: Icon(Icons.person_outline_rounded,size: 70,),   
+                    //         icon: Icon(Icons.person_outline_rounded,size: 70,),
                     //       ),
                     SizedBox(
                       height: 40,
@@ -260,35 +270,42 @@ class _SignUpState extends State<SignUp> {
                           if (myFormKey.currentState!.validate()) {
                             try {
                               var auth = FirebaseAuth.instance;
-
+                              final u.User _user = u.User.getInstance();
                               UserCredential myUser =
                                   await auth.createUserWithEmailAndPassword(
                                 email: emailController.text.trim(),
                                 password: passwordController.text.trim(),
                               );
+                              _user.UserInfo = {
+                                "image" : _image == null ? "" : _image!.path,
+                                "Full name": fullnameController.text,
+                                "Phone number": phonenumber,
+                              };
+                              await _getUserData();
                               emailController.clear();
                               passwordController.clear();
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text("added successfully")));
+                                SnackBar(
+                                  content: Text("added successfully"),
+                                ),
+                              );
                               if (myUser != null) {
-                                final userId =
-                                    FirebaseAuth.instance.currentUser!.uid;
-                                FirebaseStorage storage =
-                                    FirebaseStorage.instance;
-                                Reference ref =
-                                    storage.ref().child("Users").child(userId);
-                                await ref.putFile(File(_image!.path));
-                                String imageUrl = await ref.getDownloadURL();
-
-                                await FirebaseFirestore.instance
-                                    .collection("Users")
-                                    .doc(userId)
-                                    .set({
-                                  "User image": imageUrl,
-                                  "Full name": fullnameController.text,
-                                  "Phone number": phonenumber,
-                                });
+                                // final userId =
+                                //     FirebaseAuth.instance.currentUser!.uid;
+                                // FirebaseStorage storage =
+                                //     FirebaseStorage.instance;
+                                // Reference ref =
+                                //     storage.ref().child("Users").child(userId);
+                                // await ref.putFile(File(_image!.path));
+                                // String imageUrl = await ref.getDownloadURL();
+                                // await FirebaseFirestore.instance
+                                //     .collection("Users")
+                                //     .doc(userId)
+                                //     .set({
+                                // "User image": imageUrl,
+                                // "Full name": fullnameController.text,
+                                // "Phone number": phonenumber,
+                                // });
                                 phoneNumberController.clear();
                                 fullnameController.clear();
                                 Navigator.of(context).pop();

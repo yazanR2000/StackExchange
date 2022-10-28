@@ -42,7 +42,7 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
     "images": <XFile>[],
     "type": "Others",
   };
-  Future _addNewQuestion() async {
+  Future _addNewQuestion(Function rebuild) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       setState(() {
@@ -52,6 +52,7 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
         await _user.addNewQuestion(_details);
         Successfull.snackBarError("New Question Added Successfully", context);
         Navigator.of(context).pop();
+        rebuild();
       } catch (err) {
         e.Error.snackBarError(err.toString(), context);
       }
@@ -63,6 +64,7 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
+    Function rebuild = ModalRoute.of(context)!.settings.arguments as Function;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add new question"),
@@ -72,7 +74,7 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
             child: _isLoading ? const CircularProgressIndicator() : ElevatedButton(
               style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
               onPressed: () async {
-                await _addNewQuestion();
+                await _addNewQuestion(rebuild);
               },
               child: const Text("Done"),
             ),

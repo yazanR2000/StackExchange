@@ -1,9 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import '../models/question.dart' as q;
 
 class CommentComponent extends StatefulWidget {
   final QueryDocumentSnapshot _comment;
-  CommentComponent(this._comment);
+  final bool questionOwner;
+  final QueryDocumentSnapshot _question;
+  final Function _rebuild;
+  CommentComponent(
+    this._comment,
+    this.questionOwner,
+    this._question,
+    this._rebuild,
+  );
 
   @override
   State<CommentComponent> createState() => _CommentComponentState();
@@ -21,7 +30,30 @@ class _CommentComponentState extends State<CommentComponent> {
         color: Colors.grey.shade200,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          if (widget.questionOwner &&
+              widget._question['solvedComment'] == "null")
+            OutlinedButton(
+              onPressed: () async {
+                try {
+                  await q.Question.closeQuestionFromOwner(
+                      widget._question, widget._comment.id);
+                  Navigator.of(context).pop();
+                  
+                  widget._rebuild();
+                } catch (err) {}
+              },
+              child: Text("Is This the Solution ?"),
+            ),
+          if (widget._question['solvedComment'] != null &&
+              widget._question['solvedComment'] == widget._comment.id)
+            Text(
+              "Best Solution",
+              style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                    color: Colors.green,
+                  ),
+            ),
           ListTile(
             dense: true,
             leading: CircleAvatar(

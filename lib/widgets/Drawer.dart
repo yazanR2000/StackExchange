@@ -22,14 +22,17 @@ class _AppDrawerState extends State<AppDrawer> {
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-              accountName: Text(
-                _user.userData['Full name'],
-                style: TextStyle(fontSize: 24),
-              ),
-              decoration: BoxDecoration(color: Colors.black87),
-              accountEmail: Text(FirebaseAuth.instance.currentUser!.email!),
-              onDetailsPressed: () {
-                showDialog(
+            accountName: Text(
+              _user.userData['Full name'],
+              style: TextStyle(fontSize: 24),
+            ),
+            decoration: BoxDecoration(color: Colors.black87),
+            accountEmail: Text(FirebaseAuth.instance.currentUser!.email!),
+            currentAccountPicture: Hero(
+              tag: 'Full name',
+              child: InkWell(
+                onTap: () {
+                  showDialog(
                     context: context,
                     builder: ((context) {
                       return AlertDialog(
@@ -44,14 +47,15 @@ class _AppDrawerState extends State<AppDrawer> {
                           ],
                         ),
                       ); //Create item
-                    }));
-              },
-              currentAccountPicture: Hero(
-                tag: 'Full name',
-                child: Image(
-                  image: NetworkImage(_user.userData['User image']),
+                    }),
+                  );
+                },
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(_user.userData['User image']),
                 ),
-              )),
+              ),
+            ),
+          ),
           ListTile(
             title: Text(
               "My questions",
