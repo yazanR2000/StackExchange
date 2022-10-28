@@ -18,7 +18,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  void _reuild(){
+  void _rebuild(){
     setState(() {});
   }
 
@@ -43,21 +43,26 @@ class _HomeState extends State<Home> {
         ),
       ),
       drawer: AppDrawer(),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection("Questions").snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          final data = snapshot.data!.docs;
-          return HomeQuestions(data,_reuild);
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _rebuild();
         },
+        child: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection("Questions").snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            final data = snapshot.data!.docs;
+            return HomeQuestions(data,_rebuild);
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).pushNamed("/add_new_question",arguments: _reuild);
+          Navigator.of(context).pushNamed("/add_new_question",arguments: _rebuild);
         },
         child: const Icon(Icons.add),
       ),
