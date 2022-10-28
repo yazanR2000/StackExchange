@@ -105,7 +105,7 @@ class _CommentSheetState extends State<CommentSheet> {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: FileImage(
-                            i.File(images[index]!.path),
+                            i.File(images[index].path),
                           ),
                         ),
                       ),

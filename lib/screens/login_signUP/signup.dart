@@ -215,8 +215,7 @@ class _SignUpState extends State<SignUp> {
                     //       )
                     //     : IconButton(
                     //         onPressed: () {},
-                    //         icon: Icon(Icons.person_outline_rounded,size: 70,),
-                          
+                    //         icon: Icon(Icons.person_outline_rounded,size: 70,),   
                     //       ),
                     SizedBox(
                       height: 40,

@@ -36,7 +36,7 @@ class QuestionComponent extends StatelessWidget {
               size: 40,
             ),
             contentPadding: EdgeInsets.zero,
-            title: Text(_post['userFullName'].toString().replaceRange(12, _post['userFullName'].toString().length, '...')),
+            title: Text(_post['userFullName'].toString()),
             subtitle: Text(_post['date'].toString().substring(0, 10)),
             trailing: FittedBox(
               child: Row(
