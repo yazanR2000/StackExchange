@@ -114,6 +114,7 @@ class _CommentComponentState extends State<CommentComponent> {
                       builder: ((context) {
                         return AlertDialog(
                           scrollable: true,
+                          backgroundColor: Colors.transparent,
                           titlePadding: EdgeInsets.zero,
                           insetPadding: EdgeInsets.zero,
                           shape: RoundedRectangleBorder(
