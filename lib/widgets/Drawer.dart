@@ -27,7 +27,9 @@ class _AppDrawerState extends State<AppDrawer> {
               style: TextStyle(fontSize: 24),
             ),
             decoration: BoxDecoration(color: Colors.black87),
-            accountEmail: Text(FirebaseAuth.instance.currentUser!.email!),
+            accountEmail: Text(
+              FirebaseAuth.instance.currentUser!.email!,
+            ),
             currentAccountPicture: Hero(
               tag: 'Full name',
               child: InkWell(
@@ -39,11 +41,12 @@ class _AppDrawerState extends State<AppDrawer> {
                         title: Column(
                           children: [
                             Hero(
-                                tag: 'Full name',
-                                child: Image(
-                                  image: NetworkImage(
-                                      _user.userData['User image'] ),
-                                ))
+                              tag: 'Full name',
+                              child: Image(
+                                image:
+                                    NetworkImage(_user.userData['User image']),
+                              ),
+                            ),
                           ],
                         ),
                       ); //Create item
@@ -58,6 +61,17 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             title: Text(
+              "My profile",
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+            trailing: const Icon(Icons.person),
+            onTap: () {
+              Navigator.of(context)
+                  .pushNamed('/profile', arguments: _user.userData.id);
+            },
+          ),
+          ListTile(
+            title: Text(
               "My questions",
               style: Theme.of(context).textTheme.bodyText2,
             ),
@@ -65,14 +79,6 @@ class _AppDrawerState extends State<AppDrawer> {
             onTap: () {
               Navigator.of(context).pushNamed('/my_questions');
             },
-          ),
-          ListTile(
-            title: Text(
-              "Saved posts",
-              style: Theme.of(context).textTheme.bodyText2,
-            ),
-            trailing: const Icon(Icons.bookmark),
-            onTap: () {},
           ),
           ListTile(
             title: Text(

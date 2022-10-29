@@ -59,8 +59,8 @@ class _CommentComponentState extends State<CommentComponent> {
           ListTile(
             dense: true,
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(
-                  widget._comment['userProfileImage']),
+              backgroundImage:
+                  NetworkImage(widget._comment['userProfileImage']),
             ),
             contentPadding: EdgeInsets.zero,
             title: Text(widget._comment['userFullName']),
@@ -114,24 +114,22 @@ class _CommentComponentState extends State<CommentComponent> {
                     showDialog(
                       context: context,
                       builder: ((context) {
-                        return AlertDialog(
-                          scrollable: true,
+                        return Dialog(
+                          //scrollable: true,
                           backgroundColor: Colors.transparent,
-                          titlePadding: EdgeInsets.zero,
-                          insetPadding: EdgeInsets.zero,
+                          //titlePadding: EdgeInsets.zero,
+                          //insetPadding: EdgeInsets.zero,
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10.0))),
-                          title: Column(
-                            children: [
-                              InteractiveViewer(
-                                boundaryMargin: const EdgeInsets.all(20),
-                                child: Image(
-                                  image: NetworkImage(
-                                      widget._comment['images'][index]),
-                                ),
-                              )
-                            ],
+                          child: InteractiveViewer(
+                            //boundaryMargin: const EdgeInsets.all(20),
+
+                            child: Image(
+                              image: NetworkImage(
+                                widget._comment['images'][index],
+                              ),
+                            ),
                           ),
                         ); //Create item
                       }),
