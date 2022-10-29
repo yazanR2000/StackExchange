@@ -79,7 +79,6 @@ class _QuestionComponentState extends State<QuestionComponent> {
                       ),
                       backgroundColor: Color(0xFFFF1e1e),
                     ),
-<<<<<<< HEAD
                   IconButton(
                     onPressed: () {
                       setState(() {
@@ -91,9 +90,6 @@ class _QuestionComponentState extends State<QuestionComponent> {
                       color: bookmark ? Colors.blue : Colors.black,
                     ),
                   ),
-=======
-                  SaveButton(_post.id),
->>>>>>> 71dbd243bf0cc38ec104598ecca4f13e354544ee
                 ],
               ),
             ),
