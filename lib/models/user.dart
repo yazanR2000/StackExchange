@@ -25,17 +25,18 @@ class User {
   set userData(DocumentSnapshot value) {
     _userData = value;
   }
-  Future getUserData()async {
-    try{
+
+  Future getUserData() async {
+    try {
       final uid = FirebaseAuth.instance.currentUser!.uid;
-      final data = await FirebaseFirestore.instance.collection("Users").doc(uid).get();
-      
+      final data =
+          await FirebaseFirestore.instance.collection("Users").doc(uid).get();
+
       _userData = data;
-    }catch(err){
+    } catch (err) {
       throw err;
     }
   }
-
 
   Future addUserInfo() async {
     if (_userInfo == null) {
@@ -56,9 +57,40 @@ class User {
             : imageUrl,
         "Full name": _userInfo!['Full name'],
         "Phone number": _userInfo!['Phone number'],
-        "questions" : 0,
-        "solutions" : 0,
+        "questions": 0,
+        "solutions": 0,
       });
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  Future addToFavorite(String questionId, bool isAddOrRemove) async {
+    try {
+      final List<String> saves = _userData!['saves'];
+      if (isAddOrRemove) {
+        saves.add(questionId);
+        await FirebaseFirestore.instance
+            .collection("Users")
+            .doc(_userData!.id)
+            .update(
+          {
+            "saves" : saves,
+          },
+        );
+        
+      } else {
+        saves.removeWhere((element) => element == questionId);
+        await FirebaseFirestore.instance
+            .collection("Users")
+            .doc(_userData!.id)
+            .update(
+          {
+            "saves" : saves,
+          },
+        );
+      }
+      await getUserData();
     } catch (err) {
       throw err;
     }
@@ -98,11 +130,12 @@ class User {
         "description": details['description'],
         "images": downUrls,
         "date": DateTime.now().toLocal().toString(),
-        "solvedComment" : "null",
+        "solvedComment": "null",
       });
-      await FirebaseFirestore.instance.collection("Users").doc(_userData!.id).update({
-        "questions" : _userData!['questions'] + 1
-      });
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(_userData!.id)
+          .update({"questions": _userData!['questions'] + 1});
       await getUserData();
     } catch (err) {
       throw err;

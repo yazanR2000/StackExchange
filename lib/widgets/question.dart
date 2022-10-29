@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:stackexchange/widgets/save_button.dart';
 
 class QuestionComponent extends StatelessWidget {
   final QueryDocumentSnapshot _post;
@@ -72,17 +73,7 @@ class QuestionComponent extends StatelessWidget {
                       ),
                       backgroundColor: Color(0xFFFF1e1e),
                     ),
-                  IconButton(
-                    onPressed: () {
-                      // setState(() {
-                      //   bookmark = !bookmark;
-                      // });
-                    },
-                    icon: Icon(
-                      Icons.bookmark,
-                      //color: bookmark ? Colors.blue : Colors.black,
-                    ),
-                  ),
+                  SaveButton(_post.id),
                 ],
               ),
             ),

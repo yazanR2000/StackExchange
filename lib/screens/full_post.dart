@@ -124,28 +124,24 @@ class _FullPostState extends State<FullPost> {
                             showDialog(
                               context: context,
                               builder: ((context) {
-                                return AlertDialog(
+                                return Dialog(
+                                  //scrollable: true,
                                   backgroundColor: Colors.transparent,
-                                  scrollable: true,
-                                  titlePadding: EdgeInsets.zero,
-                                  insetPadding: EdgeInsets.zero,
+                                  //titlePadding: EdgeInsets.zero,
+                                  //insetPadding: EdgeInsets.zero,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(10.0))),
-                                  title: Column(
-                                    children: [
-                                      InteractiveViewer(
-                                        boundaryMargin:
-                                            const EdgeInsets.all(20),
-                                        child: Image(
-                                          image: NetworkImage(
-                                              details['question']['images']
-                                                  [index]),
-                                        ),
-                                      )
-                                    ],
+                                  child: InteractiveViewer(
+                                    //boundaryMargin: const EdgeInsets.all(20),
+
+                                    child: Image(
+                                      image: NetworkImage(
+                                        details['question']['images'][index],
+                                      ),
+                                    ),
                                   ),
-                                ); //Create item
+                                );
                               }),
                             );
                           },
