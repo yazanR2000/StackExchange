@@ -38,7 +38,9 @@ class _CommentComponentState extends State<CommentComponent> {
               onPressed: () async {
                 try {
                   await q.Question.closeQuestionFromOwner(
-                      widget._question, widget._comment.id);
+                    widget._question,
+                    widget._comment,
+                  );
                   Navigator.of(context).pop();
 
                   widget._rebuild();
@@ -58,7 +60,7 @@ class _CommentComponentState extends State<CommentComponent> {
             dense: true,
             leading: CircleAvatar(
               backgroundImage: NetworkImage(
-                  "https://cdn-icons-png.flaticon.com/512/149/149071.png"),
+                  widget._comment['userProfileImage']),
             ),
             contentPadding: EdgeInsets.zero,
             title: Text(widget._comment['userFullName']),

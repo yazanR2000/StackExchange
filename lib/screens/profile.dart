@@ -65,7 +65,10 @@ class Profile extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    UserSatistic(143, 41),
+                    UserSatistic(
+                      _userData!['questions'],
+                      _userData!['solutions'],
+                    ),
                     const SizedBox(
                       height: 20,
                     ),

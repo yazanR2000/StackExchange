@@ -1,4 +1,6 @@
 //Singelton class
+import 'dart:developer';
+
 import 'package:image_picker/image_picker.dart';
 
 import './question.dart';
@@ -27,6 +29,7 @@ class User {
     try{
       final uid = FirebaseAuth.instance.currentUser!.uid;
       final data = await FirebaseFirestore.instance.collection("Users").doc(uid).get();
+      
       _userData = data;
     }catch(err){
       throw err;
@@ -53,6 +56,8 @@ class User {
             : imageUrl,
         "Full name": _userInfo!['Full name'],
         "Phone number": _userInfo!['Phone number'],
+        "questions" : 0,
+        "solutions" : 0,
       });
     } catch (err) {
       throw err;
@@ -95,6 +100,10 @@ class User {
         "date": DateTime.now().toLocal().toString(),
         "solvedComment" : "null",
       });
+      await FirebaseFirestore.instance.collection("Users").doc(_userData!.id).update({
+        "questions" : _userData!['questions'] + 1
+      });
+      await getUserData();
     } catch (err) {
       throw err;
     }

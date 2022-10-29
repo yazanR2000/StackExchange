@@ -42,7 +42,7 @@ class _AppDrawerState extends State<AppDrawer> {
                                 tag: 'Full name',
                                 child: Image(
                                   image: NetworkImage(
-                                      _user.userData['User image']),
+                                      _user.userData['User image'] ),
                                 ))
                           ],
                         ),

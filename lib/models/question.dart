@@ -54,8 +54,7 @@ class Question {
       final u.User user = u.User.getInstance();
       log("${user.userData['Full name']}");
       log("4");
-      
-      
+
       log("${details['comment']}");
       await FirebaseFirestore.instance
           .collection("Comments")
@@ -68,6 +67,7 @@ class Question {
         "comment": details['comment'],
         "vote": 0,
         "images": downUrls,
+        "userProfileImage" : user.userData['User image'],
       });
       log("5");
     } catch (err) {
@@ -82,20 +82,37 @@ class Question {
           .runTransaction((Transaction myTransaction) async {
         myTransaction.delete(question.reference);
       });
+      final u.User user = u.User.getInstance();
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(question['userId'])
+          .update({
+        "questions": user.userData['questions'] - 1,
+      });
+      await user.getUserData();
     } catch (err) {
       throw err;
     }
   }
 
-  static Future closeQuestionFromOwner(QueryDocumentSnapshot question,String commentId) async {
+  static Future closeQuestionFromOwner(
+      QueryDocumentSnapshot question, QueryDocumentSnapshot comment) async {
     try {
       log("yazan");
       await FirebaseFirestore.instance
           .runTransaction((Transaction myTransaction) async {
         myTransaction.update(question.reference, {
-          "solvedComment": commentId,
+          "solvedComment": comment.id,
         });
       });
+      final u.User user = u.User.getInstance();
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(comment['userId'])
+          .update({
+        "solutions": user.userData['solutions'] + 1,
+      });
+      await user.getUserData();
     } catch (err) {
       throw err;
     }
