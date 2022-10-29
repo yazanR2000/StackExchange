@@ -1,12 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class QuestionComponent extends StatelessWidget {
+class QuestionComponent extends StatefulWidget {
   final QueryDocumentSnapshot _post;
   final bool _isProfile;
   final Function _rebuild;
-  QuestionComponent(this._post, this._isProfile,this._rebuild);
+  QuestionComponent(this._post, this._isProfile, this._rebuild);
 
+  @override
+  State<QuestionComponent> createState() => _QuestionComponentState();
+}
+
+class _QuestionComponentState extends State<QuestionComponent> {
   bool _isNew(DateTime date) {
     final DateTime dateTime = DateTime.now();
     final diffirence = dateTime.difference(date);
@@ -16,6 +21,7 @@ class QuestionComponent extends StatelessWidget {
     return false;
   }
 
+  bool bookmark = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,7 +33,7 @@ class QuestionComponent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if(_post['solvedComment'] != "null")
+          if (widget._post['solvedComment'] != "null")
             Text(
               "Solved",
               style: Theme.of(context).textTheme.bodyText1!.copyWith(
@@ -36,20 +42,20 @@ class QuestionComponent extends StatelessWidget {
             ),
           ListTile(
             dense: true,
-            onTap: _isProfile
+            onTap: widget._isProfile
                 ? null
                 : () {
-                    Navigator.of(context)
-                        .pushNamed('/profile', arguments: _post['userId']);
+                    Navigator.of(context).pushNamed('/profile',
+                        arguments: widget._post['userId']);
                   },
             leading: CircleAvatar(
               backgroundImage: NetworkImage(
-                _post['userImageUrl'],
+                widget._post['userImageUrl'],
               ),
             ),
             contentPadding: EdgeInsets.zero,
-            title: Text(_post['userFullName'].toString()),
-            subtitle: Text(_post['date'].toString().substring(0, 10)),
+            title: Text(widget._post['userFullName'].toString()),
+            subtitle: Text(widget._post['date'].toString().substring(0, 10)),
             trailing: FittedBox(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -57,14 +63,14 @@ class QuestionComponent extends StatelessWidget {
                   Chip(
                     backgroundColor: Color(0xff),
                     label: Text(
-                      _post['type'],
+                      widget._post['type'],
                       style: TextStyle(fontSize: 15),
                     ),
                   ),
                   SizedBox(
                     width: 5,
                   ),
-                  if (_isNew(DateTime.parse(_post['date'])))
+                  if (_isNew(DateTime.parse(widget._post['date'])))
                     const Chip(
                       label: Text(
                         "new",
@@ -74,13 +80,13 @@ class QuestionComponent extends StatelessWidget {
                     ),
                   IconButton(
                     onPressed: () {
-                      // setState(() {
-                      //   bookmark = !bookmark;
-                      // });
+                      setState(() {
+                        bookmark = !bookmark;
+                      });
                     },
                     icon: Icon(
                       Icons.bookmark,
-                      //color: bookmark ? Colors.blue : Colors.black,
+                      color: bookmark ? Colors.blue : Colors.black,
                     ),
                   ),
                 ],
@@ -88,12 +94,12 @@ class QuestionComponent extends StatelessWidget {
             ),
           ),
           Text(
-            _post['questionTitle'],
+            widget._post['questionTitle'],
             style: Theme.of(context).textTheme.bodyText1,
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 15),
-            child: Text(_post['description'].toString()),
+            child: Text(widget._post['description'].toString()),
           ),
           Row(
             children: [
@@ -101,7 +107,7 @@ class QuestionComponent extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context)
-                        .pushNamed("/CommentSheet", arguments: _post.id);
+                        .pushNamed("/CommentSheet", arguments: widget._post.id);
                   },
                   child: Text("Write your solution"),
                 ),
@@ -113,8 +119,8 @@ class QuestionComponent extends StatelessWidget {
             child: TextButton(
               onPressed: () {
                 Navigator.of(context).pushNamed("/FullPost", arguments: {
-                  'question' : _post,
-                  'rebuild' : _rebuild,
+                  'question': widget._post,
+                  'rebuild': widget._rebuild,
                 });
               },
               child: Text("See full post"),

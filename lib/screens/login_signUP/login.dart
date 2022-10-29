@@ -225,12 +225,10 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         GestureDetector(
                           onTap: () async {
-                            try{
-                            await signInWithGoogle();
-                            Navigator.of(context).pop();
-                            }catch(err){
-
-                            }
+                            try {
+                              await signInWithGoogle();
+                              Navigator.of(context).pop();
+                            } catch (err) {}
                           },
                           child: Container(
                             alignment: Alignment.center,
