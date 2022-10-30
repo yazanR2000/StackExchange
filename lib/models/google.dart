@@ -19,7 +19,11 @@ Future signInWithGoogle() async {
     await FirebaseFirestore.instance.collection("Users").doc(userId).set({
       "Full name": googleUser!.displayName,
       "Phone number": "07xxxxx",
-      "User image": googleUser.photoUrl,
+      "User image": googleUser.photoUrl != null
+          ? googleUser.photoUrl
+          : "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png",
+      'questions': 0,
+      'solutions': 0,
     });
   } catch (err) {
     throw err;
