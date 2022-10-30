@@ -24,47 +24,50 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            FaIcon(
-              size: 30,
-              FontAwesomeIcons.accusoft,
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Text(
-              "Stack",
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-          ],
+    return LayoutBuilder(
+      builder:(ctx, BoxConstraints constraints) =>  Scaffold(
+        appBar: AppBar(
+          title: Row(
+            children: [
+              FaIcon(
+                size: 30,
+                FontAwesomeIcons.accusoft,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                "Stack",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ],
+          ),
         ),
-      ),
-      drawer: AppDrawer(),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          _rebuild();
-        },
-        child: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection("Questions").snapshots(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            final data = snapshot.data!.docs;
-            return HomeQuestions(data,_rebuild);
+        drawer: AppDrawer(),
+        body: RefreshIndicator(
+          onRefresh: () async {
+            _rebuild();
           },
+          child: StreamBuilder(
+            stream: FirebaseFirestore.instance.collection("Questions").snapshots(),
+            builder: (context, snapshot) {
+              
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              final data = snapshot.data!.docs;
+              return HomeQuestions(data,_rebuild);
+            },
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed("/add_new_question",arguments: _rebuild);
-        },
-        child: const Icon(Icons.add),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed("/add_new_question",arguments: _rebuild);
+          },
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
