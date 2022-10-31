@@ -78,14 +78,12 @@ class _CommentSheetState extends State<CommentSheet> {
           ),
         ],
       ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextField(
+              child: TextFormField(
                 controller: _solutionController,
                 maxLines: null,
                 keyboardType: TextInputType.multiline,
@@ -94,24 +92,39 @@ class _CommentSheetState extends State<CommentSheet> {
                     hintText: 'Write your solution'),
               ),
             ),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: images.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.symmetric(vertical: 10),
-                      height: 200,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: FileImage(
-                            i.File(images[index].path),
-                          ),
-                        ),
+            Column(
+              children: List.generate(images.length, (index) {
+                return Container(
+                  margin: EdgeInsets.symmetric(vertical: 10),
+                  height: 200,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: FileImage(
+                        i.File(images[index].path),
                       ),
-                    );
-                  }),
+                    ),
+                  ),
+                );
+              }),
             ),
+            // ListView.builder(
+
+            //     itemCount: images.length,
+            //     itemBuilder: (context, index) {
+            //       return Container(
+            //         margin: EdgeInsets.symmetric(vertical: 10),
+            //         height: 200,
+            //         width: double.infinity,
+            //         decoration: BoxDecoration(
+            //           image: DecorationImage(
+            //             image: FileImage(
+            //               i.File(images[index].path),
+            //             ),
+            //           ),
+            //         ),
+            //       );
+            //     }),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
