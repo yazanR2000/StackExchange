@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:stackexchange/models/home_provider.dart';
 import '../widgets/question.dart';
 import '../models/question.dart' as q;
 
@@ -73,6 +75,7 @@ class _MyQuestionsState extends State<MyQuestions> {
                                 onPressed: () async {
                                   await q.Question.deleteQuestionFromOwner(data[index]);
                                   Navigator.of(context).pop();
+                                  Provider.of<HomeProvider>(context,listen: false).notify();
                                 },
                                 child: Text("Yes"),
                               ),

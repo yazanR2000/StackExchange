@@ -9,7 +9,8 @@ import '../models/user.dart' as u;
 import '../models/stack.dart' as s;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:developer';
-
+import '../models/home_provider.dart';
+import 'package:provider/provider.dart';
 class Home extends StatefulWidget {
   Home({super.key});
 
@@ -48,18 +49,20 @@ class _HomeState extends State<Home> {
           onRefresh: () async {
             _rebuild();
           },
-          child: StreamBuilder(
-            stream: FirebaseFirestore.instance.collection("Questions").snapshots(),
-            builder: (context, snapshot) {
-              
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              final data = snapshot.data!.docs;
-              return HomeQuestions(data,_rebuild);
-            },
+          child: Consumer<HomeProvider>(
+            builder:(context, value, child) => StreamBuilder(
+              stream: FirebaseFirestore.instance.collection("Questions").snapshots(),
+              builder: (context, snapshot) {
+                
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final data = snapshot.data!.docs;
+                return HomeQuestions(data,_rebuild);
+              },
+            ),
           ),
         ),
         floatingActionButton: FloatingActionButton(

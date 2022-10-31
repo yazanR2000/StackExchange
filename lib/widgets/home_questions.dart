@@ -74,7 +74,7 @@ class _HomeQuestionsState extends State<HomeQuestions> {
             height: 20,
           ),
           ListView.separated(
-            //reverse: true,
+            reverse: true,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             separatorBuilder: (context, index) => const SizedBox(

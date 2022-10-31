@@ -14,6 +14,8 @@ import './screens/home.dart';
 import './screens/full_post.dart';
 import './screens/CommentsSheet.dart';
 import './models/user.dart' as u;
+import 'package:provider/provider.dart';
+import './models/home_provider.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,78 +30,85 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: "OpenSans",
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          actionsIconTheme: IconThemeData(
-            color: Colors.black,
-          ),
-          iconTheme: IconThemeData(
-            color: Colors.black,
-          ),
-          titleTextStyle: TextStyle(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: HomeProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: "OpenSans",
+          scaffoldBackgroundColor: Colors.white,
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.white,
+            elevation: 0,
+            actionsIconTheme: IconThemeData(
               color: Colors.black,
-              //fontWeight: FontWeight.bold,
-              fontSize: 20),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xff34B3F1),
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100),
             ),
-            foregroundColor: Colors.white,
-          ),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            elevation: 0,
-            foregroundColor: Colors.black,
-          ),
-        ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: OutlinedButton.styleFrom(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100),
+            iconTheme: IconThemeData(
+              color: Colors.black,
             ),
-            foregroundColor: Colors.black,
-            side: const BorderSide(color: Colors.black, width: 2),
+            titleTextStyle: TextStyle(
+                color: Colors.black,
+                //fontWeight: FontWeight.bold,
+                fontSize: 20),
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xff34B3F1),
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
+              ),
+              foregroundColor: Colors.white,
+            ),
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              elevation: 0,
+              foregroundColor: Colors.black,
+            ),
+          ),
+          outlinedButtonTheme: OutlinedButtonThemeData(
+            style: OutlinedButton.styleFrom(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100),
+              ),
+              foregroundColor: Colors.black,
+              side: const BorderSide(color: Colors.black, width: 2),
+            ),
+          ),
+          floatingActionButtonTheme: const FloatingActionButtonThemeData(
+            backgroundColor: Color(0xff34B3F1),
+          ),
+          textTheme: const TextTheme(
+            bodyText1: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 23,
+            ),
+            bodyText2: TextStyle(
+              // fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
           ),
         ),
-        floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: Color(0xff34B3F1),
-        ),
-        textTheme: const TextTheme(
-          bodyText1: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 23,
-          ),
-          bodyText2: TextStyle(
-            // fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
+        home: handleAuthState(),
+        routes: {
+          "/profile": (context) => Profile(),
+          "/add_new_question": (context) => AddNewQuestions(),
+          '/sign_up': (context) => SignUp(),
+          '/login': (context) => LoginPage(),
+          '/FullPost': (context) => FullPost(),
+          '/CommentSheet': (context) => CommentSheet(),
+          '/home': (context) => Home(),
+          'forgotPassword': (context) => forgotPassword(),
+          '/my_questions': (context) => MyQuestions(),
+          '/StartScreen': (context) => StartScreen()
+        },
       ),
-      home: handleAuthState(),
-      routes: {
-        "/profile": (context) => Profile(),
-        "/add_new_question": (context) => AddNewQuestions(),
-        '/sign_up': (context) => SignUp(),
-        '/login': (context) => LoginPage(),
-        '/FullPost': (context) => FullPost(),
-        '/CommentSheet': (context) => CommentSheet(),
-        '/home': (context) => Home(),
-        'forgotPassword': (context) => forgotPassword(),
-        '/my_questions': (context) => MyQuestions(),
-        '/StartScreen': (context) => StartScreen()
-      },
     );
   }
 
@@ -120,7 +129,6 @@ class MyApp extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Scaffold(
-                        
                         body: Center(
                           child: CircularProgressIndicator(),
                         ),
@@ -144,7 +152,6 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Container(
         alignment: Alignment.center,
         height: double.infinity,
