@@ -65,37 +65,37 @@ class _CommentComponentState extends State<CommentComponent> {
             contentPadding: EdgeInsets.zero,
             title: Text(widget._comment['userFullName']),
             subtitle: Text(widget._comment['date'].toString().substring(0, 16)),
-            trailing: SizedBox(
-              width: 100,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _vote = "up";
-                        });
-                      },
-                      icon: Icon(
-                        Icons.arrow_circle_up,
-                        color: _vote == "up" ? Colors.blue : Colors.black,
-                        size: 30,
-                      )),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _vote = "down";
-                      });
-                    },
-                    icon: Icon(
-                      Icons.arrow_circle_down,
-                      color: _vote == "down" ? Colors.blue : Colors.black,
-                      size: 30,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // trailing: SizedBox(
+            //   width: 100,
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.end,
+            //     children: [
+            //       IconButton(
+            //           onPressed: () {
+            //             setState(() {
+            //               _vote = "up";
+            //             });
+            //           },
+            //           icon: Icon(
+            //             Icons.arrow_circle_up,
+            //             color: _vote == "up" ? Colors.blue : Colors.black,
+            //             size: 30,
+            //           )),
+            //       IconButton(
+            //         onPressed: () {
+            //           setState(() {
+            //             _vote = "down";
+            //           });
+            //         },
+            //         icon: Icon(
+            //           Icons.arrow_circle_down,
+            //           color: _vote == "down" ? Colors.blue : Colors.black,
+            //           size: 30,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 15),

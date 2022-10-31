@@ -25,58 +25,60 @@ class Profile extends StatelessWidget {
     return Container(
       color: const Color(0xff34B3F1),
       child: SafeArea(
-        child: Scaffold(
-          backgroundColor: const Color(0xff34B3F1),
-          body: FutureBuilder(
-            future: _getUserInfo(userId),
-            builder: (ctx, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return SingleChildScrollView(
-                //padding: const EdgeInsets.all(15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListTile(
-                      title: Text(
-                        _userData!['Full name'],
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      leading: IconButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
+        child: LayoutBuilder(
+          builder:(p0, constraints) =>  Scaffold(
+            backgroundColor: const Color(0xff34B3F1),
+            body: FutureBuilder(
+              future: _getUserInfo(userId),
+              builder: (ctx, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return SingleChildScrollView(
+                  //padding: const EdgeInsets.all(15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        title: Text(
+                          _userData!['Full name'],
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        leading: IconButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          icon: const Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    UserInfo(
-                      _userData!['Full name'],
-                      _userData!['User image'],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    UserSatistic(
-                      _userData!['questions'],
-                      _userData!['solutions'],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    UserProblems(userId),
-                  ],
-                ),
-              );
-            },
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      UserInfo(
+                        _userData!['Full name'],
+                        _userData!['User image'],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      UserSatistic(
+                        _userData!['questions'],
+                        _userData!['solutions'],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      UserProblems(userId,constraints),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),

@@ -120,7 +120,7 @@ class MyApp extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Scaffold(
-                        backgroundColor: Color(0xFF00FFEF),
+                        
                         body: Center(
                           child: CircularProgressIndicator(),
                         ),
@@ -144,14 +144,14 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF00FFEF),
+      
       body: Container(
         alignment: Alignment.center,
         height: double.infinity,
         width: double.infinity,
         child: Image(
-          image: AssetImage('images/img.gif'),
-          fit: BoxFit.fill,
+          image: AssetImage('images/splash.gif'),
+          //fit: BoxFit.fill,
         ),
       ),
     );

@@ -4,7 +4,8 @@ import '../widgets/question.dart';
 
 class UserProblems extends StatefulWidget {
   final String _userId;
-  UserProblems(this._userId);
+  final BoxConstraints _constraints;
+  UserProblems(this._userId,this._constraints);
 
   @override
   State<UserProblems> createState() => _UserProblemsState();
@@ -12,14 +13,12 @@ class UserProblems extends StatefulWidget {
 
 class _UserProblemsState extends State<UserProblems> {
   void _rebuild() {
-    setState(() {
-      
-    });
+    setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(minHeight: 520),
       padding: const EdgeInsets.all(20),
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -49,10 +48,9 @@ class _UserProblemsState extends State<UserProblems> {
                 );
               }
               if (!snapshot.hasData) {
-                return const SizedBox(
-                  height: 400,
+                return SizedBox(
                   child: Center(
-                    child: Text("Yazan dosn't post any problem yet"),
+                    child: Text("There is no problems posted yet."),
                   ),
                 );
               }
