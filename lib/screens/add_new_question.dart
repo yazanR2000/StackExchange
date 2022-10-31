@@ -117,6 +117,7 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: TextFormField(
+                    maxLength: 80,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Please enter the title";

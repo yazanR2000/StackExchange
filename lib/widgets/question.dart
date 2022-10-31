@@ -100,7 +100,11 @@ class _QuestionComponentState extends State<QuestionComponent> {
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 15),
-            child: Text(widget._post['description'].toString()),
+            child: Text(
+              widget._post['description'].toString().length > 200
+                  ? "${widget._post['description'].toString().substring(0, 200)}..."
+                  : widget._post['description'].toString(),
+            ),
           ),
           Row(
             children: [
