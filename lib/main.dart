@@ -98,35 +98,63 @@ class MyApp extends StatelessWidget {
         '/home': (context) => Home(),
         'forgotPassword': (context) => forgotPassword(),
         '/my_questions': (context) => MyQuestions(),
+        '/StartScreen': (context) => StartScreen()
       },
     );
   }
 
   handleAuthState() {
     final u.User user = u.User.getInstance();
-    return StreamBuilder(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (BuildContext context, snapshot) {
-          if (snapshot.hasData) {
-            return FutureBuilder(
-              future: user.getUserData(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Scaffold(
-                    body: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                }
-                return Home();
-              },
-            );
-          } else {
-            return const StartScreen();
-          }
-        });
+    return FutureBuilder(
+      future: Future.delayed(Duration(seconds: 4)),
+      builder: (context, snapshotSplash) {
+        if (snapshotSplash.connectionState == ConnectionState.waiting) {
+          return Splash();
+        }
+        return StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (BuildContext context, snapshot) {
+              if (snapshot.hasData) {
+                return FutureBuilder(
+                  future: user.getUserData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Scaffold(
+                        backgroundColor: Color(0xFF00FFEF),
+                        body: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                    return Home();
+                  },
+                );
+              } else {
+                return StartScreen();
+              }
+            });
+      },
+    );
   }
 }
 
+class Splash extends StatelessWidget {
+  const Splash({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFF00FFEF),
+      body: Container(
+        alignment: Alignment.center,
+        height: double.infinity,
+        width: double.infinity,
+        child: Image(
+          image: AssetImage('images/img.gif'),
+          fit: BoxFit.fill,
+        ),
+      ),
+    );
+  }
+}
 //Determine if the user is authenticated.
