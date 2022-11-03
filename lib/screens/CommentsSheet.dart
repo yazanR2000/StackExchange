@@ -32,8 +32,16 @@ class _CommentSheetState extends State<CommentSheet> {
       appBar: AppBar(
         title: Text("Add comment"),
         actions: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                images.clear();
+              });
+            },
+            child: Text("Clear"),
+          ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: _isLoading
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
@@ -43,7 +51,7 @@ class _CommentSheetState extends State<CommentSheet> {
                         setState(() {
                           _isLoading = !_isLoading;
                         });
-                        
+
                         await Question.addNewComment(
                           {
                             "comment": _solutionController.text,

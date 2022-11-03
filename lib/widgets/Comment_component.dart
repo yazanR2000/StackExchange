@@ -149,7 +149,7 @@ class _CommentComponentState extends State<CommentComponent> {
               stream: FirebaseFirestore.instance
                   .collection("Replies")
                   .doc(widget._comment.id)
-                  .collection("Replies")
+                  .collection("Replies").orderBy('date')
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -167,7 +167,7 @@ class _CommentComponentState extends State<CommentComponent> {
                   itemBuilder:(context, index) => Container(
                     padding: EdgeInsets.all(15),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(10),
                       color: Colors.white,
                     ),
                     child: Column(
