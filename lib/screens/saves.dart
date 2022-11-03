@@ -39,9 +39,9 @@ class _MySavesState extends State<MySaves> {
             return Text("You didn't save any quetion");
           }
           final data = snapshot.hasData ? snapshot.data!.docs : [];
-          return ListView.builder(
+          return ListView.separated(
             padding: const EdgeInsets.all(15),
-            //reverse: true,
+            separatorBuilder: (context, index) => SizedBox(height: 15,),
             itemCount: data.length,
             itemBuilder: (context, index) {
               return QuestionComponent(data[index],false,true,_rebuild);

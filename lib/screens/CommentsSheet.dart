@@ -14,7 +14,10 @@ class _CommentSheetState extends State<CommentSheet> {
   final List<XFile> images = [];
   Future pickImage() async {
     final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 50,
+    );
     if (image != null) {
       setState(() {
         images.add(image);
@@ -51,7 +54,6 @@ class _CommentSheetState extends State<CommentSheet> {
                         setState(() {
                           _isLoading = !_isLoading;
                         });
-
                         await Question.addNewComment(
                           {
                             "comment": _solutionController.text,

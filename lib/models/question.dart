@@ -35,12 +35,11 @@ class Question {
       log("2");
       if (details['images'].length > 0) {
         Reference ref = FirebaseStorage.instance.ref();
-        if (id.contains(' ')) {
-          ref = ref.child("Questions").child(id).child("Comments");
+        if (id.contains('-')) {
+          ref = ref.child("Questions").child(id).child(DateTime.now().toLocal().toString());
         } else {
-          ref = ref.child("Replies").child(id).child("Replies");
+          ref = ref.child("Replies").child(id).child(DateTime.now().toLocal().toString());
         }
-
         await Future.wait(
           images.map((e) async {
             final UploadTask uploadTask = ref.putFile(i.File(e.path));
@@ -61,7 +60,7 @@ class Question {
 
       final collection = FirebaseFirestore.instance;
       String collectionName;
-      if (id.contains(' ')) {
+      if (id.contains('-')) {
         collectionName = "Comments";
       } else {
         collectionName = "Replies";

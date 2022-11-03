@@ -30,31 +30,32 @@ class _AppDrawerState extends State<AppDrawer> {
             accountEmail: Text(
               FirebaseAuth.instance.currentUser!.email!,
             ),
-            currentAccountPicture: InkWell(
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: ((context) {
-                    return Dialog(
-                      insetPadding: EdgeInsets.zero,
-                      backgroundColor: Colors.transparent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10.0),
+            currentAccountPicture: Hero(
+              tag: 'Full name',
+              child: InkWell(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: ((context) {
+                      return AlertDialog(
+                        title: Column(
+                          children: [
+                            Hero(
+                              tag: 'Full name',
+                              child: Image(
+                                image:
+                                    NetworkImage(_user.userData['User image']),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      child: InteractiveViewer(
-                        child: Image(
-                          height: double.infinity,
-                          image: NetworkImage(_user.userData['User image']),
-                        ),
-                      ),
-                    ); //Create item
-                  }),
-                );
-              },
-              child: CircleAvatar(
-                backgroundImage: NetworkImage(_user.userData['User image']),
+                      ); //Create item
+                    }),
+                  );
+                },
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(_user.userData['User image']),
+                ),
               ),
             ),
           ),
@@ -82,6 +83,16 @@ class _AppDrawerState extends State<AppDrawer> {
           ListTile(
             title: Text(
               "My Saves",
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+            trailing: const Icon(Icons.bookmark),
+            onTap: () {
+              Navigator.of(context).pushNamed('/my_saves');
+            },
+          ),
+          ListTile(
+            title: Text(
+              "Search on ",
               style: Theme.of(context).textTheme.bodyText2,
             ),
             trailing: const Icon(Icons.bookmark),
