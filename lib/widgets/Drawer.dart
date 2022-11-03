@@ -36,14 +36,18 @@ class _AppDrawerState extends State<AppDrawer> {
                   context: context,
                   builder: ((context) {
                     return Dialog(
+                      insetPadding: EdgeInsets.zero,
                       backgroundColor: Colors.transparent,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10.0),
                         ),
                       ),
-                      child: Image(
-                        image: NetworkImage(_user.userData['User image']),
+                      child: InteractiveViewer(
+                        child: Image(
+                          height: double.infinity,
+                          image: NetworkImage(_user.userData['User image']),
+                        ),
                       ),
                     ); //Create item
                   }),
