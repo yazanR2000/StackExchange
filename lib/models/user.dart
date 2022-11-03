@@ -65,32 +65,26 @@ class User {
     }
   }
 
-  Future addToFavorite(String questionId, bool isAddOrRemove) async {
+  Future addToFavorite(
+      QueryDocumentSnapshot question, bool isAddOrRemove) async {
     try {
-      final List<String> saves = _userData!['saves'];
       if (isAddOrRemove) {
-        saves.add(questionId);
         await FirebaseFirestore.instance
-            .collection("Users")
+            .collection('Saves')
             .doc(_userData!.id)
-            .update(
-          {
-            "saves" : saves,
-          },
-        );
-        
+            .collection('Saves')
+            .doc(question.id)
+            .set(
+              question.data() as Map<String, dynamic>,
+            );
       } else {
-        saves.removeWhere((element) => element == questionId);
         await FirebaseFirestore.instance
-            .collection("Users")
+            .collection('Saves')
             .doc(_userData!.id)
-            .update(
-          {
-            "saves" : saves,
-          },
-        );
+            .collection('Saves')
+            .doc(question.id)
+            .delete();
       }
-      await getUserData();
     } catch (err) {
       throw err;
     }

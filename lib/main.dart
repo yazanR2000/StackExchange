@@ -16,7 +16,7 @@ import './screens/CommentsSheet.dart';
 import './models/user.dart' as u;
 import 'package:provider/provider.dart';
 import './models/home_provider.dart';
-
+import './screens/saves.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -106,7 +106,8 @@ class MyApp extends StatelessWidget {
           '/home': (context) => Home(),
           'forgotPassword': (context) => forgotPassword(),
           '/my_questions': (context) => MyQuestions(),
-          '/StartScreen': (context) => StartScreen()
+          '/StartScreen': (context) => StartScreen(),
+          '/my_saves' : (context) =>  MySaves(),
         },
       ),
     );
