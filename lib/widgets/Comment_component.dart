@@ -88,7 +88,7 @@ class _CommentComponentState extends State<CommentComponent> {
                           //scrollable: true,
                           backgroundColor: Colors.transparent,
                           //titlePadding: EdgeInsets.zero,
-                          //insetPadding: EdgeInsets.zero,
+                          insetPadding: EdgeInsets.zero,
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10.0))),
@@ -96,6 +96,7 @@ class _CommentComponentState extends State<CommentComponent> {
                             //boundaryMargin: const EdgeInsets.all(20),
 
                             child: Image(
+                              height: double.infinity,
                               image: NetworkImage(
                                 widget._comment['images'][index],
                               ),
@@ -208,7 +209,7 @@ class _CommentComponentState extends State<CommentComponent> {
                                         //scrollable: true,
                                         backgroundColor: Colors.transparent,
                                         //titlePadding: EdgeInsets.zero,
-                                        //insetPadding: EdgeInsets.zero,
+                                        insetPadding: EdgeInsets.zero,
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10.0))),
@@ -216,6 +217,7 @@ class _CommentComponentState extends State<CommentComponent> {
                                           //boundaryMargin: const EdgeInsets.all(20),
 
                                           child: Image(
+                                            height: double.infinity,
                                             image: NetworkImage(
                                               data[index]['images'][i],
                                             ),
