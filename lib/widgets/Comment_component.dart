@@ -127,7 +127,10 @@ class _CommentComponentState extends State<CommentComponent> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(
                     '/CommentSheet',
-                    arguments: widget._comment.id,
+                    arguments: {
+                          "id" : widget._comment.id,
+                          "isComment" : false,
+                        },
                   );
                 },
                 child: Text("reply"),

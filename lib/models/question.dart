@@ -32,16 +32,16 @@ class Question {
       log("1");
       final List<XFile> images = details['images'];
       final List<String> downUrls = [];
+      final commentId = DateTime.now().toLocal().toString();
       log("2");
       if (details['images'].length > 0) {
-        Reference ref = FirebaseStorage.instance.ref();
-        if (id.contains('-')) {
-          ref = ref.child("Questions").child(id).child(DateTime.now().toLocal().toString());
-        } else {
-          ref = ref.child("Replies").child(id).child(DateTime.now().toLocal().toString());
-        }
         await Future.wait(
           images.map((e) async {
+            Reference ref = FirebaseStorage.instance
+                .ref()
+                .child("Questions")
+                .child(id).child(commentId)
+                .child(DateTime.now().toLocal().toString());
             final UploadTask uploadTask = ref.putFile(i.File(e.path));
             String? dowurl;
             await uploadTask.whenComplete(() async {
@@ -59,17 +59,66 @@ class Question {
       log("${details['comment']}");
 
       final collection = FirebaseFirestore.instance;
-      String collectionName;
-      if (id.contains('-')) {
-        collectionName = "Comments";
-      } else {
-        collectionName = "Replies";
-      }
       await collection
-          .collection(collectionName)
+          .collection("Comments")
           .doc(id)
-          .collection(collectionName)
-          .add({
+          .collection("Comments").doc(commentId)
+          .set({
+        "userId": FirebaseAuth.instance.currentUser!.uid,
+        "userFullName": user.userData['Full name'],
+        "date": DateTime.now().toLocal().toString(),
+        "comment": details['comment'],
+        "vote": 0,
+        "images": downUrls,
+        "userProfileImage": user.userData['User image'],
+      });
+
+      log("5");
+    } catch (err) {
+      throw err;
+    }
+  }
+
+   static Future addNewReply(Map<String, dynamic> details, String id) async {
+    if (details['images'].length == 0 && details['comment'] == "") {
+      throw "Please add a text or image at least";
+    }
+    try {
+      log("1");
+      final List<XFile> images = details['images'];
+      final List<String> downUrls = [];
+      final replyId = DateTime.now().toLocal().toString();
+      log("2");
+      if (details['images'].length > 0) {
+        await Future.wait(
+          images.map((e) async {
+            Reference ref = FirebaseStorage.instance
+                .ref()
+                .child("Replies")
+                .child(id).child(replyId)
+                .child(DateTime.now().toLocal().toString());
+            final UploadTask uploadTask = ref.putFile(i.File(e.path));
+            String? dowurl;
+            await uploadTask.whenComplete(() async {
+              dowurl = await ref.getDownloadURL();
+            });
+            downUrls.add(dowurl!);
+          }),
+        );
+        log("3");
+      }
+      final u.User user = u.User.getInstance();
+      log("${user.userData['Full name']}");
+      log("4");
+
+      log("${details['comment']}");
+
+      final collection = FirebaseFirestore.instance;
+      await collection
+          .collection("Comments")
+          .doc(id)
+          .collection("Comments").doc(replyId)
+          .set({
         "userId": FirebaseAuth.instance.currentUser!.uid,
         "userFullName": user.userData['Full name'],
         "date": DateTime.now().toLocal().toString(),
@@ -127,6 +176,8 @@ class Question {
       throw err;
     }
   }
+
+  
 
   Future editQuestionFromOwner(Map<String, dynamic> details) async {
     try {
