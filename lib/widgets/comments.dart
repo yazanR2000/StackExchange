@@ -23,7 +23,7 @@ class _CommentsState extends State<Comments> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: _comments.doc(widget._question.id).collection('Comments').snapshots(),
+        stream: _comments.doc(widget._question.id).collection('Comments').orderBy('date').snapshots(),
         builder: (context, streamSnapshot) {
           if (streamSnapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -41,7 +41,7 @@ class _CommentsState extends State<Comments> {
                 height: 10,
               ),
               padding: EdgeInsets.only(bottom: 50),
-              reverse: true,
+              //reverse: true,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: data.length,

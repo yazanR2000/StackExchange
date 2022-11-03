@@ -67,10 +67,18 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
     Function rebuild = ModalRoute.of(context)!.settings.arguments as Function;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add new question"),
+        title: const Text("Add question"),
         actions: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _details['images'].clear();
+              });
+            },
+            child: Text("Clear"),
+          ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: _isLoading ? const CircularProgressIndicator() : ElevatedButton(
               style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
               onPressed: () async {

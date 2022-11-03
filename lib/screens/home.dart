@@ -51,7 +51,7 @@ class _HomeState extends State<Home> {
           },
           child: Consumer<HomeProvider>(
             builder:(context, value, child) => StreamBuilder(
-              stream: FirebaseFirestore.instance.collection("Questions").snapshots(),
+              stream: FirebaseFirestore.instance.collection("Questions").orderBy('date',descending: true).snapshots(),
               builder: (context, snapshot) {
                 
                 if (snapshot.connectionState == ConnectionState.waiting) {
