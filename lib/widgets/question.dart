@@ -103,7 +103,10 @@ class _QuestionComponentState extends State<QuestionComponent> {
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context)
-                        .pushNamed("/CommentSheet", arguments: widget._post.id);
+                        .pushNamed("/CommentSheet", arguments: {
+                          "id" : widget._post.id,
+                          "isComment" : true,
+                        });
                   },
                   child: Text("Write your solution"),
                 ),
