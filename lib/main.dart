@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +17,7 @@ import './models/user.dart' as u;
 import 'package:provider/provider.dart';
 import './models/home_provider.dart';
 import './screens/saves.dart';
+
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -108,8 +108,8 @@ class MyApp extends StatelessWidget {
           'forgotPassword': (context) => forgotPassword(),
           '/my_questions': (context) => MyQuestions(),
           '/StartScreen': (context) => StartScreen(),
-          '/my_saves' : (context) =>  MySaves(),
-          '/stackoverflow' :(context) => StackOverflowScreen(),
+          '/my_saves': (context) => MySaves(),
+          '/stackoverflow': (context) => StackOverflowScreen(),
         },
       ),
     );
