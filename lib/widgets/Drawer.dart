@@ -30,32 +30,27 @@ class _AppDrawerState extends State<AppDrawer> {
             accountEmail: Text(
               FirebaseAuth.instance.currentUser!.email!,
             ),
-            currentAccountPicture: Hero(
-              tag: 'Full name',
-              child: InkWell(
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: ((context) {
-                      return AlertDialog(
-                        title: Column(
-                          children: [
-                            Hero(
-                              tag: 'Full name',
-                              child: Image(
-                                image:
-                                    NetworkImage(_user.userData['User image']),
-                              ),
-                            ),
-                          ],
+            currentAccountPicture: InkWell(
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: ((context) {
+                    return Dialog(
+                      backgroundColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10.0),
                         ),
-                      ); //Create item
-                    }),
-                  );
-                },
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(_user.userData['User image']),
-                ),
+                      ),
+                      child: Image(
+                        image: NetworkImage(_user.userData['User image']),
+                      ),
+                    ); //Create item
+                  }),
+                );
+              },
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(_user.userData['User image']),
               ),
             ),
           ),

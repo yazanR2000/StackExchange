@@ -125,6 +125,8 @@ class _FullPostState extends State<FullPost> {
                               context: context,
                               builder: ((context) {
                                 return Dialog(
+                                  insetPadding: EdgeInsets.zero,
+                                  // elevation: 5,
                                   backgroundColor: Colors.transparent,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(
@@ -133,9 +135,13 @@ class _FullPostState extends State<FullPost> {
                                   ),
                                   child: InteractiveViewer(
                                     //boundaryMargin: const EdgeInsets.all(20),
-                                    child: Image(
-                                      image: NetworkImage(
-                                        details['question']['images'][index],
+                                    child: Container(
+                                      height: double.infinity,
+                                      child: Image(
+                                        // width: double.infinity,
+                                        image: NetworkImage(
+                                          details['question']['images'][index],
+                                        ),
                                       ),
                                     ),
                                   ),
