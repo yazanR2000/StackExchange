@@ -108,12 +108,8 @@ class MyApp extends StatelessWidget {
           'forgotPassword': (context) => forgotPassword(),
           '/my_questions': (context) => MyQuestions(),
           '/StartScreen': (context) => StartScreen(),
-<<<<<<< HEAD
           '/my_saves': (context) => MySaves(),
-=======
-          '/my_saves' : (context) =>  MySaves(),
-          '/stackoverflow' :(context) => StackOverflowScreen(),
->>>>>>> e929828c64ea21ca82957e71741615655743dc41
+          '/stackoverflow': (context) => StackOverflowScreen(),
         },
       ),
     );

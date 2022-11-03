@@ -35,33 +35,34 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                 setState(() {});
               },
             ),
-            SizedBox(height: 10,),
-            Expanded(
-              child: FutureBuilder(
-                future: StackoverflowAPI.getSearchResults(_search.text),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  final List<Map<String,dynamic>> results = StackoverflowAPI.results;
-                  return ListView.separated(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: CircleAvatar(),
-                        title: Text("title"),
-                        subtitle: Text("link"),
-                        trailing: Icon(Icons.check_circle),
-                      );
-                    },
-                    separatorBuilder: (context, index) => Divider(),
-                    itemCount: results.length,
+            SizedBox(
+              height: 10,
+            ),
+            FutureBuilder(
+              future: StackoverflowAPI.getSearchResults(_search.text),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
                   );
-                },
-              ),
+                }
+                final List<Map<String, dynamic>> results =
+                    StackoverflowAPI.results;
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: CircleAvatar(),
+                      title: Text("title"),
+                      subtitle: Text("link"),
+                      trailing: Icon(Icons.check_circle),
+                    );
+                  },
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: results.length,
+                );
+              },
             ),
           ],
         ),
