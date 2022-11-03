@@ -53,7 +53,11 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                   ? Future.delayed(
                       Duration(seconds: 0),
                     )
-                  : StackoverflowAPI.getSearchResults(_search.text),
+                  : _search.text.isEmpty
+                      ? Future.delayed(
+                          Duration(seconds: 0),
+                        )
+                      : StackoverflowAPI.getSearchResults(_search.text),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -84,7 +88,9 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                               label: Text(
                                 "Solved",
                                 style: TextStyle(
-                                    fontSize: 10, color: Colors.white),
+                                  fontSize: 10,
+                                  color: Colors.white,
+                                ),
                               ),
                               backgroundColor: Colors.green,
                             )

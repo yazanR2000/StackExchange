@@ -9,6 +9,7 @@ class StackoverflowAPI {
   static const _baseUrl = "https://api.stackexchange.com";
 
   static Future getSearchResults(String search) async {
+    _results.clear();
     try {
       final response = await http.get(
         Uri.parse(
@@ -18,11 +19,14 @@ class StackoverflowAPI {
       data['items'].forEach((element) {
         Map<String, dynamic> item = {};
         item.putIfAbsent(
-            "owner_profile_image", () => element["owner"]["profile_image"]);
-        item.putIfAbsent("is_answered", () => element["is_answered"]);
+            "owner_profile_image",
+            () => element["owner"]["profile_image"] == null
+                ? "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
+                : element["owner"]["profile_image"]);
+        item.putIfAbsent("is_answered", () => element["is_answered"] == null ? false : element["is_answered"]);
         item.putIfAbsent("answer_count", () => element["answer_count"]);
-        item.putIfAbsent("title", () => element["title"]);
-        item.putIfAbsent("link", () => element["link"]);
+        item.putIfAbsent("title", () => element["title"] == null ? "Empty" : element["title"]);
+        item.putIfAbsent("link", () => element["link"] == null ? "" : element["link"]);
         _results.add(item);
       });
     } catch (err) {
