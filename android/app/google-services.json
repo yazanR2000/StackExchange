@@ -14,6 +14,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "698334174862-2kaiao2mbmpjgeq9ib7ck7u9r21me259.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stackexchange",
+            "certificate_hash": "dfa99b0dd602fa277124b8bf26c8c39088658a97"
+          }
+        },
+        {
+          "client_id": "698334174862-4pu03vtu8bcoo6fg98kfeg9rbo6b2th0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.stackexchange",
+            "certificate_hash": "aaa12bf430cab6f256953f083eb2eaab3dacfd4a"
+          }
+        },
+        {
           "client_id": "698334174862-6gn4b2bjmo54fljpcn968apfgr4o4pgg.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +45,13 @@
             {
               "client_id": "698334174862-6gn4b2bjmo54fljpcn968apfgr4o4pgg.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "698334174862-v3jfmgfahadbob2pjmetmog5bstjo6b4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.stackexchange"
+              }
             }
           ]
         }
