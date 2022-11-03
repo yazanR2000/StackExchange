@@ -46,7 +46,11 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
               height: 10,
             ),
             FutureBuilder(
-              future: StackoverflowAPI.getSearchResults(_search.text),
+              future: _search.text.isEmpty
+                  ? Future.delayed(
+                      Duration(seconds: 0),
+                    )
+                  : StackoverflowAPI.getSearchResults(_search.text),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -60,6 +64,8 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return ListTile(
+                      isThreeLine: true,
+                      dense: true,
                       onTap: () async {
                         await _launchUrl(results[index]['link']);
                       },
@@ -70,12 +76,16 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                       ),
                       title: Text(results[index]['title']),
                       subtitle: Text(results[index]['link']),
-                      trailing: results[index]['is_answerd']
+                      trailing: results[index]['is_answered'] == true
                           ? Chip(
-                              label: Text("Solved"),
+                              label: Text(
+                                "Solved",
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white),
+                              ),
                               backgroundColor: Colors.green,
                             )
-                          : null,
+                          : Container(),
                     );
                   },
                   separatorBuilder: (context, index) => Divider(),

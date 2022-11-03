@@ -16,8 +16,9 @@ class StackoverflowAPI {
       );
       final data = json.decode(response.body) as Map<String, dynamic>;
       data['items'].forEach((element) {
-        Map<String,dynamic> item = {};
-        item.putIfAbsent("owner_profile_image", () => element["owner"]["profile_image"]);
+        Map<String, dynamic> item = {};
+        item.putIfAbsent(
+            "owner_profile_image", () => element["owner"]["profile_image"]);
         item.putIfAbsent("is_answered", () => element["is_answered"]);
         item.putIfAbsent("answer_count", () => element["answer_count"]);
         item.putIfAbsent("title", () => element["title"]);
