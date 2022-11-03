@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/stackoverflow.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StackOverflowScreen extends StatefulWidget {
   StackOverflowScreen({super.key});
@@ -10,6 +11,12 @@ class StackOverflowScreen extends StatefulWidget {
 
 class _StackOverflowScreenState extends State<StackOverflowScreen> {
   TextEditingController _search = TextEditingController();
+
+  Future<void> _launchUrl(String url) async {
+    if (!await launchUrl(url)) {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,33 +42,41 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                 setState(() {});
               },
             ),
-            SizedBox(height: 10,),
-            Expanded(
-              child: FutureBuilder(
-                future: StackoverflowAPI.getSearchResults(_search.text),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  final List<Map<String,dynamic>> results = StackoverflowAPI.results;
-                  return ListView.separated(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: CircleAvatar(),
-                        title: Text("title"),
-                        subtitle: Text("link"),
-                        trailing: Icon(Icons.check_circle),
-                      );
-                    },
-                    separatorBuilder: (context, index) => Divider(),
-                    itemCount: results.length,
+            SizedBox(
+              height: 10,
+            ),
+            FutureBuilder(
+              future: StackoverflowAPI.getSearchResults(_search.text),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
                   );
-                },
-              ),
+                }
+                final List<Map<String, dynamic>> results =
+                    StackoverflowAPI.results;
+                return ListView.separated(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      onTap: () async {
+                        await _launchUrl(results[index]['link']);
+                      },
+                      leading: CircleAvatar(
+                        // backgroundImage: NetworkImage(
+                        //   results[index]['owner_profile_image'],
+                        // ),
+                      ),
+                      title: Text("title"),
+                      subtitle: Text("link"),
+                      trailing: Icon(Icons.check_circle),
+                    );
+                  },
+                  separatorBuilder: (context, index) => Divider(),
+                  itemCount: results.length,
+                );
+              },
             ),
           ],
         ),
