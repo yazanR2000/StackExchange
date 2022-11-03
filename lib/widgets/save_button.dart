@@ -29,6 +29,7 @@ class _SaveButtonState extends State<SaveButton> {
       },
       icon: Icon(
         _isSaved! ? Icons.bookmark : Icons.bookmark_border,
+        color: _isSaved! ? Colors.amber : null,
       ),
     );
   }

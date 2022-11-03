@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io' as i;
 import '../models/question.dart';
@@ -14,7 +15,10 @@ class _CommentSheetState extends State<CommentSheet> {
   final List<XFile> images = [];
   Future pickImage() async {
     final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await picker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 50,
+    );
     if (image != null) {
       setState(() {
         images.add(image);
@@ -27,7 +31,8 @@ class _CommentSheetState extends State<CommentSheet> {
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
-    final String id = ModalRoute.of(context)!.settings.arguments as String;
+    final Map<String, dynamic> details =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     return Scaffold(
       appBar: AppBar(
         title: Text("Add comment"),
@@ -51,14 +56,23 @@ class _CommentSheetState extends State<CommentSheet> {
                         setState(() {
                           _isLoading = !_isLoading;
                         });
-
-                        await Question.addNewComment(
-                          {
-                            "comment": _solutionController.text,
-                            "images": images,
-                          },
-                          id,
-                        );
+                        if (details['isComment']) {
+                          await Question.addNewComment(
+                            {
+                              "comment": _solutionController.text,
+                              "images": images,
+                            },
+                            details['id'],
+                          );
+                        }else{
+                          await Question.addNewReply(
+                            {
+                              "comment": _solutionController.text,
+                              "images": images,
+                            },
+                            details['id'],
+                          );
+                        }
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             backgroundColor: Colors.green,
@@ -117,22 +131,13 @@ class _CommentSheetState extends State<CommentSheet> {
                 );
               }),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        await pickImage();
-                      },
-                      child: Text('Add images'),
-                    ),
-                  ),
-                ],
-              ),
-            )
+            TextButton.icon(
+              onPressed: () async {
+                await pickImage();
+              },
+              icon: const FaIcon(FontAwesomeIcons.images),
+              label: const Text("Add photo"),
+            ),
           ],
         ),
       ),

@@ -92,6 +92,16 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             title: Text(
+              "Search on ",
+              style: Theme.of(context).textTheme.bodyText2,
+            ),
+            trailing: const Icon(Icons.bookmark),
+            onTap: () {
+              Navigator.of(context).pushNamed('/my_saves');
+            },
+          ),
+          ListTile(
+            title: Text(
               "Logout",
               style: Theme.of(context).textTheme.bodyText2,
             ),

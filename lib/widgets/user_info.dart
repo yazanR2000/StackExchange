@@ -7,9 +7,33 @@ class UserInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       //contentPadding: EdgeInsets.zero,
-      leading: CircleAvatar(
-        radius: 30,
-        backgroundImage: NetworkImage(_imageUrl),
+      leading: InkWell(
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: ((context) {
+              return Dialog(
+                insetPadding: EdgeInsets.zero,
+                backgroundColor: Colors.transparent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.0),
+                  ),
+                ),
+                child: InteractiveViewer(
+                  child: Image(
+                    height: double.infinity,
+                    image: NetworkImage(_imageUrl),
+                  ),
+                ),
+              ); //Create item
+            }),
+          );
+        },
+        child: CircleAvatar(
+          radius: 30,
+          backgroundImage: NetworkImage(_imageUrl),
+        ),
       ),
       title: Text(
         _fullName,

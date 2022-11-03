@@ -88,7 +88,7 @@ class _CommentComponentState extends State<CommentComponent> {
                           //scrollable: true,
                           backgroundColor: Colors.transparent,
                           //titlePadding: EdgeInsets.zero,
-                          //insetPadding: EdgeInsets.zero,
+                          insetPadding: EdgeInsets.zero,
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10.0))),
@@ -96,6 +96,7 @@ class _CommentComponentState extends State<CommentComponent> {
                             //boundaryMargin: const EdgeInsets.all(20),
 
                             child: Image(
+                              height: double.infinity,
                               image: NetworkImage(
                                 widget._comment['images'][index],
                               ),
@@ -126,7 +127,10 @@ class _CommentComponentState extends State<CommentComponent> {
                 onPressed: () {
                   Navigator.of(context).pushNamed(
                     '/CommentSheet',
-                    arguments: widget._comment.id,
+                    arguments: {
+                          "id" : widget._comment.id,
+                          "isComment" : false,
+                        },
                   );
                 },
                 child: Text("reply"),
@@ -149,7 +153,8 @@ class _CommentComponentState extends State<CommentComponent> {
               stream: FirebaseFirestore.instance
                   .collection("Replies")
                   .doc(widget._comment.id)
-                  .collection("Replies").orderBy('date')
+                  .collection("Replies")
+                  .orderBy('date')
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -163,8 +168,10 @@ class _CommentComponentState extends State<CommentComponent> {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: data.length,
-                  separatorBuilder: (context, index) => SizedBox(height: 10,),
-                  itemBuilder:(context, index) => Container(
+                  separatorBuilder: (context, index) => SizedBox(
+                    height: 10,
+                  ),
+                  itemBuilder: (context, index) => Container(
                     padding: EdgeInsets.all(15),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -181,9 +188,8 @@ class _CommentComponentState extends State<CommentComponent> {
                           ),
                           contentPadding: EdgeInsets.zero,
                           title: Text(data[index]['userFullName']),
-                          subtitle: Text(data[index]['date']
-                              .toString()
-                              .substring(0, 16)),
+                          subtitle: Text(
+                              data[index]['date'].toString().substring(0, 16)),
                         ),
                         Container(
                           margin: EdgeInsets.symmetric(vertical: 15),
@@ -196,8 +202,7 @@ class _CommentComponentState extends State<CommentComponent> {
                               child: InkWell(
                                 child: Image(
                                   fit: BoxFit.fill,
-                                  image: NetworkImage(
-                                      data[index]['images'][i]),
+                                  image: NetworkImage(data[index]['images'][i]),
                                 ),
                                 onTap: () {
                                   showDialog(
@@ -207,14 +212,15 @@ class _CommentComponentState extends State<CommentComponent> {
                                         //scrollable: true,
                                         backgroundColor: Colors.transparent,
                                         //titlePadding: EdgeInsets.zero,
-                                        //insetPadding: EdgeInsets.zero,
+                                        insetPadding: EdgeInsets.zero,
                                         shape: RoundedRectangleBorder(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10.0))),
                                         child: InteractiveViewer(
                                           //boundaryMargin: const EdgeInsets.all(20),
-                
+
                                           child: Image(
+                                            height: double.infinity,
                                             image: NetworkImage(
                                               data[index]['images'][i],
                                             ),
