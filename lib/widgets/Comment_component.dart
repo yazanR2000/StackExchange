@@ -192,12 +192,12 @@ class _CommentComponentState extends State<CommentComponent> {
                         Column(
                           children: List.generate(
                             data[index]['images'].length,
-                            (index) => Container(
+                            (i) => Container(
                               child: InkWell(
                                 child: Image(
                                   fit: BoxFit.fill,
                                   image: NetworkImage(
-                                      data[index]['images'][index]),
+                                      data[index]['images'][i]),
                                 ),
                                 onTap: () {
                                   showDialog(
@@ -216,7 +216,7 @@ class _CommentComponentState extends State<CommentComponent> {
                 
                                           child: Image(
                                             image: NetworkImage(
-                                              data[index][index],
+                                              data[index]['images'][i],
                                             ),
                                           ),
                                         ),
