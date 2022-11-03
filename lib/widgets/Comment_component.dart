@@ -20,6 +20,7 @@ class CommentComponent extends StatefulWidget {
 
 class _CommentComponentState extends State<CommentComponent> {
   String? _vote;
+  bool _isExpaning = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -65,37 +66,6 @@ class _CommentComponentState extends State<CommentComponent> {
             contentPadding: EdgeInsets.zero,
             title: Text(widget._comment['userFullName']),
             subtitle: Text(widget._comment['date'].toString().substring(0, 16)),
-            // trailing: SizedBox(
-            //   width: 100,
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.end,
-            //     children: [
-            //       IconButton(
-            //           onPressed: () {
-            //             setState(() {
-            //               _vote = "up";
-            //             });
-            //           },
-            //           icon: Icon(
-            //             Icons.arrow_circle_up,
-            //             color: _vote == "up" ? Colors.blue : Colors.black,
-            //             size: 30,
-            //           )),
-            //       IconButton(
-            //         onPressed: () {
-            //           setState(() {
-            //             _vote = "down";
-            //           });
-            //         },
-            //         icon: Icon(
-            //           Icons.arrow_circle_down,
-            //           color: _vote == "down" ? Colors.blue : Colors.black,
-            //           size: 30,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 15),
@@ -149,6 +119,131 @@ class _CommentComponentState extends State<CommentComponent> {
               ),
             ),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    '/CommentSheet',
+                    arguments: widget._comment.id,
+                  );
+                },
+                child: Text("reply"),
+              ),
+              //if (widget._comment['replies'] != null)
+              TextButton.icon(
+                icon: Icon(
+                    _isExpaning ? Icons.arrow_drop_up : Icons.arrow_drop_down),
+                onPressed: () {
+                  setState(() {
+                    _isExpaning = !_isExpaning;
+                  });
+                },
+                label: Text("show replies"),
+              ),
+            ],
+          ),
+          if (_isExpaning)
+            StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("Replies")
+                  .doc(widget._comment.id)
+                  .collection("Replies")
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final data = snapshot.data!.docs;
+                return ListView.separated(
+                  padding: EdgeInsets.only(top: 10),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: data.length,
+                  separatorBuilder: (context, index) => SizedBox(height: 10,),
+                  itemBuilder:(context, index) => Container(
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ListTile(
+                          dense: true,
+                          leading: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(data[index]['userProfileImage']),
+                          ),
+                          contentPadding: EdgeInsets.zero,
+                          title: Text(data[index]['userFullName']),
+                          subtitle: Text(data[index]['date']
+                              .toString()
+                              .substring(0, 16)),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 15),
+                          child: Text(data[index]['comment']),
+                        ),
+                        Column(
+                          children: List.generate(
+                            data[index]['images'].length,
+                            (index) => Container(
+                              child: InkWell(
+                                child: Image(
+                                  fit: BoxFit.fill,
+                                  image: NetworkImage(
+                                      data[index]['images'][index]),
+                                ),
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: ((context) {
+                                      return Dialog(
+                                        //scrollable: true,
+                                        backgroundColor: Colors.transparent,
+                                        //titlePadding: EdgeInsets.zero,
+                                        //insetPadding: EdgeInsets.zero,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0))),
+                                        child: InteractiveViewer(
+                                          //boundaryMargin: const EdgeInsets.all(20),
+                
+                                          child: Image(
+                                            image: NetworkImage(
+                                              data[index][index],
+                                            ),
+                                          ),
+                                        ),
+                                      ); //Create item
+                                    }),
+                                  );
+                                },
+                              ),
+                              height: 200,
+                              width: double.infinity,
+                              margin: EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                // image: DecorationImage(
+                                //   fit: BoxFit.fill,
+                                //   image: NetworkImage(widget._comment['images'][index]),
+                                // ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
         ],
       ),
     );
