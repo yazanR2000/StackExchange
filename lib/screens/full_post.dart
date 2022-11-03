@@ -187,7 +187,10 @@ class _FullPostState extends State<FullPost> {
         onPressed: () {
           Navigator.of(context).pushNamed(
             '/CommentSheet',
-            arguments: details['question'].id,
+            arguments: {
+              "id": details['question'].id,
+              "isComment": true,
+            },
           );
         },
         label: Row(
