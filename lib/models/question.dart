@@ -115,9 +115,9 @@ class Question {
 
       final collection = FirebaseFirestore.instance;
       await collection
-          .collection("Comments")
+          .collection("Replies")
           .doc(id)
-          .collection("Comments").doc(replyId)
+          .collection("Replies").doc(replyId)
           .set({
         "userId": FirebaseAuth.instance.currentUser!.uid,
         "userFullName": user.userData['Full name'],

@@ -128,9 +128,9 @@ class _CommentComponentState extends State<CommentComponent> {
                   Navigator.of(context).pushNamed(
                     '/CommentSheet',
                     arguments: {
-                          "id" : widget._comment.id,
-                          "isComment" : false,
-                        },
+                      "id": widget._comment.id,
+                      "isComment": false,
+                    },
                   );
                 },
                 child: Text("reply"),
@@ -163,6 +163,11 @@ class _CommentComponentState extends State<CommentComponent> {
                   );
                 }
                 final data = snapshot.data!.docs;
+                if (data.isEmpty) {
+                  return Center(
+                    child: Text("There is no replies"),
+                  );
+                }
                 return ListView.separated(
                   padding: EdgeInsets.only(top: 10),
                   shrinkWrap: true,
