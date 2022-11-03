@@ -28,7 +28,10 @@ class _SignUpState extends State<SignUp> {
   bool scureText = true;
   File? _image;
   Future getImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final image = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 50,
+    );
     if (image == null) return;
     final imageTemporary = File(image.path);
     setState(() {
