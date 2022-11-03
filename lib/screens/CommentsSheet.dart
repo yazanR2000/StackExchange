@@ -27,10 +27,10 @@ class _CommentSheetState extends State<CommentSheet> {
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
-    final String qId = ModalRoute.of(context)!.settings.arguments as String;
+    final String id = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add solution"),
+        title: Text("Add comment"),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -43,12 +43,13 @@ class _CommentSheetState extends State<CommentSheet> {
                         setState(() {
                           _isLoading = !_isLoading;
                         });
+                        
                         await Question.addNewComment(
                           {
                             "comment": _solutionController.text,
                             "images": images,
                           },
-                          qId,
+                          id,
                         );
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -108,23 +109,6 @@ class _CommentSheetState extends State<CommentSheet> {
                 );
               }),
             ),
-            // ListView.builder(
-
-            //     itemCount: images.length,
-            //     itemBuilder: (context, index) {
-            //       return Container(
-            //         margin: EdgeInsets.symmetric(vertical: 10),
-            //         height: 200,
-            //         width: double.infinity,
-            //         decoration: BoxDecoration(
-            //           image: DecorationImage(
-            //             image: FileImage(
-            //               i.File(images[index].path),
-            //             ),
-            //           ),
-            //         ),
-            //       );
-            //     }),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
