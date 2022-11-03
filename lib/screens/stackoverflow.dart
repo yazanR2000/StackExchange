@@ -13,7 +13,7 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
   TextEditingController _search = TextEditingController();
 
   Future<void> _launchUrl(String url) async {
-    if (!await launchUrl(url)) {
+    if (!await launchUrl(Uri.parse(url))) {
       throw 'Could not launch $url';
     }
   }
@@ -64,13 +64,18 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                         await _launchUrl(results[index]['link']);
                       },
                       leading: CircleAvatar(
-                        // backgroundImage: NetworkImage(
-                        //   results[index]['owner_profile_image'],
-                        // ),
+                        backgroundImage: NetworkImage(
+                          results[index]['owner_profile_image'],
+                        ),
                       ),
-                      title: Text("title"),
-                      subtitle: Text("link"),
-                      trailing: Icon(Icons.check_circle),
+                      title: Text(results[index]['title']),
+                      subtitle: Text(results[index]['link']),
+                      trailing: results[index]['is_answerd']
+                          ? Chip(
+                              label: Text("Solved"),
+                              backgroundColor: Colors.green,
+                            )
+                          : null,
                     );
                   },
                   separatorBuilder: (context, index) => Divider(),
