@@ -162,6 +162,7 @@ class _CommentComponentState extends State<CommentComponent> {
                     child: CircularProgressIndicator(),
                   );
                 }
+
                 final data = snapshot.data!.docs;
                 if (data.isEmpty) {
                   return Center(

@@ -27,20 +27,23 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TextField(
-              controller: _search,
-              decoration: InputDecoration(
-                hintText: "Search....",
-                suffixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(100),
-                  borderSide: const BorderSide(color: Colors.black),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: _search,
+                decoration: InputDecoration(
+                  hintText: "Search....",
+                  suffixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(100),
+                    borderSide: const BorderSide(color: Colors.black),
+                  ),
                 ),
+                textInputAction: TextInputAction.done,
+                onSubmitted: (value) {
+                  setState(() {});
+                },
               ),
-              textInputAction: TextInputAction.done,
-              onSubmitted: (value) {
-                setState(() {});
-              },
             ),
             SizedBox(
               height: 10,
@@ -50,7 +53,11 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                   ? Future.delayed(
                       Duration(seconds: 0),
                     )
-                  : StackoverflowAPI.getSearchResults(_search.text),
+                  : _search.text.isEmpty
+                      ? Future.delayed(
+                          Duration(seconds: 0),
+                        )
+                      : StackoverflowAPI.getSearchResults(_search.text),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -64,6 +71,7 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return ListTile(
+                      isThreeLine: true,
                       dense: true,
                       onTap: () async {
                         await _launchUrl(results[index]['link']);
@@ -75,12 +83,18 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                       ),
                       title: Text(results[index]['title']),
                       subtitle: Text(results[index]['link']),
-                      // trailing: results[index]['is_answerd'] ==
-                      //     ? Chip(
-                      //         label: Text("Solved"),
-                      //         backgroundColor: Colors.green,
-                      //       )
-                      //     : null,
+                      trailing: results[index]['is_answered'] == true
+                          ? Chip(
+                              label: Text(
+                                "Solved",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              backgroundColor: Colors.green,
+                            )
+                          : Container(),
                     );
                   },
                   separatorBuilder: (context, index) => Divider(),
