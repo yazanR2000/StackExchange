@@ -159,6 +159,7 @@ class _CommentComponentState extends State<CommentComponent> {
                     child: CircularProgressIndicator(),
                   );
                 }
+
                 final data = snapshot.data!.docs;
                 return ListView.separated(
                   padding: EdgeInsets.only(top: 10),
