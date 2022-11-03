@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/stackoverflow.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StackOverflowScreen extends StatefulWidget {
   StackOverflowScreen({super.key});
@@ -10,6 +11,12 @@ class StackOverflowScreen extends StatefulWidget {
 
 class _StackOverflowScreenState extends State<StackOverflowScreen> {
   TextEditingController _search = TextEditingController();
+
+  Future<void> _launchUrl(String url) async {
+    if (!await launchUrl(Uri.parse(url))) {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +60,22 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                   physics: NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     return ListTile(
-                      leading: CircleAvatar(),
-                      title: Text("title"),
-                      subtitle: Text("link"),
-                      trailing: Icon(Icons.check_circle),
+                      onTap: () async {
+                        await _launchUrl(results[index]['link']);
+                      },
+                      leading: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          results[index]['owner_profile_image'],
+                        ),
+                      ),
+                      title: Text(results[index]['title']),
+                      subtitle: Text(results[index]['link']),
+                      trailing: results[index]['is_answerd']
+                          ? Chip(
+                              label: Text("Solved"),
+                              backgroundColor: Colors.green,
+                            )
+                          : null,
                     );
                   },
                   separatorBuilder: (context, index) => Divider(),
