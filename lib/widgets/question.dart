@@ -5,8 +5,9 @@ import 'package:stackexchange/widgets/save_button.dart';
 class QuestionComponent extends StatefulWidget {
   final QueryDocumentSnapshot _post;
   final bool _isProfile;
+  final bool _isFromSaves;
   final Function _rebuild;
-  QuestionComponent(this._post, this._isProfile, this._rebuild);
+  QuestionComponent(this._post, this._isProfile,this._isFromSaves, this._rebuild);
 
   @override
   State<QuestionComponent> createState() => _QuestionComponentState();
@@ -22,7 +23,7 @@ class _QuestionComponentState extends State<QuestionComponent> {
     return false;
   }
 
-  bool bookmark = false;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -79,17 +80,7 @@ class _QuestionComponentState extends State<QuestionComponent> {
                       ),
                       backgroundColor: Color(0xFFFF1e1e),
                     ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        bookmark = !bookmark;
-                      });
-                    },
-                    icon: Icon(
-                      Icons.bookmark,
-                      color: bookmark ? Colors.blue : Colors.black,
-                    ),
-                  ),
+                  SaveButton(widget._post,widget._isFromSaves),
                 ],
               ),
             ),

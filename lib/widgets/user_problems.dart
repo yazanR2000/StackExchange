@@ -64,7 +64,7 @@ class _UserProblemsState extends State<UserProblems> {
                   height: 20,
                 ),
                 itemBuilder: (context, index) {
-                  return QuestionComponent(data[index], true, _rebuild);
+                  return QuestionComponent(data[index], true,false, _rebuild);
                 },
               );
             },

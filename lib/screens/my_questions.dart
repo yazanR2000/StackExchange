@@ -93,7 +93,7 @@ class _MyQuestionsState extends State<MyQuestions> {
                     icon: Icon(Icons.delete),
                     label: Text("Delete"),
                   ),
-                  QuestionComponent(data[index],false,_rebuild),
+                  QuestionComponent(data[index],false,false,_rebuild),
                 ],
               );
             },

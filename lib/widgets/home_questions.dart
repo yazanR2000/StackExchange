@@ -84,6 +84,7 @@ class _HomeQuestionsState extends State<HomeQuestions> {
             itemBuilder: (context, index) => QuestionComponent(
               _filter![index],
               false,
+              false,
               widget._rebuild
             ),
           ),
