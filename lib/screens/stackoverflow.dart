@@ -73,6 +73,7 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                     return ListTile(
                       isThreeLine: true,
                       dense: true,
+                      autofocus: true,
                       onTap: () async {
                         await _launchUrl(results[index]['link']);
                       },
@@ -84,17 +85,20 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                       title: Text(results[index]['title']),
                       subtitle: Text(results[index]['link']),
                       trailing: results[index]['is_answered'] == true
-                          ? Chip(
-                              label: Text(
-                                "Solved",
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.white,
+                          ? Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Chip(
+                                label: Text(
+                                  "Solved",
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.white,
+                                  ),
                                 ),
+                                backgroundColor: Colors.green,
                               ),
-                              backgroundColor: Colors.green,
                             )
-                          : Container(),
+                          : SizedBox(),
                     );
                   },
                   separatorBuilder: (context, index) => Divider(),
