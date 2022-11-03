@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../models/user.dart' as u;
 
@@ -92,12 +93,12 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             title: Text(
-              "Search on ",
+              "Search on Stackoverflow",
               style: Theme.of(context).textTheme.bodyText2,
             ),
-            trailing: const Icon(Icons.bookmark),
+            trailing: const FaIcon(FontAwesomeIcons.stackOverflow),
             onTap: () {
-              Navigator.of(context).pushNamed('/my_saves');
+              Navigator.of(context).pushNamed('/stackoverflow');
             },
           ),
           ListTile(

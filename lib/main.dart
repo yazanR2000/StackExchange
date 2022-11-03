@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:stackexchange/firebase_options.dart';
 import 'package:stackexchange/screens/login_signUP/forgotPassword.dart';
 import 'package:stackexchange/screens/my_questions.dart';
+import 'package:stackexchange/screens/stackoverflow.dart';
 import './screens/profile.dart';
 import './screens/add_new_question.dart';
 import 'screens/login_signUP/StartScreen.dart';
@@ -108,6 +109,7 @@ class MyApp extends StatelessWidget {
           '/my_questions': (context) => MyQuestions(),
           '/StartScreen': (context) => StartScreen(),
           '/my_saves' : (context) =>  MySaves(),
+          '/stackoverflow' :(context) => StackOverflowScreen(),
         },
       ),
     );
