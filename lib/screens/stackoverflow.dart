@@ -27,20 +27,23 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TextField(
-              controller: _search,
-              decoration: InputDecoration(
-                hintText: "Search....",
-                suffixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(100),
-                  borderSide: const BorderSide(color: Colors.black),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: _search,
+                decoration: InputDecoration(
+                  hintText: "Search....",
+                  suffixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(100),
+                    borderSide: const BorderSide(color: Colors.black),
+                  ),
                 ),
+                textInputAction: TextInputAction.done,
+                onSubmitted: (value) {
+                  setState(() {});
+                },
               ),
-              textInputAction: TextInputAction.done,
-              onSubmitted: (value) {
-                setState(() {});
-              },
             ),
             SizedBox(
               height: 10,
