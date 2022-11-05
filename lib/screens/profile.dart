@@ -55,6 +55,11 @@ class Profile extends StatelessWidget {
                             color: Colors.white,
                           ),
                         ),
+                        trailing: TextButton(
+                          
+                          child: Text("Contact",style: TextStyle(color: Colors.blue),),
+                          onPressed: (){},
+                        ),
                       ),
                       const SizedBox(
                         height: 10,
