@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'Comment_component.dart';
 
 class Comments extends StatefulWidget {
-  Comments(this._question,this._rebuild);
+  Comments(this._question, this._rebuild);
   final QueryDocumentSnapshot _question;
   final Function _rebuild;
   @override
@@ -18,24 +18,42 @@ class _CommentsState extends State<Comments> {
 
   final uid = FirebaseAuth.instance.currentUser!.uid;
 
-  
+  List<QueryDocumentSnapshot<Map<String, dynamic>>> _questionComments = [];
+  void _pinSolvedComment() {
+    String solvedCommentId = widget._question['solvedComment'];
+    if (solvedCommentId != "null") {
+      for (int i = 0; i < _questionComments.length; i++) {
+        if (solvedCommentId == _questionComments[i].id){
+          final temp = _questionComments[i];
+          final firstIndex = _questionComments[0];
+          _questionComments[i] = firstIndex;
+          _questionComments[0] = temp;
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: _comments.doc(widget._question.id).collection('Comments').orderBy('date').snapshots(),
+        stream: _comments
+            .doc(widget._question.id)
+            .collection('Comments')
+            .orderBy('date')
+            .snapshots(),
         builder: (context, streamSnapshot) {
           if (streamSnapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           } else if (streamSnapshot.hasData) {
-            final data = streamSnapshot.data!.docs;
-            if (data.length == 0) {
+            _questionComments = streamSnapshot.data!.docs;
+            if (_questionComments.length == 0) {
               return const Center(
                 child: Text("There's no comments"),
               );
             }
+            _pinSolvedComment();
             return ListView.separated(
               separatorBuilder: (context, index) => SizedBox(
                 height: 10,
@@ -44,10 +62,14 @@ class _CommentsState extends State<Comments> {
               //reverse: true,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: data.length,
+              itemCount: _questionComments.length,
               itemBuilder: ((context, index) {
                 return CommentComponent(
-                    data[index], uid == widget._question['userId'], widget._question,widget._rebuild);
+                  _questionComments[index],
+                  uid == widget._question['userId'],
+                  widget._question,
+                  widget._rebuild,
+                );
               }),
             );
           }
