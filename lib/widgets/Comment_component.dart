@@ -50,7 +50,7 @@ class _CommentComponentState extends State<CommentComponent> {
                           widget._comment,
                         );
                         Navigator.of(context).pop();
-          
+
                         widget._rebuild();
                       } catch (err) {}
                     },
@@ -95,11 +95,12 @@ class _CommentComponentState extends State<CommentComponent> {
                         ),
                   ),
                 ),
-                Container(
-                  height: 300,
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  child: QuestionImages(widget._comment['images']),
-                ),
+                if (widget._comment['images'].length != 0)
+                  Container(
+                    height: 300,
+                    margin: EdgeInsets.symmetric(vertical: 10),
+                    child: QuestionImages(widget._comment['images']),
+                  ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -169,13 +170,14 @@ class _CommentComponentState extends State<CommentComponent> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: data.length,
-                    separatorBuilder: (context, index) => SizedBox(height: 10,),
+                    separatorBuilder: (context, index) => SizedBox(
+                      height: 10,
+                    ),
                     itemBuilder: (context, index) => Container(
                       padding: EdgeInsets.all(15),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white
-                      ),
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -187,17 +189,19 @@ class _CommentComponentState extends State<CommentComponent> {
                             ),
                             contentPadding: EdgeInsets.zero,
                             title: Text(data[index]['userFullName']),
-                            subtitle: Text(
-                                data[index]['date'].toString().substring(0, 16)),
+                            subtitle: Text(data[index]['date']
+                                .toString()
+                                .substring(0, 16)),
                           ),
                           Container(
                             child: Text(data[index]['comment']),
                           ),
-                          Container(
-                            height: 300,
-                            //margin: EdgeInsets.symmetric(vertical: 10),
-                            child: QuestionImages(data[index]['images']),
-                          ),
+                          if (data[index]['images'].length != 0)
+                            Container(
+                              height: 300,
+                              //margin: EdgeInsets.symmetric(vertical: 10),
+                              child: QuestionImages(data[index]['images']),
+                            ),
                         ],
                       ),
                     ),

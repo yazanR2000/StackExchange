@@ -5,6 +5,7 @@ import 'package:stackexchange/widgets/comments.dart';
 import 'package:stackexchange/widgets/save_button.dart';
 import '../widgets/Comment_component.dart';
 import '../widgets/question_images.dart';
+
 class FullPost extends StatefulWidget {
   const FullPost({super.key});
 
@@ -40,8 +41,11 @@ class _FullPostState extends State<FullPost> {
     return dif;
   }
 
-  PageController _controller = PageController(initialPage: 0,viewportFraction: 0.9,);
- 
+  PageController _controller = PageController(
+    initialPage: 0,
+    viewportFraction: 0.9,
+  );
+
   @override
   Widget build(BuildContext context) {
     final details =
@@ -116,11 +120,12 @@ class _FullPostState extends State<FullPost> {
                   SizedBox(
                     height: 5,
                   ),
-                  Container(
-                    height: 300,
-                     margin: EdgeInsets.symmetric(vertical: 10),
-                     child: QuestionImages(details['question']['images']),
-                  ),
+                  if (details['question']['images'].length != 0)
+                    Container(
+                      height: 300,
+                      margin: EdgeInsets.symmetric(vertical: 10),
+                      child: QuestionImages(details['question']['images']),
+                    ),
                 ],
               ),
             ),
@@ -278,12 +283,19 @@ class _FullPostState extends State<FullPost> {
           );
         },
         backgroundColor: Color(0xff2f3b47),
-        
         label: Row(
           children: [
-            Text("Comment",style: TextStyle(fontWeight: FontWeight.bold),),
-            SizedBox(width: 10,),
-            Icon(Icons.add_comment_outlined,size: 22,),
+            Text(
+              "Comment",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Icon(
+              Icons.add_comment_outlined,
+              size: 22,
+            ),
           ],
         ),
       ),
