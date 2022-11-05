@@ -32,8 +32,12 @@ class _forgotPasswordState extends State<forgotPassword> {
                     width: 10,
                   ),
                   Text(
-                    "Stack",
-                    style: Theme.of(context).textTheme.bodyText1,
+                    "QCODE",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ],
               ),
@@ -49,7 +53,9 @@ class _forgotPasswordState extends State<forgotPassword> {
                       children: [
                         Text("Forgot Password!",
                             style: TextStyle(
-                                fontSize: constraints.maxHeight * .045),
+                              fontSize: constraints.maxHeight * .045,
+                              color: Colors.black,
+                            ),
                             textAlign: TextAlign.start),
                         SizedBox(
                           height: 150,

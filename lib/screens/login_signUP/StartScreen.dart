@@ -32,8 +32,12 @@ class _StartScreenState extends State<StartScreen> {
                     width: 10,
                   ),
                   Text(
-                    "Stack",
-                    style: Theme.of(context).textTheme.bodyText1,
+                    "QCODE",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ],
               ),
@@ -61,6 +65,7 @@ class _StartScreenState extends State<StartScreen> {
                     Text(
                       "Hello!",
                       style: TextStyle(
+                        color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: constraints.maxHeight * .055,
                       ),

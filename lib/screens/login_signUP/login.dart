@@ -37,8 +37,12 @@ class _LoginPageState extends State<LoginPage> {
                   width: 10,
                 ),
                 Text(
-                  "Stack",
-                  style: Theme.of(context).textTheme.bodyText1,
+                  "QCODE",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
                 ),
               ],
             ),
@@ -53,8 +57,10 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text("Welcome Back!",
-                          style:
-                              TextStyle(fontSize: constraints.maxHeight * .045),
+                          style: TextStyle(
+                            fontSize: constraints.maxHeight * .045,
+                            color: Colors.black,
+                          ),
                           textAlign: TextAlign.start),
                       SizedBox(
                         height: 20,

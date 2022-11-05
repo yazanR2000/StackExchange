@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        title: "QCODE",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: "OpenSans",
