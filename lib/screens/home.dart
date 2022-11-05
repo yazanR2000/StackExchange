@@ -31,28 +31,16 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           actions: [
             IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/NotificationsScreen');
-                },
-                icon: Icon(
-                  Icons.notifications,
-                  color: Colors.amber,
-                ))
+              onPressed: () {
+                Navigator.of(context).pushNamed('/NotificationsScreen');
+              },
+              icon: Icon(
+                Icons.notifications,
+              ),
+            )
           ],
-          title: Row(
-            children: [
-              FaIcon(
-                size: 30,
-                FontAwesomeIcons.accusoft,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                "Stack",
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            ],
+          title: Text(
+            "Feeds",
           ),
         ),
         drawer: AppDrawer(),
