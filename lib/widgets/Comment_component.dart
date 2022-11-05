@@ -21,6 +21,22 @@ class CommentComponent extends StatefulWidget {
 }
 
 class _CommentComponentState extends State<CommentComponent> {
+  String _getTime(String date) {
+    String dif;
+    final DateTime time = DateTime.now();
+    final DateTime postTime = DateTime.parse(date);
+    if (time.difference(postTime).inDays != 0) {
+      dif = "${time.difference(postTime).inDays.toString()} days ago";
+    } else if (time.difference(postTime).inHours != 0) {
+      dif = "${time.difference(postTime).inHours.toString()} hours ago";
+    } else if (time.difference(postTime).inMinutes != 0) {
+      dif = "${time.difference(postTime).inMinutes.toString()} min ago";
+    } else {
+      dif = "${time.difference(postTime).inSeconds.toString()} sec ago";
+    }
+    return dif;
+  }
+
   String? _vote;
   bool _isExpaning = false;
   @override
@@ -81,8 +97,7 @@ class _CommentComponentState extends State<CommentComponent> {
                   ),
                   contentPadding: EdgeInsets.zero,
                   title: Text(widget._comment['userFullName']),
-                  subtitle:
-                      Text(widget._comment['date'].toString().substring(0, 16)),
+                  subtitle: Text(_getTime(widget._comment['date'].toString())),
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 15),
@@ -189,9 +204,8 @@ class _CommentComponentState extends State<CommentComponent> {
                             ),
                             contentPadding: EdgeInsets.zero,
                             title: Text(data[index]['userFullName']),
-                            subtitle: Text(data[index]['date']
-                                .toString()
-                                .substring(0, 16)),
+                            subtitle:
+                                Text(_getTime(data[index]['date'].toString())),
                           ),
                           Container(
                             child: Text(data[index]['comment']),
