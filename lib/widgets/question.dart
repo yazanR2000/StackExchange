@@ -131,7 +131,7 @@ class _QuestionComponentState extends State<QuestionComponent> {
                   ),
                 ),
               ),
-              SaveButton(widget._post, false),
+              SaveButton(widget._post, widget._isFromSaves),
             ],
           ),
         ],

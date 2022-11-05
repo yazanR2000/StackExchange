@@ -55,9 +55,9 @@ flutter_icons:
   android: true
   ios: true
   remove_alpha_ios: true
-  image_path: "images/logo-color-modified.png"
+  image_path: "images/logo-color-modified-modified.png"
   adapive_icon_background: "#FFFFFF00"
-  adapive_icon_foreground: "images/logo-color-modified.png"
+  adapive_icon_foreground: "images/logo-color-modified-modified.png"
 dev_dependencies:
   flutter_test:
     sdk: flutter

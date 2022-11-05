@@ -40,8 +40,12 @@ class _MySavesState extends State<MySaves> {
           }
           final data = snapshot.hasData ? snapshot.data!.docs : [];
           return ListView.separated(
-            padding: const EdgeInsets.all(15),
-            separatorBuilder: (context, index) => SizedBox(height: 15,),
+            //padding: const EdgeInsets.all(15),
+            separatorBuilder: (context, index) => Divider(
+              thickness: 10,
+              height: 10,
+              color: Colors.blueGrey.shade50,
+            ),
             itemCount: data.length,
             itemBuilder: (context, index) {
               return QuestionComponent(data[index],false,true,_rebuild);
