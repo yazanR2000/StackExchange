@@ -29,9 +29,9 @@ class _LoginPageState extends State<LoginPage> {
             titleSpacing: 10,
             title: Row(
               children: [
-                FaIcon(
-                  size: constraints.maxHeight * 0.035,
-                  FontAwesomeIcons.accusoft,
+                Image.asset(
+                  "images/smallLogo.png",
+                  height: constraints.maxHeight * 0.06,
                 ),
                 SizedBox(
                   width: 10,
