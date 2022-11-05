@@ -23,11 +23,11 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     final userId = ModalRoute.of(context)!.settings.arguments as String;
     return Container(
-      color: const Color(0xff34B3F1),
+      color: const Color(0xff2f3b47),
       child: SafeArea(
         child: LayoutBuilder(
           builder:(p0, constraints) =>  Scaffold(
-            backgroundColor: const Color(0xff34B3F1),
+            backgroundColor: const Color(0xff2f3b47),
             body: FutureBuilder(
               future: _getUserInfo(userId),
               builder: (ctx, snapshot) {
@@ -54,6 +54,11 @@ class Profile extends StatelessWidget {
                             Icons.arrow_back_ios,
                             color: Colors.white,
                           ),
+                        ),
+                        trailing: TextButton(
+                          
+                          child: Text("Contact",style: TextStyle(color: Colors.blue),),
+                          onPressed: (){},
                         ),
                       ),
                       const SizedBox(

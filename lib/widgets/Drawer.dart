@@ -29,7 +29,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   _user.userData['Full name'],
                   style: TextStyle(fontSize: 24),
                 ),
-                decoration: BoxDecoration(color: Colors.black87),
+                decoration: BoxDecoration(color: Color(0xff2f3b47)),
                 accountEmail: Text(
                   FirebaseAuth.instance.currentUser!.email!,
                 ),
