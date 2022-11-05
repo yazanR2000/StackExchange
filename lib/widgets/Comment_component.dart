@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../models/question.dart' as q;
 
 class CommentComponent extends StatefulWidget {
@@ -51,11 +52,20 @@ class _CommentComponentState extends State<CommentComponent> {
             ),
           if (widget._question['solvedComment'] != null &&
               widget._question['solvedComment'] == widget._comment.id)
-            Text(
-              "Best Solution",
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    color: Colors.green,
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: Chip(
+                //padding: EdgeInsets.zero,
+                label: Text(
+                  "Best solution",
+                  style: TextStyle(
+                    fontSize: 10,
+                    color: Colors.white,
                   ),
+                ),
+                backgroundColor: Colors.green,
+              ),
+              trailing: Icon(Icons.push_pin),
             ),
           ListTile(
             dense: true,

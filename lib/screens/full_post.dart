@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:stackexchange/widgets/comments.dart';
+import 'package:stackexchange/widgets/save_button.dart';
 import '../widgets/Comment_component.dart';
 
 class FullPost extends StatefulWidget {
@@ -76,26 +77,19 @@ class _FullPostState extends State<FullPost> {
                             width: 5,
                           ),
                           if (_isNew(
-                              DateTime.parse(details['question']['date'])))
+                            DateTime.parse(details['question']['date']),
+                          ))
                             const Chip(
                               label: Text(
                                 "new",
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 15),
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                ),
                               ),
                               backgroundColor: Color(0xFFFF1e1e),
                             ),
-                          IconButton(
-                            onPressed: () {
-                              // setState(() {
-                              //   bookmark = !bookmark;
-                              // });
-                            },
-                            icon: Icon(
-                              Icons.bookmark,
-                              //color: bookmark ? Colors.blue : Colors.black,
-                            ),
-                          ),
+                          SaveButton(details['question'], false),
                         ],
                       ),
                     ),

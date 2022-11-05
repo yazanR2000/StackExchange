@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import "dart:developer";
 class StackoverflowAPI {
   static List<Map<String, dynamic>> _results = [];
 
@@ -16,6 +16,7 @@ class StackoverflowAPI {
             "$_baseUrl/2.3/search/advanced?order=desc&title=$search&sort=votes&site=stackoverflow"),
       );
       final data = json.decode(response.body) as Map<String, dynamic>;
+      //log("$data");
       data['items'].forEach((element) {
         Map<String, dynamic> item = {};
         item.putIfAbsent(
@@ -29,12 +30,16 @@ class StackoverflowAPI {
                 ? false
                 : element["is_answered"]);
         item.putIfAbsent("answer_count", () => element["answer_count"]);
-        item.putIfAbsent("title",
-            () => element["title"] == null ? "Empty" : element["title"]);
-        item.putIfAbsent(
-            "link", () => element["link"] == null ? "" : element["link"]);
+        item.putIfAbsent("title", () => element["title"] == null ? "Empty" : element["title"]);
+        item.putIfAbsent("link", () => element["link"] == null ? "" : element["link"]);
+        item.forEach((key, value) {
+          if(value == null){
+            log("yes");
+          }
+        });
         _results.add(item);
       });
+      //log("$_results");
     } catch (err) {
       throw err;
     }

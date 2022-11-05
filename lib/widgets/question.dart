@@ -8,7 +8,11 @@ class QuestionComponent extends StatefulWidget {
   final bool _isFromSaves;
   final Function _rebuild;
   QuestionComponent(
-      this._post, this._isProfile, this._isFromSaves, this._rebuild);
+    this._post,
+    this._isProfile,
+    this._isFromSaves,
+    this._rebuild,
+  );
 
   @override
   State<QuestionComponent> createState() => _QuestionComponentState();
@@ -36,11 +40,16 @@ class _QuestionComponentState extends State<QuestionComponent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (widget._post['solvedComment'] != "null")
-            Text(
-              "Solved",
-              style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                    color: Colors.green,
-                  ),
+            Chip(
+              //padding: EdgeInsets.zero,
+              label: Text(
+                "Solved",
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.white,
+                ),
+              ),
+              backgroundColor: Colors.green,
             ),
           ListTile(
             dense: true,
@@ -108,7 +117,7 @@ class _QuestionComponentState extends State<QuestionComponent> {
                       "isComment": true,
                       "questionOwnerId": widget._post['userId'].toString(),
                       "questionTitle": widget._post['questionTitle']
-                      //also here send the id of the owner of the question.
+                      
                     });
                   },
                   child: Text("Write your solution"),

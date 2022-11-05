@@ -82,21 +82,20 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                           results[index]['owner_profile_image'],
                         ),
                       ),
-                      title: Text(results[index]['title']),
-                      subtitle: Text(results[index]['link']),
+                      title: Text(results[index]['title'].toString()),
+                      subtitle: Text(results[index]['link'].toString()),
                       trailing: results[index]['is_answered'] == true
-                          ? Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Chip(
-                                label: Text(
-                                  "Solved",
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.white,
-                                  ),
+                          ? Chip(
+                            //padding: EdgeInsets.zero,
+                              label: Text(
+                                "Solved",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.white,
                                 ),
-                                backgroundColor: Colors.green,
                               ),
+
+                              backgroundColor: Colors.green,
                             )
                           : SizedBox(),
                     );
