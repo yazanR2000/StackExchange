@@ -5,9 +5,16 @@ import '../widgets/user_info.dart';
 import '../widgets/user_statistic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   Profile({super.key});
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
   DocumentSnapshot? _userData;
+
   Future _getUserInfo(String userId) async {
     try {
       _userData = await FirebaseFirestore.instance
@@ -26,7 +33,7 @@ class Profile extends StatelessWidget {
       color: const Color(0xff2f3b47),
       child: SafeArea(
         child: LayoutBuilder(
-          builder:(p0, constraints) =>  Scaffold(
+          builder: (p0, constraints) => Scaffold(
             backgroundColor: const Color(0xff2f3b47),
             body: FutureBuilder(
               future: _getUserInfo(userId),
@@ -56,9 +63,51 @@ class Profile extends StatelessWidget {
                           ),
                         ),
                         trailing: TextButton(
-                          
-                          child: Text("Contact",style: TextStyle(color: Colors.blue),),
-                          onPressed: (){},
+                          child: Text(
+                            "Contact",
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                          onPressed: () {
+                            showDialog<void>(
+                              context: context,
+                              barrierDismissible:
+                                  false, // user must tap button!
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Contact'),
+                                  content: SingleChildScrollView(
+                                    child: ListBody(
+                                      children: <Widget>[
+                                        ListTile(
+                                          dense: true,
+                                          leading: Icon(Icons.call),
+                                          title: Text(''),
+                                        ),
+                                        ListTile(
+                                          dense: true,
+                                          leading: Icon(Icons.email),
+                                          title: Text(''),
+                                        ),
+                                        ListTile(
+                                          dense: true,
+                                          leading: Icon(Icons.email),
+                                          title: Text('DirectMessage'),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text('Back'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
                         ),
                       ),
                       const SizedBox(
@@ -78,7 +127,7 @@ class Profile extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      UserProblems(userId,constraints),
+                      UserProblems(userId, constraints),
                     ],
                   ),
                 );
