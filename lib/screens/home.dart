@@ -11,6 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:developer';
 import '../models/home_provider.dart';
 import 'package:provider/provider.dart';
+
 class Home extends StatefulWidget {
   Home({super.key});
 
@@ -19,15 +20,25 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  void _rebuild(){
+  void _rebuild() {
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder:(ctx, BoxConstraints constraints) =>  Scaffold(
+      builder: (ctx, BoxConstraints constraints) => Scaffold(
         appBar: AppBar(
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/NotificationsScreen');
+                },
+                icon: Icon(
+                  Icons.notifications,
+                  color: Colors.amber,
+                ))
+          ],
           title: Row(
             children: [
               FaIcon(
@@ -50,24 +61,27 @@ class _HomeState extends State<Home> {
             _rebuild();
           },
           child: Consumer<HomeProvider>(
-            builder:(context, value, child) => StreamBuilder(
-              stream: FirebaseFirestore.instance.collection("Questions").orderBy('date',descending: true).snapshots(),
+            builder: (context, value, child) => StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection("Questions")
+                  .orderBy('date', descending: true)
+                  .snapshots(),
               builder: (context, snapshot) {
-                
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
                 final data = snapshot.data!.docs;
-                return HomeQuestions(data,_rebuild);
+                return HomeQuestions(data, _rebuild);
               },
             ),
           ),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).pushNamed("/add_new_question",arguments: _rebuild);
+            Navigator.of(context)
+                .pushNamed("/add_new_question", arguments: _rebuild);
           },
           child: const Icon(Icons.add),
         ),

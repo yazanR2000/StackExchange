@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:stackexchange/models/notifications.dart';
 import 'dart:io' as i;
 import '../models/question.dart';
+import '../models/user.dart' as u;
 
 class CommentSheet extends StatefulWidget {
   const CommentSheet({super.key});
@@ -33,6 +37,11 @@ class _CommentSheetState extends State<CommentSheet> {
   Widget build(BuildContext context) {
     final Map<String, dynamic> details =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+
+    String questiOwnerId = details['questionOwnerId'].toString();
+    String questionTitle = details['questionTitle'].toString();
+    Notifications x = new Notifications();
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Add comment"),
@@ -64,7 +73,10 @@ class _CommentSheetState extends State<CommentSheet> {
                             },
                             details['id'],
                           );
-                        }else{
+
+                          x.PushNotification(questiOwnerId, questionTitle,
+                              details['comment'], true);
+                        } else {
                           await Question.addNewReply(
                             {
                               "comment": _solutionController.text,
@@ -72,6 +84,11 @@ class _CommentSheetState extends State<CommentSheet> {
                             },
                             details['id'],
                           );
+                          x.PushNotification(
+                              details['commentOwnerId'].toString(),
+                              questionTitle,
+                              details['comment'],
+                              false);
                         }
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
