@@ -40,7 +40,8 @@ class Question {
             Reference ref = FirebaseStorage.instance
                 .ref()
                 .child("Questions")
-                .child(id).child(commentId)
+                .child(id)
+                .child(commentId)
                 .child(DateTime.now().toLocal().toString());
             final UploadTask uploadTask = ref.putFile(i.File(e.path));
             String? dowurl;
@@ -62,7 +63,8 @@ class Question {
       await collection
           .collection("Comments")
           .doc(id)
-          .collection("Comments").doc(commentId)
+          .collection("Comments")
+          .doc(commentId)
           .set({
         "userId": FirebaseAuth.instance.currentUser!.uid,
         "userFullName": user.userData['Full name'],
@@ -79,7 +81,7 @@ class Question {
     }
   }
 
-   static Future addNewReply(Map<String, dynamic> details, String id) async {
+  static Future addNewReply(Map<String, dynamic> details, String id) async {
     if (details['images'].length == 0 && details['comment'] == "") {
       throw "Please add a text or image at least";
     }
@@ -95,7 +97,8 @@ class Question {
             Reference ref = FirebaseStorage.instance
                 .ref()
                 .child("Replies")
-                .child(id).child(replyId)
+                .child(id)
+                .child(replyId)
                 .child(DateTime.now().toLocal().toString());
             final UploadTask uploadTask = ref.putFile(i.File(e.path));
             String? dowurl;
@@ -117,7 +120,8 @@ class Question {
       await collection
           .collection("Replies")
           .doc(id)
-          .collection("Replies").doc(replyId)
+          .collection("Replies")
+          .doc(replyId)
           .set({
         "userId": FirebaseAuth.instance.currentUser!.uid,
         "userFullName": user.userData['Full name'],
@@ -176,8 +180,6 @@ class Question {
       throw err;
     }
   }
-
-  
 
   Future editQuestionFromOwner(Map<String, dynamic> details) async {
     try {
