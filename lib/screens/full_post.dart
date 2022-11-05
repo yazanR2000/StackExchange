@@ -88,7 +88,7 @@ class _FullPostState extends State<FullPost> {
                   ),
 
                   //title
-                  Text(
+                  SelectableText(
                     details['question']['questionTitle'],
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
@@ -96,7 +96,7 @@ class _FullPostState extends State<FullPost> {
                     height: 10,
                   ),
                   //subtitle
-                  Text(
+                  SelectableText(
                     details['question']['description'].toString(),
                     style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         height: 1.4, fontSize: 17, fontWeight: FontWeight.bold),
