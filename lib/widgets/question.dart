@@ -8,7 +8,11 @@ class QuestionComponent extends StatefulWidget {
   final bool _isFromSaves;
   final Function _rebuild;
   QuestionComponent(
-      this._post, this._isProfile, this._isFromSaves, this._rebuild);
+    this._post,
+    this._isProfile,
+    this._isFromSaves,
+    this._rebuild,
+  );
 
   @override
   State<QuestionComponent> createState() => _QuestionComponentState();
@@ -111,6 +115,9 @@ class _QuestionComponentState extends State<QuestionComponent> {
                         .pushNamed("/CommentSheet", arguments: {
                       "id": widget._post.id,
                       "isComment": true,
+                      "questionOwnerId": widget._post['userId'].toString(),
+                      "questionTitle": widget._post['questionTitle']
+                      
                     });
                   },
                   child: Text("Write your solution"),
@@ -125,6 +132,7 @@ class _QuestionComponentState extends State<QuestionComponent> {
                 Navigator.of(context).pushNamed("/FullPost", arguments: {
                   'question': widget._post,
                   'rebuild': widget._rebuild,
+                  'questionOwnerId': widget._post['userId'].toString(),
                 });
               },
               child: Text("See full post"),

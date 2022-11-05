@@ -24,7 +24,11 @@ class StackoverflowAPI {
             () => element["owner"]["profile_image"] == null
                 ? "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
                 : element["owner"]["profile_image"]);
-        item.putIfAbsent("is_answered", () => element["is_answered"] == null ? false : element["is_answered"]);
+        item.putIfAbsent(
+            "is_answered",
+            () => element["is_answered"] == false
+                ? false
+                : element["is_answered"]);
         item.putIfAbsent("answer_count", () => element["answer_count"]);
         item.putIfAbsent("title", () => element["title"] == null ? "Empty" : element["title"]);
         item.putIfAbsent("link", () => element["link"] == null ? "" : element["link"]);

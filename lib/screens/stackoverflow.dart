@@ -73,6 +73,7 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                     return ListTile(
                       isThreeLine: true,
                       dense: true,
+                      autofocus: true,
                       onTap: () async {
                         await _launchUrl(results[index]['link']);
                       },
@@ -93,6 +94,7 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                                   color: Colors.white,
                                 ),
                               ),
+
                               backgroundColor: Colors.green,
                             )
                           : SizedBox(),

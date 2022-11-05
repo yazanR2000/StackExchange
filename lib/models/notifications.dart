@@ -1,15 +1,36 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../models/user.dart' as u;
+
 class Notifications {
-  
-}
-/*
-Notifications Collection
-  UserId
-    [noti]
-    {
-      "questionId" : String,
-      "questionTitle" : String,
-      "userImage" : String,
-      "userName" : String,
-      "description" : String,
+  Future<void> PushNotification(
+      OwnerId, questionTitle, commentContent, isComment) async {
+    String notificationBody = '';
+    String notificationSubTitle = '';
+
+    if (isComment) {
+      notificationBody = 'commented on your post';
+      notificationSubTitle = questionTitle;
+    } else {
+      notificationBody = 'replied to your comment';
+      notificationSubTitle = commentContent;
     }
-*/
+
+    final u.User _user = u.User.getInstance();
+    _user.getUserData();
+
+    DocumentSnapshot? documentSnapshot;
+    documentSnapshot = _user.userData;
+
+    String CommentatorName = documentSnapshot['Full name'].toString();
+
+    await FirebaseFirestore.instance
+        .collection('Notifications')
+        .doc(OwnerId)
+        .collection('NewNotifications')
+        .add({
+      'title': '$CommentatorName $notificationBody',
+      'subtitle': '$notificationSubTitle',
+    });
+  }
+}

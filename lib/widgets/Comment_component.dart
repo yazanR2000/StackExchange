@@ -140,6 +140,8 @@ class _CommentComponentState extends State<CommentComponent> {
                     arguments: {
                       "id": widget._comment.id,
                       "isComment": false,
+                      "commentOwnerId": widget._comment['userId'],
+                      "comment": widget._comment['comment'].toString(),
                     },
                   );
                 },

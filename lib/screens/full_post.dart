@@ -184,6 +184,8 @@ class _FullPostState extends State<FullPost> {
             arguments: {
               "id": details['question'].id,
               "isComment": true,
+              // "questionOwnerId": details['userId'],
+              "questionOwnerId": details['questionOwnerId'],
             },
           );
         },
