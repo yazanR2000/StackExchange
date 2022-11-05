@@ -7,7 +7,8 @@ class QuestionComponent extends StatefulWidget {
   final bool _isProfile;
   final bool _isFromSaves;
   final Function _rebuild;
-  QuestionComponent(this._post, this._isProfile,this._isFromSaves, this._rebuild);
+  QuestionComponent(
+      this._post, this._isProfile, this._isFromSaves, this._rebuild);
 
   @override
   State<QuestionComponent> createState() => _QuestionComponentState();
@@ -22,7 +23,6 @@ class _QuestionComponentState extends State<QuestionComponent> {
     }
     return false;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class _QuestionComponentState extends State<QuestionComponent> {
                       ),
                       backgroundColor: Color(0xFFFF1e1e),
                     ),
-                  SaveButton(widget._post,widget._isFromSaves),
+                  SaveButton(widget._post, widget._isFromSaves),
                 ],
               ),
             ),
@@ -104,9 +104,12 @@ class _QuestionComponentState extends State<QuestionComponent> {
                   onPressed: () {
                     Navigator.of(context)
                         .pushNamed("/CommentSheet", arguments: {
-                          "id" : widget._post.id,
-                          "isComment" : true,
-                        });
+                      "id": widget._post.id,
+                      "isComment": true,
+                      "questionOwnerId": widget._post['userId'].toString(),
+                      "questionTitle": widget._post['questionTitle']
+                      //also here send the id of the owner of the question.
+                    });
                   },
                   child: Text("Write your solution"),
                 ),
@@ -120,6 +123,7 @@ class _QuestionComponentState extends State<QuestionComponent> {
                 Navigator.of(context).pushNamed("/FullPost", arguments: {
                   'question': widget._post,
                   'rebuild': widget._rebuild,
+                  'questionOwnerId': widget._post['userId'].toString(),
                 });
               },
               child: Text("See full post"),
