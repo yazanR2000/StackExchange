@@ -75,7 +75,7 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                 _details['images'].clear();
               });
             },
-            child: Text("Clear"),
+            child: Text("Clear",style: TextStyle(color: Colors.white),),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

@@ -54,8 +54,13 @@ class _MyQuestionsState extends State<MyQuestions> {
             );
           }
           final data = snapshot.hasData ? snapshot.data!.docs : [];
-          return ListView.builder(
-            padding: const EdgeInsets.all(15),
+          return ListView.separated(
+            separatorBuilder: (context, index) => Divider(
+              thickness: 10,
+              height: 10,
+              color: Colors.blueGrey.shade50,
+            ),
+            //padding: const EdgeInsets.all(15),
             //reverse: true,
             itemCount: data.length,
             itemBuilder: (context, index) {
