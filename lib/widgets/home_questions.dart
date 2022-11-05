@@ -6,7 +6,7 @@ import 'dart:developer';
 class HomeQuestions extends StatefulWidget {
   final List<QueryDocumentSnapshot<Map<String, dynamic>>> _data;
   final Function _rebuild;
-  HomeQuestions(this._data,this._rebuild);
+  HomeQuestions(this._data, this._rebuild);
 
   @override
   State<HomeQuestions> createState() => _HomeQuestionsState();
@@ -15,7 +15,6 @@ class HomeQuestions extends StatefulWidget {
 class _HomeQuestionsState extends State<HomeQuestions> {
   String? _search = "";
   List<QueryDocumentSnapshot<Map<String, dynamic>>>? _filter;
-
 
   @override
   void didChangeDependencies() {
@@ -49,44 +48,44 @@ class _HomeQuestionsState extends State<HomeQuestions> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.symmetric(vertical: 15),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextField(
-            decoration: InputDecoration(
-              hintText: "Search....",
-              suffixIcon: Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(100),
-                borderSide: const BorderSide(color: Colors.black),
+          
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: "Search....",
+                suffixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(100),
+                  borderSide: const BorderSide(color: Colors.black),
+                ),
               ),
+              onChanged: (value) {
+                _search = value;
+                _filterBySearch();
+              },
             ),
-            onChanged: (value) {
-              _search = value;
-              _filterBySearch();
-            },
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          
           ListView.separated(
             //reverse: true,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            separatorBuilder: (context, index) => const SizedBox(
-              height: 20,
+            separatorBuilder: (context, index) => Divider(
+              thickness: 10,
+              height: 10,
+              color: Colors.blueGrey.shade50,
             ),
             itemCount: _filter!.length,
             itemBuilder: (context, index) => QuestionComponent(
-              _filter![index],
-              false,
-              false,
-              widget._rebuild
-            ),
+                _filter![index], false, false, widget._rebuild),
           ),
         ],
       ),

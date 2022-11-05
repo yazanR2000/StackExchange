@@ -74,8 +74,12 @@ class _CommentSheetState extends State<CommentSheet> {
                             details['id'],
                           );
 
-                          x.PushNotification(questiOwnerId, questionTitle,
-                              details['comment'], true);
+                          x.PushNotification(
+                            questiOwnerId,
+                            questionTitle,
+                            details['comment'],
+                            true,
+                          );
                         } else {
                           await Question.addNewReply(
                             {
@@ -85,10 +89,11 @@ class _CommentSheetState extends State<CommentSheet> {
                             details['id'],
                           );
                           x.PushNotification(
-                              details['commentOwnerId'].toString(),
-                              questionTitle,
-                              details['comment'],
-                              false);
+                            details['commentOwnerId'].toString(),
+                            questionTitle,
+                            details['comment'],
+                            false,
+                          );
                         }
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

@@ -55,9 +55,11 @@ class _CommentsState extends State<Comments> {
             }
             _pinSolvedComment();
             return ListView.separated(
-              separatorBuilder: (context, index) => SizedBox(
-                height: 10,
-              ),
+              separatorBuilder: (context, index) => Divider(
+              thickness: 10,
+              height: 10,
+              color: Colors.blueGrey.shade50,
+            ),
               padding: EdgeInsets.only(bottom: 50),
               //reverse: true,
               shrinkWrap: true,

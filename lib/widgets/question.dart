@@ -28,118 +28,225 @@ class _QuestionComponentState extends State<QuestionComponent> {
     return false;
   }
 
+  String _getTime(String date) {
+    String dif;
+    final DateTime time = DateTime.now();
+    final DateTime postTime = DateTime.parse(date);
+    if (time.difference(postTime).inDays != 0) {
+      dif = "${time.difference(postTime).inDays.toString()} days ago";
+    } else if (time.difference(postTime).inHours != 0) {
+      dif = "${time.difference(postTime).inHours.toString()} hours ago";
+    } else if (time.difference(postTime).inMinutes != 0) {
+      dif = "${time.difference(postTime).inMinutes.toString()} min ago";
+    } else {
+      dif = "${time.difference(postTime).inSeconds.toString()} sec ago";
+    }
+    return dif;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.grey.shade200,
-      ),
+      padding: EdgeInsets.all(15),
+      color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget._post['solvedComment'] != "null")
-            Chip(
-              //padding: EdgeInsets.zero,
-              label: Text(
-                "Solved",
-                style: TextStyle(
-                  fontSize: 10,
-                  color: Colors.white,
-                ),
-              ),
-              backgroundColor: Colors.green,
-            ),
           ListTile(
-            dense: true,
             onTap: widget._isProfile
                 ? null
                 : () {
                     Navigator.of(context).pushNamed('/profile',
                         arguments: widget._post['userId']);
                   },
+            contentPadding: EdgeInsets.zero,
+            title: Text(
+              widget._post['userFullName'].toString(),
+            ),
+            subtitle: Text(
+              _getTime(widget._post['date'].toString()),
+            ),
             leading: CircleAvatar(
               backgroundImage: NetworkImage(
                 widget._post['userImageUrl'],
               ),
             ),
-            contentPadding: EdgeInsets.zero,
-            title: Text(widget._post['userFullName'].toString()),
-            subtitle: Text(widget._post['date'].toString().substring(0, 10)),
-            trailing: FittedBox(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Chip(
-                    backgroundColor: Color(0xff),
-                    label: Text(
-                      widget._post['type'],
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  if (_isNew(DateTime.parse(widget._post['date'])))
-                    const Chip(
-                      label: Text(
-                        "new",
-                        style: TextStyle(color: Colors.white, fontSize: 15),
-                      ),
-                      backgroundColor: Color(0xFFFF1e1e),
-                    ),
-                  SaveButton(widget._post, widget._isFromSaves),
-                ],
-              ),
-            ),
           ),
+          SizedBox(
+            height: 15,
+          ),
+          //title
           Text(
             widget._post['questionTitle'],
             style: Theme.of(context).textTheme.bodyText1,
           ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 15),
-            child: Text(
-              widget._post['description'].toString().length > 200
-                  ? "${widget._post['description'].toString().substring(0, 200)}..."
-                  : widget._post['description'].toString(),
-            ),
+          SizedBox(
+            height: 10,
           ),
-          Row(
+          //subtitle
+          Text(
+            widget._post['description'].toString().length > 500
+                ? "${widget._post['description'].toString().substring(0, 500)}..."
+                : widget._post['description'].toString(),
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Wrap(
+            direction: Axis.horizontal,
             children: [
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed("/CommentSheet", arguments: {
-                      "id": widget._post.id,
-                      "isComment": true,
-                      "questionOwnerId": widget._post['userId'].toString(),
-                      "questionTitle": widget._post['questionTitle']
-                      
-                    });
-                  },
-                  child: Text("Write your solution"),
+              Chip(
+                backgroundColor: Colors.blueGrey.shade50,
+                label: Text(
+                  widget._post['type'],
+                  style:
+                      TextStyle(fontSize: 15, color: Colors.blueGrey.shade200),
                 ),
               ),
             ],
           ),
-          Align(
-            alignment: Alignment.center,
-            child: TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed("/FullPost", arguments: {
-                  'question': widget._post,
-                  'rebuild': widget._rebuild,
-                  'questionOwnerId': widget._post['userId'].toString(),
-                });
-              },
-              child: Text("See full post"),
-            ),
-          )
+          SizedBox(
+            height: 5,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed("/FullPost", arguments: {
+                    'question': widget._post,
+                    'rebuild': widget._rebuild,
+                    'questionOwnerId': widget._post['userId'].toString(),
+                  });
+                },
+                child: Text(
+                  "View details",
+                  style: TextStyle(
+                    color: Color(0xff2f3b47),
+                  ),
+                ),
+              ),
+              SaveButton(widget._post, false),
+            ],
+          ),
         ],
       ),
     );
+    // return Container(
+    //   padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+    //   decoration: BoxDecoration(
+    //     borderRadius: BorderRadius.circular(20),
+    //     color: Colors.grey.shade200,
+    //   ),
+    //   child: Column(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: [
+    //       if (widget._post['solvedComment'] != "null")
+    //         Chip(
+    //           //padding: EdgeInsets.zero,
+    //           label: Text(
+    //             "Solved",
+    //             style: TextStyle(
+    //               fontSize: 10,
+    //               color: Colors.white,
+    //             ),
+    //           ),
+    //           backgroundColor: Colors.green,
+    //         ),
+    //       ListTile(
+    //         dense: true,
+    //         onTap: widget._isProfile
+    //             ? null
+    //             : () {
+    //                 Navigator.of(context).pushNamed('/profile',
+    //                     arguments: widget._post['userId']);
+    //               },
+    //         leading: CircleAvatar(
+    //           backgroundImage: NetworkImage(
+    //             widget._post['userImageUrl'],
+    //           ),
+    //         ),
+    //         contentPadding: EdgeInsets.zero,
+    //         title: Text(widget._post['userFullName'].toString()),
+    //         subtitle: Text(widget._post['date'].toString().substring(0, 10)),
+    //         trailing: FittedBox(
+    //           child: Row(
+    //             mainAxisAlignment: MainAxisAlignment.end,
+    //             children: [
+    // Chip(
+    //   backgroundColor: Color(0xff),
+    //   label: Text(
+    //     widget._post['type'],
+    //     style: TextStyle(fontSize: 15),
+    //   ),
+    // ),
+    //               SizedBox(
+    //                 width: 5,
+    //               ),
+    //               if (_isNew(DateTime.parse(widget._post['date'])))
+    //                 const Chip(
+    //                   label: Text(
+    //                     "new",
+    //                     style: TextStyle(color: Colors.white, fontSize: 15),
+    //                   ),
+    //                   backgroundColor: Color(0xFFFF1e1e),
+    //                 ),
+    //               SaveButton(widget._post, widget._isFromSaves),
+    //             ],
+    //           ),
+    //         ),
+    //       ),
+    //       Text(
+    //         widget._post['questionTitle'],
+    //         style: Theme.of(context).textTheme.bodyText1,
+    //       ),
+    //       Container(
+    //         margin: EdgeInsets.symmetric(vertical: 15),
+    //         child: Text(
+    // widget._post['description'].toString().length > 200
+    //     ? "${widget._post['description'].toString().substring(0, 200)}..."
+    //     : widget._post['description'].toString(),
+    //         ),
+    //       ),
+    //       Row(
+    //         children: [
+    //           Expanded(
+    //             child: ElevatedButton(
+    //               onPressed: () {
+    //                 Navigator.of(context)
+    //                     .pushNamed("/CommentSheet", arguments: {
+    //                   "id": widget._post.id,
+    //                   "isComment": true,
+    //                   "questionOwnerId": widget._post['userId'].toString(),
+    //                   "questionTitle": widget._post['questionTitle']
+
+    //                 });
+    //               },
+    //               child: Text("Write your solution"),
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //       Align(
+    //         alignment: Alignment.center,
+    //         child: TextButton(
+    // onPressed: () {
+    //   Navigator.of(context).pushNamed("/FullPost", arguments: {
+    //     'question': widget._post,
+    //     'rebuild': widget._rebuild,
+    //     'questionOwnerId': widget._post['userId'].toString(),
+    //   });
+    // },
+    //           child: Text("See full post"),
+    //         ),
+    //       )
+    //     ],
+    //   ),
+    // );
   }
 }

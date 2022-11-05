@@ -38,6 +38,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                   final DocumentSnapshot documentSnapshot =
                       streamSnapshot.data!.docs[index];
                   return ListTile(
+                    onTap: (){},
                     dense: true,
                     isThreeLine: true,
                     title: Text(documentSnapshot['title']),

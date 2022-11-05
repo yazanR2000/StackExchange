@@ -44,18 +44,19 @@ class MyApp extends StatelessWidget {
           fontFamily: "OpenSans",
           scaffoldBackgroundColor: Colors.white,
           appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.white,
+            backgroundColor: Color(0xff2f3b47),
             elevation: 0,
             actionsIconTheme: IconThemeData(
-              color: Colors.black,
+              color: Colors.white,
             ),
             iconTheme: IconThemeData(
-              color: Colors.black,
+              color: Colors.white,
             ),
             titleTextStyle: TextStyle(
-                color: Colors.black,
-                //fontWeight: FontWeight.bold,
-                fontSize: 20),
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
             style: TextButton.styleFrom(
               elevation: 0,
               foregroundColor: Colors.black,
+              textStyle: TextStyle(),
             ),
           ),
           outlinedButtonTheme: OutlinedButtonThemeData(
@@ -86,14 +88,13 @@ class MyApp extends StatelessWidget {
           floatingActionButtonTheme: const FloatingActionButtonThemeData(
             backgroundColor: Color(0xff34B3F1),
           ),
-          textTheme: const TextTheme(
+          textTheme: TextTheme(
             bodyText1: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 23,
-            ),
+                fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 20),
             bodyText2: TextStyle(
               // fontWeight: FontWeight.bold,
-              fontSize: 20,
+              color: Colors.grey,
+              fontSize: 15,
             ),
           ),
         ),
