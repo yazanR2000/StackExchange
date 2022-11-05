@@ -58,16 +58,20 @@ class _SignUpState extends State<SignUp> {
               titleSpacing: 10,
               title: Row(
                 children: [
-                  FaIcon(
-                    size: constraints.maxHeight * 0.035,
-                    FontAwesomeIcons.accusoft,
+                  Image.asset(
+                    "images/smallLogo.png",
+                    height: constraints.maxHeight * 0.06,
                   ),
                   SizedBox(
                     width: 10,
                   ),
                   Text(
-                    "Stack",
-                    style: Theme.of(context).textTheme.bodyText1,
+                    "QCODE",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ],
               ),
@@ -83,6 +87,7 @@ class _SignUpState extends State<SignUp> {
                       children: [
                         Text("Welcome !",
                             style: TextStyle(
+                                color: Colors.black,
                                 fontSize: constraints.maxHeight * .045),
                             textAlign: TextAlign.start),
                         SizedBox(
