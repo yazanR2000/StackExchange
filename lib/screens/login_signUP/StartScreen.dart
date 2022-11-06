@@ -20,28 +20,28 @@ class _StartScreenState extends State<StartScreen> {
       builder: (BuildContext context, BoxConstraints constraints) {
         return SafeArea(
           child: Scaffold(
-            appBar: AppBar(
-              titleSpacing: 10,
-              title: Row(
-                children: [
-                  Image.asset(
-                    "images/smallLogo.png",
-                    height: constraints.maxHeight * 0.06,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    "QCODE",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // appBar: AppBar(
+            //   titleSpacing: 10,
+            //   title: Row(
+            //     children: [
+            //       Image.asset(
+            //         "images/smallLogo.png",
+            //         height: constraints.maxHeight * 0.06,
+            //       ),
+            //       SizedBox(
+            //         width: 10,
+            //       ),
+            //       Text(
+            //         "QCODE",
+            //         style: TextStyle(
+            //           color: Colors.white,
+            //           fontWeight: FontWeight.bold,
+            //           fontSize: 20,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -58,7 +58,7 @@ class _StartScreenState extends State<StartScreen> {
                         width: double.infinity,
                         fit: BoxFit.cover,
                         image: AssetImage(
-                          "images/logo-removebg-preview.png",
+                          "images/large1.png",
                         ),
                       ),
                     ),

@@ -165,8 +165,14 @@ class Splash extends StatelessWidget {
         alignment: Alignment.center,
         height: double.infinity,
         width: double.infinity,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage('images/splash2.gif'),
+        )),
         child: Image(
-          image: AssetImage('images/splash.gif'),
+          fit: BoxFit.cover,
+          image: AssetImage('images/logo-removebg.png'),
           //fit: BoxFit.fill,
         ),
       ),
