@@ -4,6 +4,7 @@ import 'package:stackexchange/widgets/user_problems.dart';
 import '../widgets/user_info.dart';
 import '../widgets/user_statistic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatefulWidget {
   Profile({super.key});
@@ -67,8 +68,26 @@ class _ProfileState extends State<Profile> {
                             "Contact",
                             style: TextStyle(color: Colors.blue),
                           ),
-                          onPressed: () {
-                            showDialog<void>(
+                          onPressed: () async {
+                            final Uri Phone_url =
+                                Uri.parse('tel:${_userData!['Phone number']}');
+
+                            Future<void> PhoneCall() async {
+                              if (!await launchUrl(Phone_url)) {
+                                throw 'Could not launch $Phone_url';
+                              }
+                            }
+
+                            final Uri Email_url =
+                                Uri.parse('mailto:${_userData!['User Email']}');
+
+                            Future<void> Email() async {
+                              if (!await launchUrl(Email_url)) {
+                                throw 'Could not launch $Email_url';
+                              }
+                            }
+
+                            await showDialog<void>(
                               context: context,
                               barrierDismissible:
                                   false, // user must tap button!
@@ -79,14 +98,18 @@ class _ProfileState extends State<Profile> {
                                     child: ListBody(
                                       children: <Widget>[
                                         ListTile(
+                                          onTap: PhoneCall,
                                           dense: true,
                                           leading: Icon(Icons.call),
-                                          title: Text(''),
+                                          title: Text(
+                                              '${_userData!['Phone number']}'),
                                         ),
                                         ListTile(
+                                          onTap: Email,
                                           dense: true,
                                           leading: Icon(Icons.email),
-                                          title: Text(''),
+                                          title: Text(
+                                              '${_userData!['User Email']}'),
                                         ),
                                         ListTile(
                                           dense: true,

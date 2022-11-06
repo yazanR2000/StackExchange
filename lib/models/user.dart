@@ -55,6 +55,7 @@ class User {
         "User image": imageUrl == null
             ? "https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
             : imageUrl,
+        'User Email': _userInfo!['User Email'],
         "Full name": _userInfo!['Full name'],
         "Phone number": _userInfo!['Phone number'],
         "questions": 0,
