@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../models/question.dart' as q;
 import '../widgets/question_images.dart';
+import 'package:flutter/services.dart';
 
 class CommentComponent extends StatefulWidget {
   final QueryDocumentSnapshot _comment;
@@ -101,7 +102,7 @@ class _CommentComponentState extends State<CommentComponent> {
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 15),
-                  child: Text(
+                  child: SelectableText(
                     widget._comment['comment'],
                     style: Theme.of(context).textTheme.bodyText2!.copyWith(
                           height: 1.4,
@@ -208,7 +209,17 @@ class _CommentComponentState extends State<CommentComponent> {
                                 Text(_getTime(data[index]['date'].toString())),
                           ),
                           Container(
-                            child: Text(data[index]['comment']),
+                            child: SelectableText(
+                              data[index]['comment'],
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .copyWith(
+                                    height: 1.4,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
                           ),
                           if (data[index]['images'].length != 0)
                             Container(

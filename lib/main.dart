@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:stackexchange/firebase_options.dart';
 import 'package:stackexchange/screens/NotificationsScreen.dart';
+import 'package:stackexchange/screens/chat.dart';
 import 'package:stackexchange/screens/login_signUP/forgotPassword.dart';
 import 'package:stackexchange/screens/my_questions.dart';
 import 'package:stackexchange/screens/stackoverflow.dart';
@@ -113,7 +114,8 @@ class MyApp extends StatelessWidget {
           '/StartScreen': (context) => StartScreen(),
           '/my_saves': (context) => MySaves(),
           '/stackoverflow': (context) => StackOverflowScreen(),
-          '/NotificationsScreen': (context) => NotificationsScreen()
+          '/NotificationsScreen': (context) => NotificationsScreen(),
+          '/ChatScreen': (context) => ChatScreen(),
         },
       ),
     );

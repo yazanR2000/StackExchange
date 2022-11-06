@@ -291,6 +291,7 @@ class _SignUpState extends State<SignUp> {
                                     password: passwordController.text.trim(),
                                   );
                                   _user.UserInfo = {
+                                    'User Email': emailController.text,
                                     "image": _image == null ? "" : _image!.path,
                                     "Full name": fullnameController.text,
                                     "Phone number": phonenumber,
