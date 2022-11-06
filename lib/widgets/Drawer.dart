@@ -145,12 +145,19 @@ class _AppDrawerState extends State<AppDrawer> {
                       ),
                       SizedBox(
                         height: constraints.maxHeight * 0.1,
-                        child: VerticalDivider(color: Colors.black),
+                        child: VerticalDivider(
+                          indent: 30,
+                          endIndent: 10,
+                          color: Colors.black,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            await Navigator.of(context)
+                                .pushNamed('/Contact_Us');
+                          },
                           child: Text(
                             "Contact us",
                             style: TextStyle(
