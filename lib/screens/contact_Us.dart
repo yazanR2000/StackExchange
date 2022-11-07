@@ -12,9 +12,6 @@ class _Contact_UsState extends State<Contact_Us> {
   GlobalKey<FormState> myFormKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-    final uName = user!.displayName;
-    final uEmail = user.email;
     TextEditingController nameCont = TextEditingController();
     TextEditingController emailCont = TextEditingController();
     TextEditingController massegeCont = TextEditingController();
@@ -49,10 +46,6 @@ class _Contact_UsState extends State<Contact_Us> {
                             if (value == null || value.isEmpty) {
                               return 'This field is required *';
                             }
-
-                            if (value != uName) {
-                              return 'This is not your user name';
-                            }
                           }),
                           controller: nameCont,
                           textInputAction: TextInputAction.next,
@@ -73,9 +66,6 @@ class _Contact_UsState extends State<Contact_Us> {
                             }
                             if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
                               return 'Please enter a valid email address.';
-                            }
-                            if (value != uEmail) {
-                              return 'This is not your email address';
                             }
                           },
                           controller: emailCont,
