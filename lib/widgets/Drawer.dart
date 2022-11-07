@@ -21,8 +21,7 @@ class _AppDrawerState extends State<AppDrawer> {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
+          child: Column(
             children: [
               UserAccountsDrawerHeader(
                 accountName: Text(
@@ -124,6 +123,52 @@ class _AppDrawerState extends State<AppDrawer> {
                   await GoogleSignIn().signOut();
                   Navigator.of(context).pop();
                 },
+              ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "How to use?",
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: constraints.maxHeight * 0.1,
+                        child: VerticalDivider(
+                          indent: 30,
+                          endIndent: 10,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextButton(
+                          onPressed: () async {
+                            await Navigator.of(context)
+                                .pushNamed('/Contact_Us');
+                          },
+                          child: Text(
+                            "Contact us",
+                            style: TextStyle(
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               )
             ],
           ),

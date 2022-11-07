@@ -67,6 +67,7 @@ class _HomeState extends State<Home> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Color(0xff2f3b47),
           onPressed: () {
             Navigator.of(context)
                 .pushNamed("/add_new_question", arguments: _rebuild);
