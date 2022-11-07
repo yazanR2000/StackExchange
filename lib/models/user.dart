@@ -66,6 +66,26 @@ class User {
     }
   }
 
+  // Future contactus() async {
+  //   if (_userInfo == null) {
+  //     return;
+  //   }
+
+  //   try {
+  //     final userId = FirebaseAuth.instance.currentUser!.uid;
+  //     await FirebaseFirestore.instance
+  //         .collection("Contact Us")
+  //         .doc(userId)
+  //         .set({
+  //       'email': _userInfo!['email'],
+  //       "name": _userInfo!['name'],
+  //       "massege": _userInfo!['massege'],
+  //     });
+  //   } catch (e) {
+  //     throw e;
+  //   }
+  // }
+
   Future addToFavorite(
       QueryDocumentSnapshot question, bool isAddOrRemove) async {
     try {

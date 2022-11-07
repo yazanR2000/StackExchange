@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../models/user.dart' as u;
 
 class Contact_Us extends StatefulWidget {
   const Contact_Us({super.key});
@@ -15,6 +17,7 @@ class _Contact_UsState extends State<Contact_Us> {
     TextEditingController nameCont = TextEditingController();
     TextEditingController emailCont = TextEditingController();
     TextEditingController massegeCont = TextEditingController();
+    final uid = FirebaseAuth.instance.currentUser!.uid;
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return SafeArea(
@@ -101,7 +104,16 @@ class _Contact_UsState extends State<Contact_Us> {
                                 fixedSize: Size(constraints.maxHeight * 0.2,
                                     constraints.maxHeight * 0.05)),
                             onPressed: () async {
-                              if (myFormKey.currentState!.validate()) {}
+                              if (myFormKey.currentState!.validate()) {
+                                await FirebaseFirestore.instance
+                                    .collection("Contact Us")
+                                    .doc(uid)
+                                    .set({
+                                  'User Email': emailCont.text,
+                                  "Full name": nameCont.text,
+                                  "message": massegeCont.text,
+                                });
+                              }
                               nameCont.clear();
                               emailCont.clear();
                               massegeCont.clear();
