@@ -107,7 +107,7 @@ class _Contact_UsState extends State<Contact_Us> {
                               if (myFormKey.currentState!.validate()) {
                                 await FirebaseFirestore.instance
                                     .collection("Contact Us")
-                                    .doc(uid)
+                                    .doc()
                                     .set({
                                   'User Email': emailCont.text,
                                   "Full name": nameCont.text,

@@ -12,6 +12,7 @@ import 'package:stackexchange/screens/my_questions.dart';
 import 'package:stackexchange/screens/stackoverflow.dart';
 import './screens/profile.dart';
 import './screens/add_new_question.dart';
+import 'screens/contact_Us.dart';
 import 'screens/login_signUP/StartScreen.dart';
 import './screens/login_signUP/signup.dart';
 import './screens/login_signUP/login.dart';
@@ -118,7 +119,7 @@ class MyApp extends StatelessWidget {
           '/my_saves': (context) => MySaves(),
           '/stackoverflow': (context) => StackOverflowScreen(),
           '/NotificationsScreen': (context) => NotificationsScreen(),
-          //'/Contact_Us': (context) => Contact_Us(),
+          '/Contact_Us': (context) => Contact_Us(),
           '/ChatScreen': (context) => ChatScreen(),
           '/image_Too_text': (context) => image_To_text(),
           '/GetContact': (context) => GetContact(),

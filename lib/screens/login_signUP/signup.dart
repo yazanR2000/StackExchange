@@ -272,11 +272,7 @@ class _SignUpState extends State<SignUp> {
                                     "Full name": fullnameController.text,
                                     "Phone number": phonenumber,
                                   };
-<<<<<<< HEAD
-                                   Navigator.of(context).pop();
-=======
                                   Navigator.of(context).pop();
->>>>>>> 01503b0ea026d78433ab82021f25b5e925f1f667
                                   //
                                   // if (myUser.user!.emailVerified == false) {
                                   //   User? verifyUser =
