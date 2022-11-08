@@ -272,6 +272,7 @@ class _SignUpState extends State<SignUp> {
                                     "Full name": fullnameController.text,
                                     "Phone number": phonenumber,
                                   };
+<<<<<<< HEAD
                                   Navigator.of(context).pop();
                                   //
                                   // if (myUser.user!.emailVerified == false) {
@@ -288,6 +289,36 @@ class _SignUpState extends State<SignUp> {
                                       content: Text("added successfully"),
                                     ),
                                   );
+=======
+                                  await _user.addUserInfo();
+
+                                  User? verifyUser =
+                                      FirebaseAuth.instance.currentUser;
+                                  if (myUser.user!.emailVerified == false) {
+                                    await verifyUser!.sendEmailVerification();
+                                  }
+
+                                  if (verifyUser!.emailVerified) {
+                                    await _getUserData();
+                                    emailController.clear();
+                                    passwordController.clear();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text("added successfully"),
+                                      ),
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context)
+                                        .hideCurrentSnackBar();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            "Verification email has been sent"),
+                                      ),
+                                    );
+                                  }
+                                  Navigator.of(context).pop();
+>>>>>>> 7c3440f6e72963a7d50d0a3a620bfa6a3c61d940
                                   if (myUser != null) {
                                     phoneNumberController.clear();
                                     fullnameController.clear();

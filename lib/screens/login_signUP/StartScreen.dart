@@ -6,42 +6,43 @@ import 'package:stackexchange/screens/login_signUP/login.dart';
 import 'package:stackexchange/screens/login_signUP/signup.dart';
 
 class StartScreen extends StatefulWidget {
-  const StartScreen({super.key});
+  
   static const String screenRoute = "StartScreen";
+  final Function _reload;
+  StartScreen(this._reload);
 
   @override
   State<StartScreen> createState() => _StartScreenState();
 }
 
 class _StartScreenState extends State<StartScreen> {
+  // @override
+  // void didChangeDependencies() {
+  //   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      
+  //   });
+  //   super.didChangeDependencies();
+  // }
+
+  // @override
+  // void initState() {
+  //   final user = FirebaseAuth.instance.currentUser!;
+  //   if (user.emailVerified) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text("Verification email has been sent"),
+  //       ),
+  //     );
+  //   }
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return SafeArea(
           child: Scaffold(
-            // appBar: AppBar(
-            //   titleSpacing: 10,
-            //   title: Row(
-            //     children: [
-            //       Image.asset(
-            //         "images/smallLogo.png",
-            //         height: constraints.maxHeight * 0.06,
-            //       ),
-            //       SizedBox(
-            //         width: 10,
-            //       ),
-            //       Text(
-            //         "QCODE",
-            //         style: TextStyle(
-            //           color: Colors.white,
-            //           fontWeight: FontWeight.bold,
-            //           fontSize: 20,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -91,7 +92,7 @@ class _StartScreenState extends State<StartScreen> {
                                 constraints.maxHeight * .07),
                           ),
                           onPressed: () {
-                            Navigator.of(context).pushNamed('/login');
+                            Navigator.of(context).pushNamed('/login',arguments: widget._reload);
                           },
                           child: Text(
                             "Login",

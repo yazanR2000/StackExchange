@@ -111,16 +111,18 @@ class _ProfileState extends State<Profile> {
                                           title: Text(
                                               '${_userData!['User Email']}'),
                                         ),
-                                        ListTile(
-                                          onTap: (() {
-                                            Navigator.of(context).pushNamed(
-                                              "/ChatScreen",
-                                            );
-                                          }),
-                                          dense: true,
-                                          leading: Icon(Icons.message),
-                                          title: Text('DirectMessage'),
-                                        )
+                                        // ListTile(
+                                        //   onTap: () async {
+                                            
+                                        //     Navigator.of(context).pushNamed(
+                                        //       "/ChatScreen",
+                                        //       arguments: _userData!.id
+                                        //     );
+                                        //   },
+                                        //   dense: true,
+                                        //   leading: Icon(Icons.message),
+                                        //   title: Text('DirectMessage'),
+                                        // )
                                       ],
                                     ),
                                   ),
