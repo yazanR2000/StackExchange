@@ -30,6 +30,15 @@ class _HomeState extends State<Home> {
       builder: (ctx, BoxConstraints constraints) => Scaffold(
         appBar: AppBar(
           actions: [
+            MaterialButton(
+              onPressed: (() {
+                Navigator.of(context).pushNamed('/GetContact');
+              }),
+              child: Icon(
+                Icons.contact_mail,
+                color: Colors.white,
+              ),
+            ),
             IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed('/NotificationsScreen');
