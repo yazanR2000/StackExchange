@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stackexchange/widgets/user_info.dart';
 import 'package:stackexchange/widgets/user_problems.dart';
-import '../widgets/user_info.dart';
+// import '../widgets/user_info.dart';
 import '../widgets/user_statistic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Profile extends StatefulWidget {
   Profile({super.key});
@@ -27,6 +29,8 @@ class _ProfileState extends State<Profile> {
     }
   }
 
+  TextEditingController newNum = TextEditingController();
+  bool changeNum = false;
   @override
   Widget build(BuildContext context) {
     final userId = ModalRoute.of(context)!.settings.arguments as String;
@@ -93,7 +97,71 @@ class _ProfileState extends State<Profile> {
                                   false, // user must tap button!
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: Text('Contact'),
+                                  title: Row(
+                                    children: [
+                                      Text('Contact'),
+                                      SizedBox(
+                                        width: 150,
+                                      ),
+                                      Container(
+                                        child: userId ==
+                                                FirebaseAuth
+                                                    .instance.currentUser!.uid
+                                            ? IconButton(
+                                                onPressed: () async {
+                                                  //changeNum = !changeNum;
+
+                                                  await showDialog<void>(
+                                                      context: context,
+                                                      barrierDismissible:
+                                                          false, // user must tap button!
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return AlertDialog(
+                                                          content: TextField(
+                                                            textInputAction:
+                                                                TextInputAction
+                                                                    .done,
+                                                            keyboardType:
+                                                                TextInputType
+                                                                    .phone,
+                                                            controller: newNum,
+                                                          ),
+                                                          actions: [
+                                                            TextButton(
+                                                                onPressed:
+                                                                    (() async {
+                                                                  setState(
+                                                                      () async {
+                                                                    await FirebaseFirestore
+                                                                        .instance
+                                                                        .collection(
+                                                                            'Users')
+                                                                        .doc(
+                                                                            userId)
+                                                                        .update({
+                                                                      'Phone number':
+                                                                          newNum
+                                                                              .text
+                                                                    });
+                                                                    newNum
+                                                                        .clear();
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  });
+                                                                }),
+                                                                child: Text(
+                                                                    "TextDone"))
+                                                          ],
+                                                        );
+                                                      });
+                                                },
+                                                icon: Icon(Icons.edit),
+                                              )
+                                            : null,
+                                      )
+                                    ],
+                                  ),
                                   content: SingleChildScrollView(
                                     child: ListBody(
                                       children: <Widget>[
@@ -101,19 +169,20 @@ class _ProfileState extends State<Profile> {
                                           onTap: PhoneCall,
                                           dense: true,
                                           leading: Icon(Icons.call),
-                                          title: Text(
+                                          title: SelectableText(
                                               '${_userData!['Phone number']}'),
                                         ),
+
                                         ListTile(
                                           onTap: Email,
                                           dense: true,
                                           leading: Icon(Icons.email),
-                                          title: Text(
+                                          title: SelectableText(
                                               '${_userData!['User Email']}'),
                                         ),
                                         // ListTile(
                                         //   onTap: () async {
-                                            
+
                                         //     Navigator.of(context).pushNamed(
                                         //       "/ChatScreen",
                                         //       arguments: _userData!.id
@@ -143,7 +212,7 @@ class _ProfileState extends State<Profile> {
                       const SizedBox(
                         height: 10,
                       ),
-                      UserInfo(
+                      UserInformation(
                         _userData!['Full name'],
                         _userData!['User image'],
                       ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class UserInfo extends StatelessWidget {
+class UserInformation extends StatelessWidget {
   final String _imageUrl, _fullName;
-  UserInfo(this._fullName, this._imageUrl);
+  UserInformation(this._fullName, this._imageUrl);
   @override
   Widget build(BuildContext context) {
     return ListTile(
