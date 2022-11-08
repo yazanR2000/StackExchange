@@ -12,6 +12,7 @@ import 'dart:developer';
 import '../models/home_provider.dart';
 import 'package:provider/provider.dart';
 import '../widgets/waiting_questions.dart';
+
 class Home extends StatefulWidget {
   Home({super.key});
 
@@ -30,15 +31,17 @@ class _HomeState extends State<Home> {
       builder: (ctx, BoxConstraints constraints) => Scaffold(
         appBar: AppBar(
           actions: [
-            MaterialButton(
-              onPressed: (() {
-                Navigator.of(context).pushNamed('/GetContact');
-              }),
-              child: Icon(
-                Icons.contact_mail,
-                color: Colors.white,
+            if (FirebaseAuth.instance.currentUser!.email ==
+                'qcode2022@gmail.com')
+              MaterialButton(
+                onPressed: (() {
+                  Navigator.of(context).pushNamed('/GetContact');
+                }),
+                child: Icon(
+                  Icons.contact_mail,
+                  color: Colors.white,
+                ),
               ),
-            ),
             IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed('/NotificationsScreen');
