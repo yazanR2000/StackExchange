@@ -244,30 +244,6 @@ class _SignUpState extends State<SignUp> {
                         SizedBox(
                           height: 20,
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(right: 45, left: 45),
-                        //   child: ElevatedButton.icon(
-                        //     icon: const Icon(
-                        //         CupertinoIcons.photo_fill_on_rectangle_fill),
-                        //     onPressed: () {
-                        //       getImage();
-                        //     },
-                        //     label: const Text(
-                        //       "Upload your Photo",
-                        //     ),
-                        //   ),
-                        // ),
-                        // _image != null
-                        //     ? Image.file(
-                        //         _image!,
-                        //         width: 50,
-                        //         height: 50,
-                        //         fit: BoxFit.cover,
-                        //       )
-                        //     : IconButton(
-                        //         onPressed: () {},
-                        //         icon: Icon(Icons.person_outline_rounded,size: 70,),
-                        //       ),
                         SizedBox(
                           height: 40,
                         ),
@@ -296,6 +272,13 @@ class _SignUpState extends State<SignUp> {
                                     "Full name": fullnameController.text,
                                     "Phone number": phonenumber,
                                   };
+                                  //
+                                  // if (myUser.user!.emailVerified == false) {
+                                  //   User? verifyUser =
+                                  //       FirebaseAuth.instance.currentUser;
+                                  //   await verifyUser!.sendEmailVerification();
+                                  // }
+                                  //
                                   await _getUserData();
                                   emailController.clear();
                                   passwordController.clear();
@@ -305,22 +288,6 @@ class _SignUpState extends State<SignUp> {
                                     ),
                                   );
                                   if (myUser != null) {
-                                    // final userId =
-                                    //     FirebaseAuth.instance.currentUser!.uid;
-                                    // FirebaseStorage storage =
-                                    //     FirebaseStorage.instance;
-                                    // Reference ref =
-                                    //     storage.ref().child("Users").child(userId);
-                                    // await ref.putFile(File(_image!.path));
-                                    // String imageUrl = await ref.getDownloadURL();
-                                    // await FirebaseFirestore.instance
-                                    //     .collection("Users")
-                                    //     .doc(userId)
-                                    //     .set({
-                                    // "User image": imageUrl,
-                                    // "Full name": fullnameController.text,
-                                    // "Phone number": phonenumber,
-                                    // });
                                     phoneNumberController.clear();
                                     fullnameController.clear();
                                     Navigator.of(context).pop();
