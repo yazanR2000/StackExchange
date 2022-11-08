@@ -124,7 +124,10 @@ class _ProfileState extends State<Profile> {
                                                                       context) {
                                                                 return AlertDialog(
                                                                   content:
-                                                                      TextField(
+                                                                      TextFormField(
+                                                                    decoration: InputDecoration(
+                                                                        hintText:
+                                                                            "Phone Number"),
                                                                     textInputAction:
                                                                         TextInputAction
                                                                             .done,
