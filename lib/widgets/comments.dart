@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:stackexchange/widgets/waiting_questions.dart';
 
 import 'Comment_component.dart';
 
@@ -43,9 +44,7 @@ class _CommentsState extends State<Comments> {
             .snapshots(),
         builder: (context, streamSnapshot) {
           if (streamSnapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return ShimmerWaiting();
           } else if (streamSnapshot.hasData) {
             _questionComments = streamSnapshot.data!.docs;
             if (_questionComments.length == 0) {

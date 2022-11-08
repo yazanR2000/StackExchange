@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../models/stackoverflow.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../widgets/waiting_questions.dart';
+
 class StackOverflowScreen extends StatefulWidget {
   StackOverflowScreen({super.key});
 
@@ -64,9 +66,7 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                       : StackoverflowAPI.getSearchResults(_search.text),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  return Container(height: 800,child: ShimmerWaiting());
                 }
                 final List<Map<String, dynamic>> results =
                     StackoverflowAPI.results;

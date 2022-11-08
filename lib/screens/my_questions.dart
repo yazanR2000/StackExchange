@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:stackexchange/models/home_provider.dart';
 import '../widgets/question.dart';
 import '../models/question.dart' as q;
-
+import '../widgets/waiting_questions.dart';
 class MyQuestions extends StatefulWidget {
   MyQuestions({super.key});
 
@@ -34,9 +34,7 @@ class _MyQuestionsState extends State<MyQuestions> {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return ShimmerWaiting();
           }
           if (!snapshot.hasData) {
             return Column(
