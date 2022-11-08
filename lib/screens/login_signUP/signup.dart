@@ -272,26 +272,34 @@ class _SignUpState extends State<SignUp> {
                                     "Full name": fullnameController.text,
                                     "Phone number": phonenumber,
                                   };
-<<<<<<< HEAD
-                                   Navigator.of(context).pop();
-=======
+                                  await _user.addUserInfo();
+
+                                  User? verifyUser =
+                                      FirebaseAuth.instance.currentUser;
+                                  if (myUser.user!.emailVerified == false) {
+                                    await verifyUser!.sendEmailVerification();
+                                  }
+
+                                  if (verifyUser!.emailVerified) {
+                                    await _getUserData();
+                                    emailController.clear();
+                                    passwordController.clear();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text("added successfully"),
+                                      ),
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context)
+                                        .hideCurrentSnackBar();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                            "Verification email has been sent"),
+                                      ),
+                                    );
+                                  }
                                   Navigator.of(context).pop();
->>>>>>> 01503b0ea026d78433ab82021f25b5e925f1f667
-                                  //
-                                  // if (myUser.user!.emailVerified == false) {
-                                  //   User? verifyUser =
-                                  //       FirebaseAuth.instance.currentUser;
-                                  //   await verifyUser!.sendEmailVerification();
-                                  // }
-                                  //
-                                  await _getUserData();
-                                  emailController.clear();
-                                  passwordController.clear();
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text("added successfully"),
-                                    ),
-                                  );
                                   if (myUser != null) {
                                     phoneNumberController.clear();
                                     fullnameController.clear();

@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:stackexchange/firebase_options.dart';
 import 'package:stackexchange/screens/NotificationsScreen.dart';
 import 'package:stackexchange/screens/admin_screen.dart';
+import 'package:stackexchange/screens/auth.dart';
 import 'package:stackexchange/screens/chat.dart';
-//import 'package:stackexchange/screens/contact_Us.dart';
+import 'package:stackexchange/screens/contact_Us.dart';
 import 'package:stackexchange/screens/img2txt.dart';
 import 'package:stackexchange/screens/login_signUP/forgotPassword.dart';
 import 'package:stackexchange/screens/my_questions.dart';
@@ -103,7 +104,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: handleAuthState(),
+        home: Auth(),
         routes: {
           "/profile": (context) => Profile(),
           "/add_new_question": (context) => AddNewQuestions(),
@@ -114,11 +115,11 @@ class MyApp extends StatelessWidget {
           '/home': (context) => Home(),
           'forgotPassword': (context) => forgotPassword(),
           '/my_questions': (context) => MyQuestions(),
-          '/StartScreen': (context) => StartScreen(),
+          //'/StartScreen': (context) => StartScreen(),
           '/my_saves': (context) => MySaves(),
           '/stackoverflow': (context) => StackOverflowScreen(),
           '/NotificationsScreen': (context) => NotificationsScreen(),
-          //'/Contact_Us': (context) => Contact_Us(),
+          '/Contact_Us': (context) => Contact_Us(),
           '/ChatScreen': (context) => ChatScreen(),
           '/image_Too_text': (context) => image_To_text(),
           '/GetContact': (context) => GetContact(),
@@ -127,62 +128,65 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  handleAuthState() {
-    final u.User user = u.User.getInstance();
-    return FutureBuilder(
-      future: Future.delayed(Duration(seconds: 4)),
-      builder: (context, snapshotSplash) {
-        if (snapshotSplash.connectionState == ConnectionState.waiting) {
-          return Splash();
-        }
-        return StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (BuildContext context, snapshot) {
-              if (snapshot.hasData) {
-                return FutureBuilder(
-                  future: user.getUserData(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Scaffold(
-                        body: Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                      );
-                    }
-                    return Home();
-                  },
-                );
-              } else {
-                return StartScreen();
-              }
-            });
-      },
-    );
-  }
+  // handleAuthState() {
+  //   final u.User user = u.User.getInstance();
+  //   return FutureBuilder(
+  //     future: Future.delayed(Duration(seconds: 4)),
+  //     builder: (context, snapshotSplash) {
+  //       if (snapshotSplash.connectionState == ConnectionState.waiting) {
+  //         return Splash();
+  //       }
+  //       return StreamBuilder(
+  //           stream: FirebaseAuth.instance.authStateChanges(),
+  //           builder: (BuildContext context, snapshotUser) {
+  //             if (snapshotUser.hasData) {
+  //               if (snapshotUser.data!.emailVerified) {
+  //                 return FutureBuilder(
+  //                   future: user.getUserData(),
+  //                   builder: (context, snapshot) {
+  //                     if (snapshot.connectionState == ConnectionState.waiting) {
+  //                       return Scaffold(
+  //                         body: Center(
+  //                           child: CircularProgressIndicator(),
+  //                         ),
+  //                       );
+  //                     }
+  //                     return Home();
+  //                   },
+  //                 );
+  //               }
+  //               //return StartScreen();
+  //             } else {
+  //               //return StartScreen();
+  //             }
+  //           });
+  //     },
+  //   );
+  // }
 }
 
-class Splash extends StatelessWidget {
-  const Splash({super.key});
+// class Splash extends StatelessWidget {
+//   const Splash({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        alignment: Alignment.center,
-        height: double.infinity,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-          fit: BoxFit.cover,
-          image: AssetImage('images/splash2.gif'),
-        )),
-        child: Image(
-          fit: BoxFit.cover,
-          image: AssetImage('images/logo-removebg.png'),
-          //fit: BoxFit.fill,
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Container(
+//         alignment: Alignment.center,
+//         height: double.infinity,
+//         width: double.infinity,
+//         decoration: BoxDecoration(
+//             image: DecorationImage(
+//           fit: BoxFit.cover,
+//           image: AssetImage('images/splash2.gif'),
+//         )),
+//         child: Image(
+//           fit: BoxFit.cover,
+//           image: AssetImage('images/logo-removebg.png'),
+//           //fit: BoxFit.fill,
+//         ),
+//       ),
+//     );
+//   }
+// }
 //Determine if the user is authenticated.
