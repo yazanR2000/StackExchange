@@ -6,6 +6,7 @@ import 'package:stackexchange/screens/NotificationsScreen.dart';
 import 'package:stackexchange/screens/admin_screen.dart';
 import 'package:stackexchange/screens/chat.dart';
 import 'package:stackexchange/screens/contact_Us.dart';
+import 'package:stackexchange/screens/img2txt.dart';
 import 'package:stackexchange/screens/login_signUP/forgotPassword.dart';
 import 'package:stackexchange/screens/my_questions.dart';
 import 'package:stackexchange/screens/stackoverflow.dart';
@@ -119,6 +120,7 @@ class MyApp extends StatelessWidget {
           '/NotificationsScreen': (context) => NotificationsScreen(),
           '/Contact_Us': (context) => Contact_Us(),
           '/ChatScreen': (context) => ChatScreen(),
+          '/image_Too_text': (context) => image_To_text(),
           '/GetContact': (context) => GetContact(),
         },
       ),

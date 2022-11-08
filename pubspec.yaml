@@ -50,6 +50,7 @@ dependencies:
   provider: ^6.0.4
   url_launcher: ^6.1.6
   carousel_slider: ^4.1.1
+  google_ml_kit: ^0.13.0
 
 flutter_icons:
   android: true

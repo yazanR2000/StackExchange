@@ -33,7 +33,11 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                 controller: _search,
                 decoration: InputDecoration(
                   hintText: "Search....",
-                  suffixIcon: Icon(Icons.search),
+                  suffixIcon: IconButton(
+                      icon: Icon(Icons.camera_alt_outlined),
+                      onPressed: (() {
+                        Navigator.pushNamed(context, '/image_Too_text');
+                      })),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(100),
                     borderSide: const BorderSide(color: Colors.black),
@@ -86,7 +90,7 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                       subtitle: Text(results[index]['link'].toString()),
                       trailing: results[index]['is_answered'] == true
                           ? Chip(
-                            //padding: EdgeInsets.zero,
+                              //padding: EdgeInsets.zero,
                               label: Text(
                                 "Solved",
                                 style: TextStyle(

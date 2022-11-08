@@ -55,13 +55,18 @@ class _HomeQuestionsState extends State<HomeQuestions> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: TextField(
               decoration: InputDecoration(
+                // prefix: IconButton(),
                 hintText: "Search....",
-                suffixIcon: Icon(Icons.search),
+                suffix: Icon(Icons.search),
+                suffixIcon: IconButton(
+                    icon: Icon(Icons.camera_alt_outlined),
+                    onPressed: (() {
+                      Navigator.pushNamed(context, '/image_Too_text');
+                    })),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),
                   borderSide: const BorderSide(color: Colors.black),
@@ -73,7 +78,6 @@ class _HomeQuestionsState extends State<HomeQuestions> {
               },
             ),
           ),
-          
           ListView.separated(
             //reverse: true,
             shrinkWrap: true,
