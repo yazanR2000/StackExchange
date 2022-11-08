@@ -23,8 +23,7 @@ class _image_To_textState extends State<image_To_text> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text("Text Recognition example"),
+        title: const Text("Image to Text"),
       ),
       body: Center(
           child: SingleChildScrollView(
@@ -119,19 +118,19 @@ class _image_To_textState extends State<image_To_text> {
                   height: 20,
                 ),
                 Container(
-                  alignment: Alignment.center,
+                  alignment: Alignment.topLeft,
                   width: double.infinity,
                   child: SelectableText(
                     strutStyle: StrutStyle(debugLabel: "hi"),
 
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.start,
                     // ignore: prefer_const_constructors
                     toolbarOptions: ToolbarOptions(
                       copy: true,
                       selectAll: true,
                     ),
                     scannedText,
-                    style: const TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 )
               ],

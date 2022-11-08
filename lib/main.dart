@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:stackexchange/firebase_options.dart';
 import 'package:stackexchange/screens/NotificationsScreen.dart';
+import 'package:stackexchange/screens/admin_screen.dart';
 import 'package:stackexchange/screens/chat.dart';
 import 'package:stackexchange/screens/contact_Us.dart';
 import 'package:stackexchange/screens/img2txt.dart';
@@ -120,6 +121,7 @@ class MyApp extends StatelessWidget {
           '/Contact_Us': (context) => Contact_Us(),
           '/ChatScreen': (context) => ChatScreen(),
           '/image_Too_text': (context) => image_To_text(),
+          '/GetContact': (context) => GetContact(),
         },
       ),
     );

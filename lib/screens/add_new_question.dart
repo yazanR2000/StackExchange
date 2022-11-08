@@ -61,6 +61,7 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
       });
     }
   }
+
   bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
@@ -75,17 +76,22 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                 _details['images'].clear();
               });
             },
-            child: Text("Clear",style: TextStyle(color: Colors.white),),
+            child: Text(
+              "Clear",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: _isLoading ? const CircularProgressIndicator() : ElevatedButton(
-              style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
-              onPressed: () async {
-                await _addNewQuestion(rebuild);
-              },
-              child: const Text("Done"),
-            ),
+            child: _isLoading
+                ? const CircularProgressIndicator()
+                : ElevatedButton(
+                    style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
+                    onPressed: () async {
+                      await _addNewQuestion(rebuild);
+                    },
+                    child: const Text("Done"),
+                  ),
           ),
         ],
       ),
@@ -195,6 +201,12 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                   icon: const FaIcon(FontAwesomeIcons.images),
                   label: const Text("Add photo"),
                 ),
+                TextButton.icon(
+                    label: Text("Scan"),
+                    icon: Icon(Icons.camera_alt_outlined),
+                    onPressed: (() {
+                      Navigator.pushNamed(context, '/image_Too_text');
+                    }))
               ],
             ),
           ),
