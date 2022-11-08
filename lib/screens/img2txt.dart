@@ -23,7 +23,6 @@ class _image_To_textState extends State<image_To_text> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: const Text("Image to Text"),
       ),
       body: Center(
