@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 // ignore: camel_case_types
-class image_Too_text extends StatefulWidget {
-  const image_Too_text({Key? key}) : super(key: key);
+class image_To_text extends StatefulWidget {
+  const image_To_text({Key? key}) : super(key: key);
 
   @override
-  State<image_Too_text> createState() => _image_Too_textState();
+  State<image_To_text> createState() => _image_To_textState();
 }
 
 // ignore: camel_case_types
-class _image_Too_textState extends State<image_Too_text> {
+class _image_To_textState extends State<image_To_text> {
   bool textScanning = false;
 
   XFile? imageFile;

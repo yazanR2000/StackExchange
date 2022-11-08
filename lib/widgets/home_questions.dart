@@ -65,7 +65,7 @@ class _HomeQuestionsState extends State<HomeQuestions> {
                 suffixIcon: IconButton(
                     icon: Icon(Icons.camera_alt_outlined),
                     onPressed: (() {
-                      Navigator.pushNamed(context, 'image_Too_text');
+                      Navigator.pushNamed(context, '/image_Too_text');
                     })),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),

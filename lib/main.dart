@@ -119,7 +119,7 @@ class MyApp extends StatelessWidget {
           '/NotificationsScreen': (context) => NotificationsScreen(),
           '/Contact_Us': (context) => Contact_Us(),
           '/ChatScreen': (context) => ChatScreen(),
-          '/image_Too_text': (context) => image_Too_text(),
+          '/image_Too_text': (context) => image_To_text(),
         },
       ),
     );
