@@ -39,6 +39,7 @@ class _StartScreenState extends State<StartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return SafeArea(
@@ -111,7 +112,7 @@ class _StartScreenState extends State<StartScreen> {
                                 constraints.maxHeight * .07),
                           ),
                           onPressed: () {
-                            Navigator.of(context).pushNamed('/sign_up');
+                            Navigator.of(context).pushNamed('/sign_up',arguments: widget._reload);
                           },
                           child: Text(
                             "Sign Up",
