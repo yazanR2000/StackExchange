@@ -15,42 +15,74 @@ class _GetContactState extends State<GetContact> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
-        backgroundColor: Color(0xff2f3b47),
-        body: StreamBuilder(
-            stream:
-                FirebaseFirestore.instance.collection("Contact Us").snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
-              }
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Contacts'),
+        ),
+        body: Container(
+            height: double.infinity,
+            width: double.infinity,
+            child: StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("Contact Us")
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  }
 
-              if (snapshot.hasData) {
-                final data = snapshot.data!.docs;
+                  if (snapshot.hasData) {
+                    final data = snapshot.data!.docs;
 
-                return ListView.separated(
-                  itemCount: data.length,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Divider();
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                        child: Column(
-                      children: [
-                        Center(child: Text(data[index]["Full name"])),
-                        SizedBox(height: 10),
-                        Container(child: Text(data[index]["User Email"])),
-                        SizedBox(height: 10),
-                        Container(child: Text(data[index]["message"])),
-                      ],
-                    ));
-                  },
-                );
-                // return ContactWidget(
-                //   name: name,
-                // );
-              }
-              return Text("There is no data");
-            }));
+                    return ListView.separated(
+                      itemCount: data.length,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Divider();
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                            padding: EdgeInsets.all(10),
+                            alignment: Alignment.topLeft,
+                            margin: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                                color: Colors.grey,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SelectableText(
+                                  "User name: ${data[index]["Full name"]}",
+                                  style: TextStyle(color: Colors.black),
+                                  textAlign: TextAlign.start,
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                  child: Divider(
+                                    thickness: 1,
+                                  ),
+                                ),
+                                SelectableText(
+                                  "Email: ${data[index]["User Email"]}",
+                                  style: TextStyle(color: Colors.black),
+                                  textAlign: TextAlign.start,
+                                ),
+                                SizedBox(
+                                    height: 10,
+                                    child: Divider(
+                                      thickness: 1,
+                                    )),
+                                SelectableText(
+                                  "${data[index]["message"]}",
+                                  style: TextStyle(color: Colors.black),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ],
+                            ));
+                      },
+                    );
+                  }
+                  return Text("There is no data");
+                })));
   }
 }
