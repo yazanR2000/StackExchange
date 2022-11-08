@@ -1,6 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -31,8 +32,11 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  String? docId;
+
   @override
   Widget build(BuildContext context) {
+    final uid = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -54,7 +58,30 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            MessageStreamBulder(),
+            //MessageStreamBulder(),
+            Expanded(
+              child: StreamBuilder(
+                stream: FirebaseFirestore.instance.collection("Chat").where(
+                  'contacts', // ["y1","y2"]
+                  arrayContainsAny: [
+                    FirebaseAuth.instance.currentUser!.uid,
+                    uid
+                  ],
+                ).snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  final data = snapshot.data!.docs;
+                  return ListView.builder(
+                    itemBuilder: (context, index) => Text("Yazan"),
+                    itemCount: data.length,
+                  );
+                },
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
@@ -87,13 +114,14 @@ class _ChatScreenState extends State<ChatScreen> {
                   TextButton(
                     onPressed: (() {
                       mssageTextcontroller.clear();
-                      FirebaseFirestore.instance.collection("messages").add(
-                        {
-                          'text': messageText,
-                          'sender': signInUser.email,
-                          'time': FieldValue.serverTimestamp(),
-                        },
-                      );
+
+                      // _firestore.collection("messages").add(
+                      //   {
+                      //     'text': messageText,
+                      //     'sender': signInUser.email,
+                      //     'time': FieldValue.serverTimestamp(),
+                      //   },
+                      // );
                     }),
                     child: Text(
                       "Send",

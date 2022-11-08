@@ -22,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Function reload = ModalRoute.of(context)!.settings.arguments as Function;
     return SafeArea(
       child: LayoutBuilder(builder: (context, BoxConstraints constraints) {
         return Scaffold(
@@ -167,12 +168,27 @@ class _LoginPageState extends State<LoginPage> {
                                             passwordController!.text.trim());
                                 emailController!.clear();
                                 passwordController!.clear();
-                                ScaffoldMessenger.of(context).showSnackBar(
+                                final user = auth.currentUser;
+                                if (user!.emailVerified) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                        content: Text("login successfully")));
-
-                                if (myUser != null) {
+                                      content: Text("login successfully"),
+                                    ),
+                                  );
                                   Navigator.of(context).pop();
+                                  reload();
+                                } else {
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        "Please verify your email",
+                                      ),
+                                    ),
+                                  );
+                                  Navigator.of(context).pop();
+                                  
                                 }
                               } on FirebaseAuthException catch (e) {
                                 if (e.code == 'user-not-found') {
