@@ -133,6 +133,7 @@ class User {
           }),
         );
       }
+      log("yazan");
       await FirebaseFirestore.instance
           .collection("Questions")
           .doc(questionId)
@@ -147,11 +148,14 @@ class User {
         "date": DateTime.now().toLocal().toString(),
         "solvedComment": "null",
       });
+      log("yazan1");
       await FirebaseFirestore.instance
           .collection("Users")
           .doc(_userData!.id)
           .update({"questions": _userData!['questions'] + 1});
+      log("yazan2");
       await getUserData();
+      log("yazan3");
     } catch (err) {
       throw err;
     }
