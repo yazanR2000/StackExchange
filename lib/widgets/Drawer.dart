@@ -72,7 +72,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ListTile(
                 title: Text(
                   "My profile",
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(fontWeight: FontWeight.bold),
                 ),
                 trailing: const Icon(Icons.person),
                 onTap: () {
@@ -83,7 +83,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ListTile(
                 title: Text(
                   "My questions",
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(fontWeight: FontWeight.bold),
                 ),
                 trailing: const Icon(Icons.my_library_books),
                 onTap: () {
@@ -93,7 +93,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ListTile(
                 title: Text(
                   "My Saves",
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(fontWeight: FontWeight.bold),
                 ),
                 trailing: const Icon(Icons.bookmark),
                 onTap: () {
@@ -103,7 +103,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ListTile(
                 title: Text(
                   "Search on Stackoverflow",
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(fontWeight: FontWeight.bold),
                 ),
                 trailing: const FaIcon(FontAwesomeIcons.stackOverflow),
                 onTap: () {
@@ -113,7 +113,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ListTile(
                 title: Text(
                   "Logout",
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(fontWeight: FontWeight.bold),
                 ),
                 trailing: Icon(
                   Icons.logout,

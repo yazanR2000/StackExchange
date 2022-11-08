@@ -97,7 +97,10 @@ class MyApp extends StatelessWidget {
           ),
           textTheme: TextTheme(
             bodyText1: TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 20),
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
+              fontSize: 20,
+            ),
             bodyText2: TextStyle(
               // fontWeight: FontWeight.bold,
               color: Colors.grey,
