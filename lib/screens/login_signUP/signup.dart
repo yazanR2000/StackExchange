@@ -272,6 +272,7 @@ class _SignUpState extends State<SignUp> {
                                     "Full name": fullnameController.text,
                                     "Phone number": phonenumber,
                                   };
+                                  Navigator.of(context).pop();
                                   //
                                   // if (myUser.user!.emailVerified == false) {
                                   //   User? verifyUser =
@@ -290,7 +291,6 @@ class _SignUpState extends State<SignUp> {
                                   if (myUser != null) {
                                     phoneNumberController.clear();
                                     fullnameController.clear();
-                                    Navigator.of(context).pop();
                                   }
                                 } on FirebaseAuthException catch (e) {
                                   ScaffoldMessenger.of(context).showSnackBar(
