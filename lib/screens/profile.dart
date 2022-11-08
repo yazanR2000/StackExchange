@@ -34,207 +34,206 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     final userId = ModalRoute.of(context)!.settings.arguments as String;
-    return Container(
-      color: const Color(0xff2f3b47),
-      child: SafeArea(
-        child: LayoutBuilder(
-          builder: (p0, constraints) => Scaffold(
-            backgroundColor: const Color(0xff2f3b47),
-            body: FutureBuilder(
-              future: _getUserInfo(userId),
-              builder: (ctx, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return SingleChildScrollView(
-                  //padding: const EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        title: Text(
-                          _userData!['Full name'],
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        leading: IconButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          icon: const Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.white,
-                          ),
-                        ),
-                        trailing: TextButton(
-                          child: Text(
-                            "Contact",
-                            style: TextStyle(color: Colors.blue),
-                          ),
-                          onPressed: () async {
-                            final Uri Phone_url =
-                                Uri.parse('tel:${_userData!['Phone number']}');
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return Container(
+          color: const Color(0xff2f3b47),
+          child: SafeArea(
+            child: LayoutBuilder(
+              builder: (p0, constraints) => Scaffold(
+                backgroundColor: const Color(0xff2f3b47),
+                body: FutureBuilder(
+                  future: _getUserInfo(userId),
+                  builder: (ctx, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return SingleChildScrollView(
+                      //padding: const EdgeInsets.all(15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ListTile(
+                            title: Text(
+                              _userData!['Full name'],
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            leading: IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              icon: const Icon(
+                                Icons.arrow_back_ios,
+                                color: Colors.white,
+                              ),
+                            ),
+                            trailing: TextButton(
+                              child: Text(
+                                "Contact",
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                              onPressed: () async {
+                                final Uri Phone_url = Uri.parse(
+                                    'tel:${_userData!['Phone number']}');
 
-                            Future<void> PhoneCall() async {
-                              if (!await launchUrl(Phone_url)) {
-                                throw 'Could not launch $Phone_url';
-                              }
-                            }
+                                Future<void> PhoneCall() async {
+                                  if (!await launchUrl(Phone_url)) {
+                                    throw 'Could not launch $Phone_url';
+                                  }
+                                }
 
-                            final Uri Email_url =
-                                Uri.parse('mailto:${_userData!['User Email']}');
+                                final Uri Email_url = Uri.parse(
+                                    'mailto:${_userData!['User Email']}');
 
-                            Future<void> Email() async {
-                              if (!await launchUrl(Email_url)) {
-                                throw 'Could not launch $Email_url';
-                              }
-                            }
+                                Future<void> Email() async {
+                                  if (!await launchUrl(Email_url)) {
+                                    throw 'Could not launch $Email_url';
+                                  }
+                                }
 
-                            await showDialog<void>(
-                              context: context,
-                              barrierDismissible:
-                                  false, // user must tap button!
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Row(
-                                    children: [
-                                      Text('Contact'),
-                                      SizedBox(
-                                        width: 150,
+                                await showDialog<void>(
+                                  context: context,
+                                  barrierDismissible:
+                                      false, // user must tap button!
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Row(
+                                        children: [
+                                          Text('Contact'),
+                                          SizedBox(
+                                            width: constraints.maxHeight * 0.15,
+                                          ),
+                                          Container(
+                                            child:
+                                                userId ==
+                                                        FirebaseAuth.instance
+                                                            .currentUser!.uid
+                                                    ? IconButton(
+                                                        onPressed: () async {
+                                                          //changeNum = !changeNum;
+
+                                                          await showDialog<
+                                                                  void>(
+                                                              context: context,
+                                                              barrierDismissible:
+                                                                  false, // user must tap button!
+                                                              builder:
+                                                                  (BuildContext
+                                                                      context) {
+                                                                return AlertDialog(
+                                                                  content:
+                                                                      TextField(
+                                                                    textInputAction:
+                                                                        TextInputAction
+                                                                            .done,
+                                                                    keyboardType:
+                                                                        TextInputType
+                                                                            .phone,
+                                                                    controller:
+                                                                        newNum,
+                                                                  ),
+                                                                  actions: [
+                                                                    TextButton(
+                                                                        onPressed:
+                                                                            (() async {
+                                                                          setState(
+                                                                              () async {
+                                                                            await FirebaseFirestore.instance.collection('Users').doc(userId).update({
+                                                                              'Phone number': newNum.text
+                                                                            });
+                                                                            newNum.clear();
+                                                                            Navigator.pop(context);
+                                                                          });
+                                                                        }),
+                                                                        child: Text(
+                                                                            "TextDone"))
+                                                                  ],
+                                                                );
+                                                              });
+                                                        },
+                                                        icon: Icon(Icons.edit),
+                                                      )
+                                                    : null,
+                                          )
+                                        ],
                                       ),
-                                      Container(
-                                        child: userId ==
-                                                FirebaseAuth
-                                                    .instance.currentUser!.uid
-                                            ? IconButton(
-                                                onPressed: () async {
-                                                  //changeNum = !changeNum;
+                                      content: SingleChildScrollView(
+                                        child: ListBody(
+                                          children: <Widget>[
+                                            ListTile(
+                                              onTap: PhoneCall,
+                                              dense: true,
+                                              leading: Icon(Icons.call),
+                                              title: SelectableText(
+                                                  '${_userData!['Phone number']}'),
+                                            ),
 
-                                                  await showDialog<void>(
-                                                      context: context,
-                                                      barrierDismissible:
-                                                          false, // user must tap button!
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        return AlertDialog(
-                                                          content: TextField(
-                                                            textInputAction:
-                                                                TextInputAction
-                                                                    .done,
-                                                            keyboardType:
-                                                                TextInputType
-                                                                    .phone,
-                                                            controller: newNum,
-                                                          ),
-                                                          actions: [
-                                                            TextButton(
-                                                                onPressed:
-                                                                    (() async {
-                                                                  setState(
-                                                                      () async {
-                                                                    await FirebaseFirestore
-                                                                        .instance
-                                                                        .collection(
-                                                                            'Users')
-                                                                        .doc(
-                                                                            userId)
-                                                                        .update({
-                                                                      'Phone number':
-                                                                          newNum
-                                                                              .text
-                                                                    });
-                                                                    newNum
-                                                                        .clear();
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  });
-                                                                }),
-                                                                child: Text(
-                                                                    "TextDone"))
-                                                          ],
-                                                        );
-                                                      });
-                                                },
-                                                icon: Icon(Icons.edit),
-                                              )
-                                            : null,
-                                      )
-                                    ],
-                                  ),
-                                  content: SingleChildScrollView(
-                                    child: ListBody(
-                                      children: <Widget>[
-                                        ListTile(
-                                          onTap: PhoneCall,
-                                          dense: true,
-                                          leading: Icon(Icons.call),
-                                          title: SelectableText(
-                                              '${_userData!['Phone number']}'),
+                                            ListTile(
+                                              onTap: Email,
+                                              dense: true,
+                                              leading: Icon(Icons.email),
+                                              title: SelectableText(
+                                                  '${_userData!['User Email']}'),
+                                            ),
+                                            // ListTile(
+                                            //   onTap: () async {
+
+                                            //     Navigator.of(context).pushNamed(
+                                            //       "/ChatScreen",
+                                            //       arguments: _userData!.id
+                                            //     );
+                                            //   },
+                                            //   dense: true,
+                                            //   leading: Icon(Icons.message),
+                                            //   title: Text('DirectMessage'),
+                                            // )
+                                          ],
                                         ),
-
-                                        ListTile(
-                                          onTap: Email,
-                                          dense: true,
-                                          leading: Icon(Icons.email),
-                                          title: SelectableText(
-                                              '${_userData!['User Email']}'),
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: Text('Back'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
                                         ),
-                                        // ListTile(
-                                        //   onTap: () async {
-
-                                        //     Navigator.of(context).pushNamed(
-                                        //       "/ChatScreen",
-                                        //       arguments: _userData!.id
-                                        //     );
-                                        //   },
-                                        //   dense: true,
-                                        //   leading: Icon(Icons.message),
-                                        //   title: Text('DirectMessage'),
-                                        // )
                                       ],
-                                    ),
-                                  ),
-                                  actions: <Widget>[
-                                    TextButton(
-                                      child: Text('Back'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                  ],
+                                    );
+                                  },
                                 );
                               },
-                            );
-                          },
-                        ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          UserInformation(
+                            _userData!['Full name'],
+                            _userData!['User image'],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          UserSatistic(
+                            _userData!['questions'],
+                            _userData!['solutions'],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          UserProblems(userId, constraints),
+                        ],
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      UserInformation(
-                        _userData!['Full name'],
-                        _userData!['User image'],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      UserSatistic(
-                        _userData!['questions'],
-                        _userData!['solutions'],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      UserProblems(userId, constraints),
-                    ],
-                  ),
-                );
-              },
+                    );
+                  },
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
