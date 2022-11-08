@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stackexchange/widgets/contact.dart';
 import '../../models/user.dart' as u;
+import '../widgets/waiting_questions.dart';
 
 class GetContact extends StatefulWidget {
   const GetContact({super.key});
@@ -16,7 +17,7 @@ class _GetContactState extends State<GetContact> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          centerTitle: true,
+          //centerTitle: true,
           title: Text('Contacts'),
         ),
         body: Container(
@@ -28,7 +29,7 @@ class _GetContactState extends State<GetContact> {
                     .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return ShimmerWaiting();
                   }
 
                   if (snapshot.hasData) {
