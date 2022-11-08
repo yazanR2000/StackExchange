@@ -44,7 +44,7 @@ class UserSatistic extends StatelessWidget {
                   .copyWith(color: Colors.white),
             ),
             const Text(
-              "Solutions",
+              "Points",
               style: TextStyle(
                 color: Colors.white,
               ),

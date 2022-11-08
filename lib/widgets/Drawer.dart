@@ -125,49 +125,37 @@ class _AppDrawerState extends State<AppDrawer> {
                 },
               ),
               Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "How to use?",
-                            style: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListTile(
+                      onTap: () async {
+                        await Navigator.of(context).pushNamed('/Contact_Us');
+                      },
+                      title: Text(
+                        "Contact us",
+                        style: Theme.of(context).textTheme.bodyText2,
                       ),
-                      SizedBox(
-                        height: constraints.maxHeight * 0.1,
-                        child: VerticalDivider(
-                          indent: 30,
-                          endIndent: 10,
-                          color: Colors.black,
-                        ),
+                      trailing: Icon(Icons.contact_support_outlined),
+                    ),
+                    ListTile(
+                      onTap: () {},
+                      title: Text(
+                        "See our guide",
+                        style: Theme.of(context).textTheme.bodyText2,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextButton(
-                          onPressed: () async {
-                            await Navigator.of(context)
-                                .pushNamed('/Contact_Us');
-                          },
-                          child: Text(
-                            "Contact us",
-                            style: TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                      //trailing: FaIcon(FontAwesomeIcons.how),
+                    ),
+                    // SizedBox(
+                    //   height: constraints.maxHeight * 0.1,
+                    //   child: VerticalDivider(
+                    //     indent: 30,
+                    //     endIndent: 10,
+                    //     color: Colors.black,
+                    //   ),
+                    // ),
+                  ],
                 ),
               )
             ],
