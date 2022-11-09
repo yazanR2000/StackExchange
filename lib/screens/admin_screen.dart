@@ -18,7 +18,7 @@ class _GetContactState extends State<GetContact> {
     return Scaffold(
         appBar: AppBar(
           //centerTitle: true,
-          title: Text('Contacts'),
+          title: Text('Admin Contact'),
         ),
         body: Container(
             height: double.infinity,
@@ -55,7 +55,7 @@ class _GetContactState extends State<GetContact> {
                                         0, 0), // changes position of shadow
                                   ),
                                 ],
-                                color: Colors.white,
+                                color: Colors.grey.shade300,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

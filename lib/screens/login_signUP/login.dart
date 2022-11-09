@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stackexchange/models/google.dart';
-import 'package:stackexchange/screens/login_signUP/signup.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -297,27 +296,6 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         height: 50,
                       ),
-                      Row(
-                        children: <Widget>[
-                          const Text(
-                            'Don\'t have an account?',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          TextButton(
-                            child: const Text(
-                              'Sign up',
-                              style: TextStyle(fontSize: 15),
-                            ),
-                            onPressed: () {
-                              Navigator.pushNamed(context, "/sign_up");
-                            },
-                          )
-                        ],
-                        mainAxisAlignment: MainAxisAlignment.center,
-                      )
                     ]),
               ),
             ),
