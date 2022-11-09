@@ -50,7 +50,8 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    final Function reload = ModalRoute.of(context)!.settings.arguments as Function;
+    final Function reload =
+        ModalRoute.of(context)!.settings.arguments as Function;
     return SafeArea(
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
@@ -304,7 +305,7 @@ class _SignUpState extends State<SignUp> {
                                     );
                                     Navigator.of(context).pop();
                                   }
-                                  
+
                                   if (myUser != null) {
                                     phoneNumberController.clear();
                                     fullnameController.clear();

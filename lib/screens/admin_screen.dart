@@ -38,7 +38,7 @@ class _GetContactState extends State<GetContact> {
                     return ListView.separated(
                       itemCount: data.length,
                       separatorBuilder: (BuildContext context, int index) {
-                        return Divider();
+                        return SizedBox();
                       },
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
@@ -46,7 +46,16 @@ class _GetContactState extends State<GetContact> {
                             alignment: Alignment.topLeft,
                             margin: EdgeInsets.all(20),
                             decoration: BoxDecoration(
-                                color: Colors.grey,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black12.withOpacity(0.8),
+                                    // spreadRadius: 1,
+                                    blurRadius: 10,
+                                    offset: Offset(
+                                        0, 0), // changes position of shadow
+                                  ),
+                                ],
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +83,7 @@ class _GetContactState extends State<GetContact> {
                                       thickness: 1,
                                     )),
                                 SelectableText(
-                                  "${data[index]["message"]}",
+                                  "Message: \n\t ${data[index]["message"]}",
                                   style: TextStyle(color: Colors.black),
                                   textAlign: TextAlign.start,
                                 ),

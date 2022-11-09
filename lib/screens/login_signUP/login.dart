@@ -22,7 +22,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Function reload = ModalRoute.of(context)!.settings.arguments as Function;
+    final Function reload =
+        ModalRoute.of(context)!.settings.arguments as Function;
     return SafeArea(
       child: LayoutBuilder(builder: (context, BoxConstraints constraints) {
         return Scaffold(
@@ -188,7 +189,6 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   );
                                   Navigator.of(context).pop();
-                                  
                                 }
                               } on FirebaseAuthException catch (e) {
                                 if (e.code == 'user-not-found') {
