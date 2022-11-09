@@ -71,6 +71,15 @@ class _QuestionComponentState extends State<QuestionComponent> {
                 widget._post['userImageUrl'],
               ),
             ),
+            trailing: widget._post['solvedComment'] == "null"
+                ? Chip(
+                    backgroundColor: Colors.green,
+                    label: Text(
+                      "Solved",
+                      style: TextStyle(fontSize: 10, color: Colors.white),
+                    ),
+                  )
+                : SizedBox(),
           ),
           SizedBox(
             height: 15,
