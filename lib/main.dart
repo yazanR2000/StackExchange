@@ -24,6 +24,7 @@ import './models/user.dart' as u;
 import 'package:provider/provider.dart';
 import './models/home_provider.dart';
 import './screens/saves.dart';
+import './providers.dart/profile_provider.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(
           value: HomeProvider(),
+        ),
+        ChangeNotifierProvider.value(
+          value: ProfileProvider(),
         ),
       ],
       child: MaterialApp(

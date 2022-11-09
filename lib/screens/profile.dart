@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stackexchange/providers.dart/profile_provider.dart';
 import 'package:stackexchange/widgets/user_info.dart';
 import 'package:stackexchange/widgets/user_problems.dart';
 // import '../widgets/user_info.dart';
@@ -7,6 +8,8 @@ import '../widgets/user_statistic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   Profile({super.key});
@@ -106,72 +109,84 @@ class _ProfileState extends State<Profile> {
                                             width: constraints.maxHeight * 0.15,
                                           ),
                                           Container(
-                                            child:
-                                                userId ==
-                                                        FirebaseAuth.instance
-                                                            .currentUser!.uid
-                                                    ? IconButton(
-                                                        onPressed: () async {
-                                                          //changeNum = !changeNum;
+                                            child: userId ==
+                                                    FirebaseAuth.instance
+                                                        .currentUser!.uid
+                                                ? IconButton(
+                                                    onPressed: () async {
+                                                      //changeNum = !changeNum;
 
-                                                          await showDialog<
-                                                                  void>(
-                                                              context: context,
-                                                              barrierDismissible:
-                                                                  false, // user must tap button!
-                                                              builder:
-                                                                  (BuildContext
-                                                                      context) {
-                                                                return AlertDialog(
-                                                                  content:
-                                                                      TextFormField(
-                                                                    decoration: InputDecoration(
+                                                      await showDialog<void>(
+                                                          context: context,
+                                                          barrierDismissible:
+                                                              false, // user must tap button!
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return AlertDialog(
+                                                              content:
+                                                                  TextFormField(
+                                                                decoration:
+                                                                    InputDecoration(
                                                                         hintText:
                                                                             "Phone Number"),
-                                                                    textInputAction:
-                                                                        TextInputAction
-                                                                            .done,
-                                                                    keyboardType:
-                                                                        TextInputType
-                                                                            .phone,
-                                                                    controller:
-                                                                        newNum,
-                                                                  ),
-                                                                  actions: [
-                                                                    TextButton(
-                                                                        onPressed:
-                                                                            (() async {
-                                                                          setState(
-                                                                              () async {
-                                                                            await FirebaseFirestore.instance.collection('Users').doc(userId).update({
-                                                                              'Phone number': newNum.text
-                                                                            });
-                                                                            newNum.clear();
-                                                                            Navigator.pop(context);
-                                                                          });
-                                                                        }),
-                                                                        child: Text(
-                                                                            "TextDone"))
-                                                                  ],
-                                                                );
-                                                              });
-                                                        },
-                                                        icon: Icon(Icons.edit),
-                                                      )
-                                                    : null,
+                                                                textInputAction:
+                                                                    TextInputAction
+                                                                        .done,
+                                                                keyboardType:
+                                                                    TextInputType
+                                                                        .phone,
+                                                                controller:
+                                                                    newNum,
+                                                              ),
+                                                              actions: [
+                                                                TextButton(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      await FirebaseFirestore
+                                                                          .instance
+                                                                          .collection(
+                                                                              'Users')
+                                                                          .doc(
+                                                                              userId)
+                                                                          .update({
+                                                                        'Phone number':
+                                                                            newNum.text
+                                                                      });
+
+                                                                      Provider.of<ProfileProvider>(context, listen: false)
+                                                                              .isChange =
+                                                                          newNum
+                                                                              .text;
+                                                                      newNum
+                                                                          .clear();
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    child: Text(
+                                                                        "Done"))
+                                                              ],
+                                                            );
+                                                          });
+                                                    },
+                                                    icon: Icon(Icons.edit),
+                                                  )
+                                                : null,
                                           )
                                         ],
                                       ),
                                       content: SingleChildScrollView(
                                         child: ListBody(
                                           children: <Widget>[
-                                            ListTile(
-                                              onTap: PhoneCall,
-                                              dense: true,
-                                              leading: Icon(Icons.call),
-                                              title: SelectableText(
-                                                  '${_userData!['Phone number']}'),
-                                            ),
+                                            Consumer<ProfileProvider>(
+                                                builder: (context, p, _) {
+                                              return ListTile(
+                                                onTap: PhoneCall,
+                                                dense: true,
+                                                leading: Icon(Icons.call),
+                                                title: SelectableText(
+                                                    '${p.isChange.isEmpty ? _userData!['Phone number'] : p.isChange}'),
+                                              );
+                                            }),
 
                                             ListTile(
                                               onTap: Email,
