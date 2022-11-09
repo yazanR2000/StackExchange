@@ -55,7 +55,7 @@ class _GetContactState extends State<GetContact> {
                                         0, 0), // changes position of shadow
                                   ),
                                 ],
-                                color: Colors.grey.shade300,
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
