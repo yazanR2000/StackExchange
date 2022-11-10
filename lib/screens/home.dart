@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:stackexchange/screens/login_signUP/Test.dart';
+import 'package:stackexchange/screens/my_questions.dart';
+import 'package:stackexchange/screens/questions_page.dart';
+import 'package:stackexchange/screens/saves.dart';
 import 'package:stackexchange/widgets/Drawer.dart';
 import 'package:stackexchange/widgets/home_questions.dart';
 import '../widgets/question.dart';
@@ -13,6 +16,7 @@ import 'dart:developer';
 import '../models/home_provider.dart';
 import 'package:provider/provider.dart';
 import '../widgets/waiting_questions.dart';
+import 'stackoverflow.dart';
 
 class Home extends StatefulWidget {
   Home({super.key});
@@ -22,10 +26,16 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<Widget> _pages = [
+    QuetionsPage(),
+    MyQuestions(),
+    MySaves(),
+    StackOverflowScreen(),
+  ];
+  int _current = 0;
   void _rebuild() {
     setState(() {});
   }
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -65,33 +75,48 @@ class _HomeState extends State<Home> {
           ),
         ),
         drawer: AppDrawer(),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            _rebuild();
-          },
-          child: Consumer<HomeProvider>(
-            builder: (context, value, child) => StreamBuilder(
-              stream: FirebaseFirestore.instance
-                  .collection("Questions")
-                  .orderBy('date', descending: true)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return ShimmerWaiting();
-                }
-                final data = snapshot.data!.docs;
-                return HomeQuestions(data, _rebuild);
-              },
-            ),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
+        body: _pages[_current],
+        floatingActionButton: _current == 0 ? FloatingActionButton(
           backgroundColor: Color(0xff2f3b47),
           onPressed: () {
             Navigator.of(context)
                 .pushNamed("/add_new_question", arguments: _rebuild);
           },
           child: const Icon(Icons.add),
+        ) : SizedBox(),
+        bottomNavigationBar: BottomNavigationBar(
+          //fixedColor: Colors.black,
+          selectedIconTheme: IconThemeData(
+            color: Colors.black,
+          ),
+          unselectedIconTheme: IconThemeData(
+            color: Colors.grey
+          ),
+          currentIndex: _current,
+          onTap: (value){
+            setState(() {
+              _current = value;
+            });
+          },
+          //type: BottomNavigationBarType.,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Home"
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.question_mark),
+              label: "My questions"
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bookmark),
+              label: "Saves"
+            ),
+            BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.stackOverflow),
+              label: "Stackoverflow"
+            ),
+          ],
         ),
       ),
     );

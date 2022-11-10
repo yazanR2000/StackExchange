@@ -15,44 +15,41 @@ class MySaves extends StatefulWidget {
 
 class _MySavesState extends State<MySaves> {
   final uid = FirebaseAuth.instance.currentUser!.uid;
-  void _rebuild(){
+  void _rebuild() {
     setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("My Saves"),
-      ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection("Saves")
-            .doc(uid).collection("Saves")
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          if (!snapshot.hasData) {
-            return Text("You didn't save any quetion");
-          }
-          final data = snapshot.hasData ? snapshot.data!.docs : [];
-          return ListView.separated(
-            //padding: const EdgeInsets.all(15),
-            separatorBuilder: (context, index) => Divider(
-              thickness: 10,
-              height: 10,
-              color: Colors.blueGrey.shade50,
-            ),
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              return QuestionComponent(data[index],false,true,_rebuild);
-            },
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection("Saves")
+          .doc(uid)
+          .collection("Saves")
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(),
           );
-        },
-      ),
+        }
+        if (!snapshot.hasData) {
+          return Text("You didn't save any quetion");
+        }
+        final data = snapshot.hasData ? snapshot.data!.docs : [];
+        return ListView.separated(
+          //padding: const EdgeInsets.all(15),
+          separatorBuilder: (context, index) => Divider(
+            thickness: 10,
+            height: 10,
+            color: Colors.blueGrey.shade50,
+          ),
+          itemCount: data.length,
+          itemBuilder: (context, index) {
+            return QuestionComponent(data[index], false, true, _rebuild);
+          },
+        );
+      },
     );
   }
 }

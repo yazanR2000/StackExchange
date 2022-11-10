@@ -6,6 +6,7 @@ import 'package:stackexchange/models/home_provider.dart';
 import '../widgets/question.dart';
 import '../models/question.dart' as q;
 import '../widgets/waiting_questions.dart';
+
 class MyQuestions extends StatefulWidget {
   MyQuestions({super.key});
 
@@ -15,94 +16,90 @@ class MyQuestions extends StatefulWidget {
 
 class _MyQuestionsState extends State<MyQuestions> {
   final uid = FirebaseAuth.instance.currentUser!.uid;
-  void _rebuild(){
-    setState(() {
-      
-    });
+  void _rebuild() {
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("My Questions"),
-      ),
-      body: StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection("Questions")
-            .where("userId", isEqualTo: uid)
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return ShimmerWaiting();
-          }
-          if (!snapshot.hasData) {
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance
+          .collection("Questions")
+          .where("userId", isEqualTo: uid)
+          .snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return ShimmerWaiting();
+        }
+        if (!snapshot.hasData) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text("You didn't add any quetion"),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/add_new_question');
+                },
+                child: Text("Post a question"),
+              ),
+            ],
+          );
+        }
+        final data = snapshot.hasData ? snapshot.data!.docs : [];
+        return ListView.separated(
+          separatorBuilder: (context, index) => Divider(
+            thickness: 10,
+            height: 10,
+            color: Colors.blueGrey.shade50,
+          ),
+          //padding: const EdgeInsets.all(15),
+          //reverse: true,
+          itemCount: data.length,
+          itemBuilder: (context, index) {
             return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("You didn't add any quetion"),
-                TextButton(
+                TextButton.icon(
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/add_new_question');
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          content: Text(
+                              "Are you sure you want to delete this question ?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () async {
+                                await q.Question.deleteQuestionFromOwner(
+                                    data[index]);
+                                Navigator.of(context).pop();
+                                Provider.of<HomeProvider>(context,
+                                        listen: false)
+                                    .notify();
+                              },
+                              child: Text("Yes"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("Cancel"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
-                  child: Text("Post a question"),
+                  icon: Icon(Icons.delete),
+                  label: Text("Delete"),
                 ),
+                QuestionComponent(data[index], false, false, _rebuild),
               ],
             );
-          }
-          final data = snapshot.hasData ? snapshot.data!.docs : [];
-          return ListView.separated(
-            separatorBuilder: (context, index) => Divider(
-              thickness: 10,
-              height: 10,
-              color: Colors.blueGrey.shade50,
-            ),
-            //padding: const EdgeInsets.all(15),
-            //reverse: true,
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextButton.icon(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            content: Text(
-                                "Are you sure you want to delete this question ?"),
-                            actions: [
-                              TextButton(
-                                onPressed: () async {
-                                  await q.Question.deleteQuestionFromOwner(data[index]);
-                                  Navigator.of(context).pop();
-                                  Provider.of<HomeProvider>(context,listen: false).notify();
-                                },
-                                child: Text("Yes"),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text("Cancel"),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    icon: Icon(Icons.delete),
-                    label: Text("Delete"),
-                  ),
-                  QuestionComponent(data[index],false,false,_rebuild),
-                ],
-              );
-            },
-          );
-        },
-      ),
+          },
+        );
+      },
     );
   }
 }

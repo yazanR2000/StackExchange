@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:stackexchange/widgets/TextCode.dart';
 import 'package:stackexchange/widgets/comments.dart';
 import 'package:stackexchange/widgets/save_button.dart';
 import '../widgets/Comment_component.dart';
@@ -45,6 +46,12 @@ class _FullPostState extends State<FullPost> {
     initialPage: 0,
     viewportFraction: 0.9,
   );
+
+  Widget _textCode(String code, String type) {
+    TextCode.textCodeEditor = code;
+    TextCode.type = type;
+    return TextCode();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +111,11 @@ class _FullPostState extends State<FullPost> {
                   SizedBox(
                     height: 5,
                   ),
+                  if (details['question']['code'] != "null")
+                    _textCode(
+                      details['question']['code'],
+                      details['question']['type'],
+                    ),
                   Wrap(
                     direction: Axis.horizontal,
                     children: [
@@ -302,59 +314,3 @@ class _FullPostState extends State<FullPost> {
     );
   }
 }
-// child: PageView(
-//                       controller: _controller,
-//                       children: List.generate(
-//                         details['question']['images'].length,
-//                         (index) => Container(
-//                           child: InkWell(
-//                             child: ClipRRect(
-//                               borderRadius: BorderRadius.circular(5),
-//                               child: Image(
-                                
-//                                 fit: BoxFit.fill,
-//                                 image: NetworkImage(
-//                                   details['question']['images'][index],
-//                                 ),
-//                               ),
-//                             ),
-                            // onTap: () {
-                            //   showDialog(
-                            //     context: context,
-                            //     builder: ((context) {
-                            //       return Dialog(
-                            //         insetPadding: EdgeInsets.zero,
-                            //         backgroundColor: Colors.transparent,
-                            //         shape: RoundedRectangleBorder(
-                            //           borderRadius: BorderRadius.all(
-                            //             Radius.circular(10.0),
-                            //           ),
-                            //         ),
-                            //         child: InteractiveViewer(
-                            //           child: Container(
-                            //             height: double.infinity,
-                            //             child: ClipRRect(
-                            //               borderRadius: BorderRadius.circular(10),
-                            //               child: Image(
-                            //                 image: NetworkImage(
-                            //                   details['question']['images']
-                            //                       [index],
-                            //                 ),
-                            //               ),
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       );
-                            //     }),
-                            //   );
-                            // },
-//                           ),
-//                           height: 200,
-//                           width: double.infinity,
-//                           margin: EdgeInsets.symmetric(vertical: 10),
-//                           decoration: BoxDecoration(
-//                             borderRadius: BorderRadius.circular(10),
-//                           ),
-//                         ),
-//                       ),
-//                     ),

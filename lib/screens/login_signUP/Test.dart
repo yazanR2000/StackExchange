@@ -33,14 +33,14 @@ class _testPageState extends State<testPage> {
         ElevatedButton(
             onPressed: () {
               setState(() {
-                code = codeText.text;
-                x = !x;
-                TextCode.textCodeEditor = code;
+                //code = ;
+                //x = !x;
+                TextCode.textCodeEditor = codeText.text;
                 codeText.clear();
               });
             },
             child: Text("done")),
-        if (x == true) TextCode(),
+        TextCode(),
       ]),
     );
   }

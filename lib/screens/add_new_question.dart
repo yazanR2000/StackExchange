@@ -7,6 +7,7 @@ import '../models/user.dart' as u;
 import '../extentions/error.dart' as e;
 import '../extentions/successfull.dart';
 import '../models/question_types.dart';
+import '../widgets/TextCode.dart';
 
 class AddNewQuestions extends StatefulWidget {
   AddNewQuestions({super.key});
@@ -41,6 +42,7 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
     "description": "",
     "images": <XFile>[],
     "type": "Others",
+    "code": "null",
   };
   Future _addNewQuestion(Function rebuild) async {
     if (_formKey.currentState!.validate()) {
@@ -63,6 +65,12 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
   }
 
   bool _isLoading = false;
+  bool _isCodeShow = false;
+  @override
+  void initState() {
+    TextCode.textCodeEditor = "";
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     Function rebuild = ModalRoute.of(context)!.settings.arguments as Function;
@@ -117,6 +125,7 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                     onChanged: (dynamic newValue) {
                       setState(() {
                         _details['type'] = newValue!.toString();
+                        TextCode.type = _details['type'];
                       });
                     },
                   ),
@@ -173,6 +182,49 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                     },
                   ),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    setState(() {
+                      _isCodeShow = !_isCodeShow;
+                    });
+                  },
+                  icon: Icon(Icons.code),
+                  label: Text(_isCodeShow ? "Remove code" : "Add code"),
+                ),
+                if (_isCodeShow)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Please enter the description";
+                        }
+                        return null;
+                      },
+                      maxLines: 10,
+                      decoration: InputDecoration(
+                        hintText: "Add code",
+                        border: InputBorder.none,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          TextCode.textCodeEditor = value == null ? null : value;
+                        });
+                      },
+                      onSaved: (value){
+                        _details['code'] = value;
+                      },
+                    ),
+                  ),
+                if(_isCodeShow)
+                  TextCode(),
                 Column(
                   children: List.generate(
                     _details['images'].length,
@@ -194,19 +246,25 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                     ),
                   ),
                 ),
-                TextButton.icon(
-                  onPressed: () async {
-                    await _pickImage();
-                  },
-                  icon: const FaIcon(FontAwesomeIcons.images),
-                  label: const Text("Add photo"),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton.icon(
+                      onPressed: () async {
+                        await _pickImage();
+                      },
+                      icon: const FaIcon(FontAwesomeIcons.images),
+                      label: const Text("Add photo"),
+                    ),
+                    TextButton.icon(
+                      label: Text("Scan"),
+                      icon: Icon(Icons.camera_alt_outlined),
+                      onPressed: (() {
+                        Navigator.pushNamed(context, '/image_Too_text');
+                      }),
+                    )
+                  ],
                 ),
-                TextButton.icon(
-                    label: Text("Scan"),
-                    icon: Icon(Icons.camera_alt_outlined),
-                    onPressed: (() {
-                      Navigator.pushNamed(context, '/image_Too_text');
-                    }))
               ],
             ),
           ),

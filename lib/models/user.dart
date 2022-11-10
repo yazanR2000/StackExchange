@@ -147,6 +147,7 @@ class User {
         "images": downUrls,
         "date": DateTime.now().toLocal().toString(),
         "solvedComment": "null",
+        "code" : details['code']
       });
       log("yazan1");
       await FirebaseFirestore.instance
