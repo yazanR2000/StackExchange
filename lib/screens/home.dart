@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:stackexchange/screens/login_signUP/Test.dart';
 import 'package:stackexchange/widgets/Drawer.dart';
 import 'package:stackexchange/widgets/home_questions.dart';
 import '../widgets/question.dart';
@@ -45,6 +46,14 @@ class _HomeState extends State<Home> {
             IconButton(
               onPressed: () {
                 Navigator.of(context).pushNamed('/NotificationsScreen');
+              },
+              icon: Icon(
+                Icons.notifications,
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(testPage.screenRoute);
               },
               icon: Icon(
                 Icons.notifications,

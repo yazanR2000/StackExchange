@@ -8,6 +8,7 @@ import 'package:stackexchange/screens/auth.dart';
 import 'package:stackexchange/screens/chat.dart';
 import 'package:stackexchange/screens/contact_Us.dart';
 import 'package:stackexchange/screens/img2txt.dart';
+import 'package:stackexchange/screens/login_signUP/Test.dart';
 import 'package:stackexchange/screens/login_signUP/forgotPassword.dart';
 import 'package:stackexchange/screens/my_questions.dart';
 import 'package:stackexchange/screens/stackoverflow.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
         title: "QCODE",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          primarySwatch: Colors.blue,
           fontFamily: "OpenSans",
           scaffoldBackgroundColor: Colors.white,
           appBarTheme: const AppBarTheme(
@@ -131,6 +133,7 @@ class MyApp extends StatelessWidget {
           '/ChatScreen': (context) => ChatScreen(),
           '/image_Too_text': (context) => image_To_text(),
           '/GetContact': (context) => GetContact(),
+          testPage.screenRoute: (context) => testPage()
         },
       ),
     );

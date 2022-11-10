@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
+import 'package:flutter_syntax_view/flutter_syntax_view.dart';
+import 'package:stackexchange/widgets/TextCode.dart';
 
 class testPage extends StatefulWidget {
   const testPage({super.key});
@@ -12,28 +12,36 @@ class testPage extends StatefulWidget {
 }
 
 class _testPageState extends State<testPage> {
-  Future signOut() async {
-    var result = await FirebaseAuth.instance.signOut();
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signOut();
-    // Navigator.pushReplacementNamed(context, StartScreen.screenRoute);
-    return result;
-  }
+  bool x = false;
+  static String? code = r'hi';
 
+  TextEditingController codeText = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () {
-                setState(() {
-                  signOut();
-                });
-              },
-              icon: Icon(Icons.dangerous))
-        ],
+        title: Text("Flutter Syntax View Example"),
+        backgroundColor: Colors.blueGrey[800],
+        elevation: 6,
       ),
-      body: Center(child: Image.asset("images/logo-removebg-preview.png")),
+      body: ListView(children: [
+        TextField(
+          minLines: 5,
+          maxLines: 10,
+          controller: codeText,
+        ),
+        ElevatedButton(
+            onPressed: () {
+              setState(() {
+                code = codeText.text;
+                x = !x;
+                TextCode.textCodeEditor = code;
+                codeText.clear();
+              });
+            },
+            child: Text("done")),
+        if (x == true) TextCode(),
+      ]),
     );
   }
 }

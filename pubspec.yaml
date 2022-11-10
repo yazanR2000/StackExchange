@@ -52,6 +52,8 @@ dependencies:
   carousel_slider: ^4.1.1
   google_ml_kit: ^0.13.0
   shimmer: ^2.0.0
+  pluto_code_editor: ^0.1.1
+  flutter_syntax_view: ^4.0.0
 
 flutter_icons:
   android: true
