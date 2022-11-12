@@ -58,14 +58,14 @@ class _StartScreenState extends State<StartScreen> {
                         width: double.infinity,
                         fit: BoxFit.cover,
                         image: AssetImage(
-                          "images/large1.png",
+                          "images/logo-removebg.png",
                         ),
                       ),
                     ),
                     Text(
                       "Hello!",
                       style: TextStyle(
-                        color: Colors.black,
+                        //color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: constraints.maxHeight * .055,
                       ),

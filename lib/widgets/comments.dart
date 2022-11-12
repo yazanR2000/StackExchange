@@ -44,7 +44,7 @@ class _CommentsState extends State<Comments> {
             .snapshots(),
         builder: (context, streamSnapshot) {
           if (streamSnapshot.connectionState == ConnectionState.waiting) {
-            return ShimmerWaiting();
+            return const Center(child: CircularProgressIndicator(),);
           } else if (streamSnapshot.hasData) {
             _questionComments = streamSnapshot.data!.docs;
             if (_questionComments.length == 0) {

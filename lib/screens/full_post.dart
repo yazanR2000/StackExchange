@@ -97,7 +97,10 @@ class _FullPostState extends State<FullPost> {
                   //title
                   SelectableText(
                     details['question']['questionTitle'],
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   SizedBox(
                     height: 10,
@@ -106,10 +109,7 @@ class _FullPostState extends State<FullPost> {
                   SelectableText(
                     details['question']['description'].toString(),
                     // style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                    //       height: 1.4,
-                    //       fontSize: 17,
-                    //       fontWeight: FontWeight.bold,
-                    //     ),
+                    //     height: 1.4, fontSize: 17, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 5,
@@ -128,7 +128,7 @@ class _FullPostState extends State<FullPost> {
                           details['question']['type'],
                           style: TextStyle(
                             fontSize: 15,
-                            color: Colors.blueGrey.shade200,
+                            //color: Colors.blueGrey.shade200,
                           ),
                         ),
                       ),
@@ -146,125 +146,7 @@ class _FullPostState extends State<FullPost> {
                 ],
               ),
             ),
-            // Container(
-            //   padding: EdgeInsets.all(15),
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(20),
-            //     color: Colors.grey.shade200,
-            //   ),
-            //   child: Column(
-            //     mainAxisSize: MainAxisSize.min,
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       ListTile(
-            //         dense: true,
-            //         leading: CircleAvatar(
-            //           backgroundImage: NetworkImage(
-            //             details['question']['userImageUrl'],
-            //           ),
-            //         ),
-            //         contentPadding: EdgeInsets.zero,
-            //         title: Text(details['question']['userFullName'].toString()),
-            //         subtitle: Text(details['question']['date']
-            //             .toString()
-            //             .substring(0, 16)),
-            //         trailing: FittedBox(
-            //           child: Row(
-            //             mainAxisAlignment: MainAxisAlignment.end,
-            //             children: [
-            //               Chip(
-            //                 backgroundColor: Color(0xff),
-            //                 label: Text(
-            //                   details['question']['type'],
-            //                   style: TextStyle(fontSize: 15),
-            //                 ),
-            //               ),
-            //               SizedBox(
-            //                 width: 5,
-            //               ),
-            //               if (_isNew(
-            //                 DateTime.parse(details['question']['date']),
-            //               ))
-            //                 const Chip(
-            //                   label: Text(
-            //                     "new",
-            //                     style: TextStyle(
-            //                       color: Colors.white,
-            //                       fontSize: 15,
-            //                     ),
-            //                   ),
-            //                   backgroundColor: Color(0xFFFF1e1e),
-            //                 ),
-            //               SaveButton(details['question'], false),
-            //             ],
-            //           ),
-            //         ),
-            //       ),
-            // Text(
-            //   details['question']['questionTitle'],
-            //   style: Theme.of(context).textTheme.bodyText1,
-            // ),
-            //       Container(
-            //         margin: EdgeInsets.symmetric(vertical: 15),
-            //         child: Text(
-            //           details['question']['description'],
-            //         ),
-            //       ),
-            // Column(
-            //   children: List.generate(
-            //     details['question']['images'].length,
-            //     (index) => Container(
-            //       child: InkWell(
-            //         child: Image(
-            //           fit: BoxFit.fill,
-            //           image: NetworkImage(
-            //               details['question']['images'][index]),
-            //         ),
-            //         onTap: () {
-            //           showDialog(
-            //             context: context,
-            //             builder: ((context) {
-            //               return Dialog(
-            //                 insetPadding: EdgeInsets.zero,
-            //                 backgroundColor: Colors.transparent,
-            //                 shape: RoundedRectangleBorder(
-            //                   borderRadius: BorderRadius.all(
-            //                     Radius.circular(10.0),
-            //                   ),
-            //                 ),
-            //                 child: InteractiveViewer(
-            //                   child: Container(
-            //                     height: double.infinity,
-            //                     child: Image(
-            //                       image: NetworkImage(
-            //                         details['question']['images'][index],
-            //                       ),
-            //                     ),
-            //                   ),
-            //                 ),
-            //               );
-            //             }),
-            //           );
-            //         },
-            //       ),
-            //       height: 200,
-            //       width: double.infinity,
-            //       margin: EdgeInsets.symmetric(vertical: 10),
-            //       decoration: BoxDecoration(
-            //         borderRadius: BorderRadius.circular(10),
-            //         // image: DecorationImage(
-            //         //   fit: BoxFit.fill,
-            //         //   image: NetworkImage(
-            //         //       details['question']['images'][index]),
-            //         // ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
+
             Divider(
               thickness: 10,
               height: 10,
