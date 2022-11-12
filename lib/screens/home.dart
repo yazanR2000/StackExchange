@@ -40,84 +40,51 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (ctx, BoxConstraints constraints) => Scaffold(
-        appBar: AppBar(
-          actions: [
-            if (FirebaseAuth.instance.currentUser!.email ==
-                'qcode2022@gmail.com')
-              MaterialButton(
-                onPressed: (() {
-                  Navigator.of(context).pushNamed('/GetContact');
-                }),
-                child: Icon(
-                  Icons.contact_mail,
-                  color: Colors.white,
-                ),
-              ),
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('/NotificationsScreen');
-              },
-              icon: Icon(
-                Icons.notifications,
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(testPage.screenRoute);
-              },
-              icon: Icon(
-                Icons.notifications,
-              ),
-            )
-          ],
-          title: Text(
-            "Feeds",
-          ),
-        ),
-        drawer: AppDrawer(),
-        body: _pages[_current],
-        floatingActionButton: _current == 0 ? FloatingActionButton(
-          backgroundColor: Color(0xff2f3b47),
+        
+        
+        body: QuetionsPage(),
+        floatingActionButton: FloatingActionButton(
+          //backgroundColor: Color(0xff2f3b47),
           onPressed: () {
             Navigator.of(context)
                 .pushNamed("/add_new_question", arguments: _rebuild);
           },
           child: const Icon(Icons.add),
-        ) : SizedBox(),
-        bottomNavigationBar: BottomNavigationBar(
-          //fixedColor: Colors.black,
-          selectedIconTheme: IconThemeData(
-            color: Colors.black,
-          ),
-          unselectedIconTheme: IconThemeData(
-            color: Colors.grey
-          ),
-          currentIndex: _current,
-          onTap: (value){
-            setState(() {
-              _current = value;
-            });
-          },
-          //type: BottomNavigationBarType.,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home"
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.question_mark),
-              label: "My questions"
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark),
-              label: "Saves"
-            ),
-            BottomNavigationBarItem(
-              icon: FaIcon(FontAwesomeIcons.stackOverflow),
-              label: "Stackoverflow"
-            ),
-          ],
-        ),
+        ) ,
+        // bottomNavigationBar: BottomNavigationBar(
+        //   //fixedColor: Colors.black,
+        //   selectedIconTheme: IconThemeData(
+        //     color: Colors.black,
+        //   ),
+        //   unselectedIconTheme: IconThemeData(
+        //     color: Colors.grey
+        //   ),
+        //   currentIndex: _current,
+        //   onTap: (value){
+        //     setState(() {
+        //       _current = value;
+        //     });
+        //   },
+        //   //type: BottomNavigationBarType.,
+        //   items: [
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.home),
+        //       label: "Home"
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.question_mark),
+        //       label: "My questions"
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.bookmark),
+        //       label: "Saves"
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: FaIcon(FontAwesomeIcons.stackOverflow),
+        //       label: "Stackoverflow"
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }

@@ -49,7 +49,7 @@ class TextCode extends StatelessWidget {
     "vscodeLight": SyntaxView(
       code: textCodeEditor!,
       syntax: _getSyntax(),
-      syntaxTheme: SyntaxTheme.vscodeLight(),
+      syntaxTheme: SyntaxTheme.vscodeDark(),
       fontSize: 10.0,
       withZoom: true,
       withLinesCount: true,

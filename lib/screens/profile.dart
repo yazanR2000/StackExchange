@@ -44,7 +44,7 @@ class _ProfileState extends State<Profile> {
           child: SafeArea(
             child: LayoutBuilder(
               builder: (p0, constraints) => Scaffold(
-                backgroundColor: const Color(0xff2f3b47),
+                //backgroundColor: const Color(0xff2f3b47),
                 body: FutureBuilder(
                   future: _getUserInfo(userId),
                   builder: (ctx, snapshot) {
@@ -59,10 +59,10 @@ class _ProfileState extends State<Profile> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ListTile(
-                            title: Text(
-                              _userData!['Full name'],
-                              style: const TextStyle(color: Colors.white),
-                            ),
+                            // title: Text(
+                            //   _userData!['Full name'],
+                            //   style: const TextStyle(color: Colors.white),
+                            // ),
                             leading: IconButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
@@ -239,7 +239,14 @@ class _ProfileState extends State<Profile> {
                             _userData!['solutions'],
                           ),
                           const SizedBox(
-                            height: 20,
+                            height: 10,
+                          ),
+                          Divider(
+                            thickness: 5,
+                            height: 5,
+                          ),
+                          const SizedBox(
+                            height: 10,
                           ),
                           UserProblems(userId, constraints),
                         ],

@@ -85,7 +85,7 @@ class _HomeQuestionsState extends State<HomeQuestions> {
             separatorBuilder: (context, index) => Divider(
               thickness: 10,
               height: 10,
-              color: Colors.blueGrey.shade50,
+              //color: Colors.blueGrey.shade50,
             ),
             itemCount: _filter!.length,
             itemBuilder: (context, index) => QuestionComponent(

@@ -23,7 +23,7 @@ class _Contact_UsState extends State<Contact_Us> {
         return SafeArea(
           child: Scaffold(
             appBar: AppBar(),
-            backgroundColor: Color(0xff2f3b47),
+            //backgroundColor: Color(0xff2f3b47),
             body: Form(
               key: myFormKey,
               child: SingleChildScrollView(
@@ -39,9 +39,10 @@ class _Contact_UsState extends State<Contact_Us> {
                         Text(
                           "CONTACT US",
                           style: TextStyle(
-                              fontSize: constraints.maxHeight * 0.05,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                            fontSize: constraints.maxHeight * 0.05,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                         SizedBox(height: 16),
                         TextFormField(
@@ -59,6 +60,7 @@ class _Contact_UsState extends State<Contact_Us> {
                             filled: true,
                             fillColor: Colors.white,
                             hintText: "Name",
+                            hintStyle: TextStyle(color: Colors.black)
                           ),
                         ),
                         SizedBox(height: 16),
@@ -80,6 +82,7 @@ class _Contact_UsState extends State<Contact_Us> {
                             filled: true,
                             fillColor: Colors.white,
                             hintText: "Email",
+                            hintStyle: TextStyle(color: Colors.black)
                           ),
                         ),
                         SizedBox(height: 16),
@@ -96,6 +99,7 @@ class _Contact_UsState extends State<Contact_Us> {
                             filled: true,
                             fillColor: Colors.white,
                             hintText: "Massege",
+                            hintStyle: TextStyle(color: Colors.black)
                           ),
                         ),
                         SizedBox(height: 16),
@@ -122,7 +126,7 @@ class _Contact_UsState extends State<Contact_Us> {
                               "SUBMIT",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white),
+                                  color: Colors.white,),
                             ))
                       ],
                     ),

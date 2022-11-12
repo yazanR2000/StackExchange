@@ -48,7 +48,7 @@ class _QuestionComponentState extends State<QuestionComponent> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(15),
-      color: Colors.white,
+      //color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -71,9 +71,9 @@ class _QuestionComponentState extends State<QuestionComponent> {
                 widget._post['userImageUrl'],
               ),
             ),
-            trailing: widget._post['solvedComment'] == "null"
+            trailing: widget._post['solvedComment'] != "null"
                 ? Chip(
-                    backgroundColor: Colors.green,
+                    //backgroundColor: Colors.green,
                     label: Text(
                       "Solved",
                       style: TextStyle(fontSize: 10, color: Colors.white),
@@ -87,7 +87,10 @@ class _QuestionComponentState extends State<QuestionComponent> {
           //title
           SelectableText(
             widget._post['questionTitle'],
-            style: Theme.of(context).textTheme.bodyText1,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+            ),
           ),
           SizedBox(
             height: 10,
@@ -106,7 +109,7 @@ class _QuestionComponentState extends State<QuestionComponent> {
             direction: Axis.horizontal,
             children: [
               Chip(
-                backgroundColor: Colors.blueGrey.shade50,
+                //backgroundColor: Colors.blueGrey.shade50,
                 label: Text(
                   widget._post['type'],
                   style:
@@ -135,9 +138,9 @@ class _QuestionComponentState extends State<QuestionComponent> {
                 },
                 child: Text(
                   "View details",
-                  style: TextStyle(
-                    color: Color(0xff2f3b47),
-                  ),
+                  // style: TextStyle(
+                  //   color: Color(0xff2f3b47),
+                  // ),
                 ),
               ),
               SaveButton(widget._post, widget._isFromSaves),

@@ -53,67 +53,70 @@ class MyApp extends StatelessWidget {
         title: "QCODE",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          //primarySwatch: Colors.blue,
           fontFamily: "OpenSans",
-          scaffoldBackgroundColor: Colors.white,
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Color(0xff2f3b47),
-            elevation: 0,
-            actionsIconTheme: IconThemeData(
-              color: Colors.white,
-            ),
-            iconTheme: IconThemeData(
-              color: Colors.white,
-            ),
-            titleTextStyle: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xff34B3F1),
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
-              foregroundColor: Colors.white,
-            ),
-          ),
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(
-              elevation: 0,
-              foregroundColor: Colors.black,
-              textStyle: TextStyle(),
-            ),
-          ),
-          outlinedButtonTheme: OutlinedButtonThemeData(
-            style: OutlinedButton.styleFrom(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
-              foregroundColor: Colors.black,
-              side: const BorderSide(color: Colors.black, width: 2),
-            ),
-          ),
-          floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            backgroundColor: Color(0xff34B3F1),
-          ),
+          //scaffoldBackgroundColor: Colors.white,
+          // appBarTheme: const AppBarTheme(
+          //   backgroundColor: Color(0xff2f3b47),
+          //   elevation: 0,
+          //   actionsIconTheme: IconThemeData(
+          //     color: Colors.white,
+          //   ),
+          //   iconTheme: IconThemeData(
+          //     color: Colors.white,
+          //   ),
+          //   titleTextStyle: TextStyle(
+          //     color: Colors.white,
+          //     fontSize: 20,
+          //     fontWeight: FontWeight.bold,
+          //   ),
+          // ),
+          // elevatedButtonTheme: ElevatedButtonThemeData(
+          //   style: ElevatedButton.styleFrom(
+          //     backgroundColor: const Color(0xff34B3F1),
+          //     elevation: 0,
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(100),
+          //     ),
+          //     foregroundColor: Colors.white,
+          //   ),
+          // ),
+          // textButtonTheme: TextButtonThemeData(
+          //   style: TextButton.styleFrom(
+          //     elevation: 0,
+          //     foregroundColor: Colors.black,
+          //     textStyle: TextStyle(),
+          //   ),
+          // ),
+          // outlinedButtonTheme: OutlinedButtonThemeData(
+          //   style: OutlinedButton.styleFrom(
+          //     elevation: 0,
+          //     shape: RoundedRectangleBorder(
+          //       borderRadius: BorderRadius.circular(100),
+          //     ),
+          //     foregroundColor: Colors.black,
+          //     side: const BorderSide(color: Colors.black, width: 2),
+          //   ),
+          // ),
+          // floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          //   backgroundColor: Color(0xff34B3F1),
+          // ),
           textTheme: TextTheme(
             bodyText1: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.blue,
+              //color: Colors.blue,
               fontSize: 20,
             ),
             bodyText2: TextStyle(
               // fontWeight: FontWeight.bold,
-              color: Colors.grey,
+             //color: Colors.grey,
               fontSize: 15,
             ),
           ),
         ),
+        darkTheme: ThemeData.dark(),
+        
+        
         home: Auth(),
         routes: {
           "/profile": (context) => Profile(),

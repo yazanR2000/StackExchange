@@ -71,7 +71,7 @@ class _FullPostState extends State<FullPost> {
           children: [
             Container(
               padding: EdgeInsets.all(15),
-              color: Colors.white,
+              //color: Colors.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -97,7 +97,7 @@ class _FullPostState extends State<FullPost> {
                   //title
                   SelectableText(
                     details['question']['questionTitle'],
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 10,
@@ -105,8 +105,11 @@ class _FullPostState extends State<FullPost> {
                   //subtitle
                   SelectableText(
                     details['question']['description'].toString(),
-                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
-                        height: 1.4, fontSize: 17, fontWeight: FontWeight.bold),
+                    // style: Theme.of(context).textTheme.bodyText2!.copyWith(
+                    //       height: 1.4,
+                    //       fontSize: 17,
+                    //       fontWeight: FontWeight.bold,
+                    //     ),
                   ),
                   SizedBox(
                     height: 5,
@@ -120,11 +123,13 @@ class _FullPostState extends State<FullPost> {
                     direction: Axis.horizontal,
                     children: [
                       Chip(
-                        backgroundColor: Colors.blueGrey.shade50,
+                        //backgroundColor: Colors.blueGrey.shade50,
                         label: Text(
                           details['question']['type'],
                           style: TextStyle(
-                              fontSize: 15, color: Colors.blueGrey.shade200),
+                            fontSize: 15,
+                            color: Colors.blueGrey.shade200,
+                          ),
                         ),
                       ),
                     ],
@@ -263,20 +268,16 @@ class _FullPostState extends State<FullPost> {
             Divider(
               thickness: 10,
               height: 10,
-              color: Colors.blueGrey.shade50,
+              //color: Colors.blueGrey.shade50,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                "Comments",
-                style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                      color: Color(0xff2f3b47),
-                    ),
-              ),
+              child: Text("Comments",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            // SizedBox(
+            //   height: 10,
+            // ),
             Comments(details['question'], details['rebuild']),
           ],
         ),
@@ -294,7 +295,7 @@ class _FullPostState extends State<FullPost> {
             },
           );
         },
-        backgroundColor: Color(0xff2f3b47),
+        //backgroundColor: Color(0xff2f3b47),
         label: Row(
           children: [
             Text(

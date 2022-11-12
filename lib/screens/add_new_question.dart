@@ -133,13 +133,7 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: TextFormField(
+                TextFormField(
                     maxLength: 80,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -149,23 +143,39 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                     },
                     decoration: const InputDecoration(
                       hintText: "Title",
-                      border: InputBorder.none,
+                      //border: InputBorder.none,
                     ),
                     onSaved: (value) {
                       _details['title'] = value;
                     },
                   ),
-                ),
+                // Container(
+                //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                //   decoration: BoxDecoration(
+                //     color: Colors.grey.shade100,
+                //     borderRadius: BorderRadius.circular(30),
+                //   ),
+                //   child: TextFormField(
+                //     maxLength: 80,
+                //     validator: (value) {
+                //       if (value!.isEmpty) {
+                //         return "Please enter the title";
+                //       }
+                //       return null;
+                //     },
+                //     decoration: const InputDecoration(
+                //       hintText: "Title",
+                //       border: InputBorder.none,
+                //     ),
+                //     onSaved: (value) {
+                //       _details['title'] = value;
+                //     },
+                //   ),
+                // ),
                 const SizedBox(
                   height: 20,
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: TextFormField(
+                TextFormField(
                     validator: (value) {
                       if (value!.isEmpty) {
                         return "Please enter the description";
@@ -175,13 +185,35 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                     maxLines: 10,
                     decoration: const InputDecoration(
                       hintText: "Description",
-                      border: InputBorder.none,
+                      //border: InputBorder.none,
                     ),
                     onSaved: (value) {
                       _details['description'] = value;
                     },
                   ),
-                ),
+                // Container(
+                //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                //   decoration: BoxDecoration(
+                //     color: Colors.grey.shade100,
+                //     borderRadius: BorderRadius.circular(15),
+                //   ),
+                //   child: TextFormField(
+                //     validator: (value) {
+                //       if (value!.isEmpty) {
+                //         return "Please enter the description";
+                //       }
+                //       return null;
+                //     },
+                //     maxLines: 10,
+                //     decoration: const InputDecoration(
+                //       hintText: "Description",
+                //       border: InputBorder.none,
+                //     ),
+                //     onSaved: (value) {
+                //       _details['description'] = value;
+                //     },
+                //   ),
+                // ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -196,12 +228,13 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                 ),
                 if (_isCodeShow)
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
+                      color: Colors.grey.shade50,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: TextFormField(
+                      style: TextStyle(color: Colors.black),
                       validator: (value) {
                         if (value!.isEmpty) {
                           return "Please enter the description";
@@ -211,6 +244,7 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                       maxLines: 10,
                       decoration: InputDecoration(
                         hintText: "Add code",
+                        hintStyle: TextStyle(color: Colors.black),
                         border: InputBorder.none,
                       ),
                       onChanged: (value) {

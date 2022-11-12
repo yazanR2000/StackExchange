@@ -86,7 +86,7 @@ class _CommentComponentState extends State<CommentComponent> {
                           color: Colors.white,
                         ),
                       ),
-                      backgroundColor: Colors.green,
+                      //backgroundColor: Colors.green,
                     ),
                     trailing: Icon(Icons.push_pin),
                   ),

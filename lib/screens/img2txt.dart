@@ -130,7 +130,7 @@ class _image_To_textState extends State<image_To_text> {
                       selectAll: true,
                     ),
                     scannedText,
-                    style: const TextStyle(fontSize: 20, color: Colors.black),
+                    //style: const TextStyle(fontSize: 20, color: Colors.black),
                   ),
                 )
               ],

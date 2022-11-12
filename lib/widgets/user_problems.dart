@@ -20,22 +20,23 @@ class _UserProblemsState extends State<UserProblems> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(30),
-        ),
+      decoration: BoxDecoration(
+        //color: Colors.white,
+        // borderRadius: BorderRadius.vertical(
+        //   top: Radius.circular(30),
+        // ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Problems",
-            style: Theme.of(context).textTheme.bodyText1,
+            "Posts",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+            ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          
           StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("Questions")
@@ -60,8 +61,9 @@ class _UserProblemsState extends State<UserProblems> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: data.length,
-                separatorBuilder: (context, index) => const SizedBox(
-                  height: 20,
+                separatorBuilder: (context, index) => const Divider(
+                  thickness: 2,
+                  height: 2,
                 ),
                 itemBuilder: (context, index) {
                   return QuestionComponent(data[index], true,false, _rebuild);
