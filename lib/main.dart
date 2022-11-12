@@ -50,11 +50,15 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        
         title: "QCODE",
         debugShowCheckedModeBanner: false,
+        //themeMode: ThemeMode.dark,
+
         theme: ThemeData(
           //primarySwatch: Colors.blue,
           fontFamily: "OpenSans",
+          brightness: Brightness.dark,
           //scaffoldBackgroundColor: Colors.white,
           // appBarTheme: const AppBarTheme(
           //   backgroundColor: Color(0xff2f3b47),
@@ -114,7 +118,9 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        darkTheme: ThemeData.dark(),
+        // darkTheme: ThemeData.dark(
+        //   useMaterial3: true
+        // ),
         
         
         home: Auth(),

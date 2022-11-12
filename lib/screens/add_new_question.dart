@@ -71,6 +71,7 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
     TextCode.textCodeEditor = "";
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     Function rebuild = ModalRoute.of(context)!.settings.arguments as Function;
@@ -94,7 +95,12 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
             child: _isLoading
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
-                    style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50)
+                      ),
+                    ),
                     onPressed: () async {
                       await _addNewQuestion(rebuild);
                     },
@@ -134,21 +140,21 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                   height: 20,
                 ),
                 TextFormField(
-                    maxLength: 80,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Please enter the title";
-                      }
-                      return null;
-                    },
-                    decoration: const InputDecoration(
-                      hintText: "Title",
-                      //border: InputBorder.none,
-                    ),
-                    onSaved: (value) {
-                      _details['title'] = value;
-                    },
+                  maxLength: 80,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter the title";
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: "Title",
+                    //border: InputBorder.none,
                   ),
+                  onSaved: (value) {
+                    _details['title'] = value;
+                  },
+                ),
                 // Container(
                 //   padding: const EdgeInsets.symmetric(horizontal: 20),
                 //   decoration: BoxDecoration(
@@ -176,21 +182,21 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                   height: 20,
                 ),
                 TextFormField(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Please enter the description";
-                      }
-                      return null;
-                    },
-                    maxLines: 10,
-                    decoration: const InputDecoration(
-                      hintText: "Description",
-                      //border: InputBorder.none,
-                    ),
-                    onSaved: (value) {
-                      _details['description'] = value;
-                    },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please enter the description";
+                    }
+                    return null;
+                  },
+                  maxLines: 10,
+                  decoration: const InputDecoration(
+                    hintText: "Description",
+                    //border: InputBorder.none,
                   ),
+                  onSaved: (value) {
+                    _details['description'] = value;
+                  },
+                ),
                 // Container(
                 //   padding: const EdgeInsets.symmetric(horizontal: 20),
                 //   decoration: BoxDecoration(
@@ -249,16 +255,16 @@ class _AddNewQuestionsState extends State<AddNewQuestions> {
                       ),
                       onChanged: (value) {
                         setState(() {
-                          TextCode.textCodeEditor = value == null ? null : value;
+                          TextCode.textCodeEditor =
+                              value == null ? null : value;
                         });
                       },
-                      onSaved: (value){
+                      onSaved: (value) {
                         _details['code'] = value;
                       },
                     ),
                   ),
-                if(_isCodeShow)
-                  TextCode(),
+                if (_isCodeShow) TextCode(),
                 Column(
                   children: List.generate(
                     _details['images'].length,
