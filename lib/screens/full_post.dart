@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:stackexchange/widgets/TextCode.dart';
 import 'package:stackexchange/widgets/comments.dart';
 import 'package:stackexchange/widgets/save_button.dart';
 import '../widgets/Comment_component.dart';
 import '../widgets/question_images.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FullPost extends StatefulWidget {
   const FullPost({super.key});
@@ -134,6 +136,32 @@ class _FullPostState extends State<FullPost> {
                       ),
                     ],
                   ),
+                  if (details['question']['code'] != "null")
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () async {
+                            final Uri codeURL = Uri.parse(
+                                'https://replit.com/new/${details['question']['type']}');
+
+                            Future<void> CodeURL() async {
+                              if (!await launchUrl(codeURL)) {
+                                throw 'Could not launch $codeURL';
+                              }
+                            }
+
+                            if (details['question']['code'] != "null") {
+                              await Clipboard.setData(ClipboardData(
+                                  text: details['question']['code']));
+                              CodeURL();
+                            }
+                          },
+                          icon: Icon(Icons.play_arrow),
+                          label: Text("Run Code"),
+                        ),
+                      ],
+                    ),
                   SizedBox(
                     height: 5,
                   ),
