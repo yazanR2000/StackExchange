@@ -68,138 +68,95 @@ class _AppDrawerState extends State<AppDrawer> {
                       );
                     },
                     child: CircleAvatar(
-                      backgroundImage: NetworkImage(_user.userData['User image']),
+                      backgroundImage:
+                          NetworkImage(_user.userData['User image']),
                     ),
                   ),
                 ),
-              ),
-              ListTile(
-                title: Text(
-                  "My profile",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(fontWeight: FontWeight.bold),
+                ListTile(
+                  title: Text(
+                    "My profile",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  leading: const Icon(Icons.person),
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed('/profile', arguments: _user.userData.id);
+                  },
                 ),
-                leading: const Icon(Icons.person),
-                onTap: () {
-                  Navigator.of(context)
-                      .pushNamed('/profile', arguments: _user.userData.id);
-                },
-              ),
-              ListTile(
-                title: Text(
-                  "My questions",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(fontWeight: FontWeight.bold),
+                ListTile(
+                  title: Text(
+                    "My questions",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  leading: const Icon(Icons.my_library_books),
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/my_questions');
+                  },
                 ),
-                leading: const Icon(Icons.my_library_books),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/my_questions');
-                },
-              ),
-              ListTile(
-                title: Text(
-                  "My Saves",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(fontWeight: FontWeight.bold),
+                ListTile(
+                  title: Text(
+                    "My Saves",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  leading: const Icon(Icons.bookmark),
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/my_saves');
+                  },
                 ),
-                leading: const Icon(Icons.bookmark),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/my_saves');
-                },
-              ),
-              ListTile(
-                title: Text(
-                  "Search on Stackoverflow",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2!
-                      .copyWith(fontWeight: FontWeight.bold),
+                ListTile(
+                  title: Text(
+                    "Search on Stackoverflow",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  leading: const FaIcon(FontAwesomeIcons.stackOverflow),
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/stackoverflow');
+                  },
                 ),
-                leading: const FaIcon(FontAwesomeIcons.stackOverflow),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/stackoverflow');
-                },
-              ),
-
-              // ListTile(
-              // title: Text(
-              //   "Logout",
-              //   style: Theme.of(context).textTheme.bodyText2!.copyWith(fontWeight: FontWeight.bold),
-              // ),
-              // leading: Icon(
-              //   Icons.logout,
-              // ),
-              //   onTap: () async {
-              //     await FirebaseAuth.instance.signOut();
-              //     await GoogleSignIn().signOut();
-              //     Navigator.of(context).pop();
-              //   },
-              // ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        onTap: () async {
-                          await Navigator.of(context).pushNamed('/EditProfile');
-                        },
-                        title: Text(
-                          "Edit Profile",
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                        leading: Icon(Icons.settings_outlined),
-                      ),
-                      ListTile(
-                        onTap: () async {
-                          await Navigator.of(context).pushNamed('/Contact_Us');
-                        },
-                        title: Text(
-                          "Contact us",
-                          style: Theme.of(context).textTheme.bodyText2,
-                        ),
-                        leading: Icon(Icons.contact_support_outlined),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: OutlinedButton.icon(
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.logout,
-                            color: Colors.white,
-                          ),
-                          label: Text(
-                            "Logout",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-
-                      // SizedBox(
-                      //   height: constraints.maxHeight * 0.1,
-                      //   child: VerticalDivider(
-                      //     indent: 30,
-                      //     endIndent: 10,
-                      //     color: Colors.black,
-                      //   ),
-                      // ),
-                    ],
+                SizedBox(
+                  height: constraints.maxHeight * 0.323,
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: OutlinedButton.icon(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.logout,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      "Logout",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2!
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                ListTile(
+                  onTap: () async {
+                    await Navigator.of(context).pushNamed('/Contact_Us');
+                  },
+                  title: Text(
+                    "Contact us",
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
                   leading: Icon(Icons.contact_support_outlined),
                 ),
-                
-                
               ],
             ),
           ),
