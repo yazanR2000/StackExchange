@@ -222,6 +222,9 @@ class _ProfileState extends State<Profile> {
                                                                               .collection('Users')
                                                                               .doc(userId)
                                                                               .update({
+                                                                            // "image": _image == null
+                                                                            //     ? _userData!['image']
+                                                                            //     : _image!.path,
                                                                             'Full name': fullnameController.text == ''
                                                                                 ? _userData!['Full name']
                                                                                 : fullnameController.text,
