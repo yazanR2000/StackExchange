@@ -15,6 +15,7 @@ import 'package:stackexchange/screens/stackoverflow.dart';
 import './screens/profile.dart';
 import './screens/add_new_question.dart';
 import 'screens/contact_Us.dart';
+import 'screens/edit_profile.dart';
 import 'screens/login_signUP/StartScreen.dart';
 import './screens/login_signUP/signup.dart';
 import './screens/login_signUP/login.dart';
@@ -50,7 +51,6 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        
         title: "QCODE",
         debugShowCheckedModeBanner: false,
         //themeMode: ThemeMode.dark,
@@ -113,7 +113,7 @@ class MyApp extends StatelessWidget {
             ),
             bodyText2: TextStyle(
               // fontWeight: FontWeight.bold,
-             //color: Colors.grey,
+              //color: Colors.grey,
               fontSize: 15,
             ),
           ),
@@ -121,8 +121,7 @@ class MyApp extends StatelessWidget {
         // darkTheme: ThemeData.dark(
         //   useMaterial3: true
         // ),
-        
-        
+
         home: Auth(),
         routes: {
           "/profile": (context) => Profile(),
@@ -142,6 +141,7 @@ class MyApp extends StatelessWidget {
           '/ChatScreen': (context) => ChatScreen(),
           '/image_Too_text': (context) => image_To_text(),
           '/GetContact': (context) => GetContact(),
+          '/EditProfile': ((context) => EditProfile()),
           testPage.screenRoute: (context) => testPage()
         },
       ),

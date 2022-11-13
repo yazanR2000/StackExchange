@@ -147,6 +147,16 @@ class _AppDrawerState extends State<AppDrawer> {
                     children: [
                       ListTile(
                         onTap: () async {
+                          await Navigator.of(context).pushNamed('/EditProfile');
+                        },
+                        title: Text(
+                          "Edit Profile",
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        leading: Icon(Icons.settings_outlined),
+                      ),
+                      ListTile(
+                        onTap: () async {
                           await Navigator.of(context).pushNamed('/Contact_Us');
                         },
                         title: Text(
@@ -172,7 +182,7 @@ class _AppDrawerState extends State<AppDrawer> {
                           ),
                         ),
                       ),
-                
+
                       // SizedBox(
                       //   height: constraints.maxHeight * 0.1,
                       //   child: VerticalDivider(
