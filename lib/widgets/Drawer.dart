@@ -22,51 +22,54 @@ class _AppDrawerState extends State<AppDrawer> {
       builder: (BuildContext context, BoxConstraints constraints) {
         return Container(
           color: Color(0xff222831),
-          child: Column(
-            children: [
-              UserAccountsDrawerHeader(
-                accountName: Text(
-                  _user.userData['Full name'],
-                  style: TextStyle(fontSize: 24),
-                ),
-                //decoration: BoxDecoration(color: Color(0xff2f3b47)),
-                accountEmail: Text(
-                  FirebaseAuth.instance.currentUser!.email!,
-                ),
-                currentAccountPicture: InkWell(
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: ((context) {
-                        return Dialog(
-                          insetPadding: EdgeInsets.zero,
-                          backgroundColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(10.0),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                UserAccountsDrawerHeader(
+                  accountName: Text(
+                    _user.userData['Full name'],
+                    style: TextStyle(fontSize: 24),
+                  ),
+                  //decoration: BoxDecoration(color: Color(0xff2f3b47)),
+                  accountEmail: Text(
+                    FirebaseAuth.instance.currentUser!.email!,
+                  ),
+                  currentAccountPicture: InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: ((context) {
+                          return Dialog(
+                            insetPadding: EdgeInsets.zero,
+                            backgroundColor: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.0),
+                              ),
                             ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              InteractiveViewer(
-                                child: Container(
-                                  height: constraints.maxHeight * 0.9,
-                                  child: Image(
-                                    image: NetworkImage(
-                                        _user.userData['User image']),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                InteractiveViewer(
+                                  child: Container(
+                                    height: constraints.maxHeight * 0.9,
+                                    child: Image(
+                                      image: NetworkImage(
+                                          _user.userData['User image']),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ); //Create item
-                      }),
-                    );
-                  },
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage(_user.userData['User image']),
+                              ],
+                            ),
+                          ); //Create item
+                        }),
+                      );
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(_user.userData['User image']),
+                    ),
                   ),
                 ),
               ),
@@ -193,9 +196,12 @@ class _AppDrawerState extends State<AppDrawer> {
                       // ),
                     ],
                   ),
+                  leading: Icon(Icons.contact_support_outlined),
                 ),
-              )
-            ],
+                
+                
+              ],
+            ),
           ),
         );
       },

@@ -34,6 +34,7 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
               child: TextField(
                 controller: _search,
                 decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(horizontal: 20),
                   hintText: "Search....",
                   suffixIcon: IconButton(
                       icon: Icon(Icons.camera_alt_outlined),
@@ -41,7 +42,7 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                         Navigator.pushNamed(context, '/image_Too_text');
                       })),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(100),
+                    borderRadius: BorderRadius.circular(10),
                     borderSide: const BorderSide(color: Colors.black),
                   ),
                 ),
