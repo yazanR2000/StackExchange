@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,7 +13,7 @@ import '../widgets/user_statistic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'dart:io' as i;
 import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
@@ -217,14 +218,33 @@ class _ProfileState extends State<Profile> {
                                                                       ElevatedButton(
                                                                         onPressed:
                                                                             () async {
+                                                                          final userId = FirebaseAuth
+                                                                              .instance
+                                                                              .currentUser!
+                                                                              .uid;
+                                                                          FirebaseStorage
+                                                                              storage =
+                                                                              FirebaseStorage.instance;
+                                                                          Reference ref = storage
+                                                                              .ref()
+                                                                              .child("Users")
+                                                                              .child(userId);
+                                                                          String?
+                                                                              imageUrl;
+                                                                          if (_userData!['image']
+                                                                              .isNotEmpty) {
+                                                                            await ref.putFile(i.File(_userData!['image']));
+                                                                            imageUrl =
+                                                                                await ref.getDownloadURL();
+                                                                          }
                                                                           await FirebaseFirestore
                                                                               .instance
                                                                               .collection('Users')
                                                                               .doc(userId)
                                                                               .update({
-                                                                            // "image": _image == null
-                                                                            //     ? _userData!['image']
-                                                                            //     : _image!.path,
+                                                                            "User image": _image == null
+                                                                                ? _userData!['User image']
+                                                                                : imageUrl,
                                                                             'Full name': fullnameController.text == ''
                                                                                 ? _userData!['Full name']
                                                                                 : fullnameController.text,
