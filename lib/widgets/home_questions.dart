@@ -39,6 +39,9 @@ class _HomeQuestionsState extends State<HomeQuestions> {
           element['description']
               .toString()
               .toLowerCase()
+              .contains(_search!.toLowerCase()) || element['type']
+              .toString()
+              .toLowerCase()
               .contains(_search!.toLowerCase())) {
         newFilter.add(element);
       }
@@ -58,17 +61,19 @@ class _HomeQuestionsState extends State<HomeQuestions> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: TextField(
+              
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.symmetric(horizontal: 20),
                 // prefix: IconButton(),
                 hintText: "Search....",
-                suffix: Icon(Icons.search),
+                //suffix: Icon(Icons.search),
                 suffixIcon: IconButton(
                     icon: Icon(Icons.camera_alt_outlined),
                     onPressed: (() {
                       Navigator.pushNamed(context, '/image_Too_text');
                     })),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(100),
+                  borderRadius: BorderRadius.circular(10),
                   borderSide: const BorderSide(color: Colors.black),
                 ),
               ),

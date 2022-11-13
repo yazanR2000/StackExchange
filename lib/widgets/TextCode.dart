@@ -9,37 +9,33 @@ class TextCode extends StatelessWidget {
   static String? textCodeEditor;
   static Syntax _getSyntax() {
     switch (type) {
-      case "Flutter":
+      case "dart":
         {
           return Syntax.DART;
         }
-      case "C++":
+      case "cpp":
         {
           return Syntax.CPP;
         }
-      case "Java":
+      case "java":
         {
           return Syntax.JAVA;
         }
-      case "C#":
+      case "csharp":
         {
           return Syntax.CPP;
         }
-      case "IOS":
+      case "swift":
         {
           return Syntax.SWIFT;
         }
-      case "Desktop":
+      case "c#":
         {
           return Syntax.C;
         }
-      case "React native":
+      case "javascript":
         {
           return Syntax.JAVASCRIPT;
-        }
-      case "Others":
-        {
-          return Syntax.DART;
         }
     }
     return Syntax.C;

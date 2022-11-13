@@ -47,20 +47,26 @@ class _CommentSheetState extends State<CommentSheet> {
         title: Text("Add comment"),
         actions: [
           TextButton(
-            
             onPressed: () {
               setState(() {
                 images.clear();
               });
             },
-            child: Text("Clear",style: TextStyle(color: Colors.white),),
+            child: Text(
+              "Clear",
+              style: TextStyle(color: Colors.white),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: _isLoading
                 ? const CircularProgressIndicator()
                 : ElevatedButton(
-                    style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50)),
+                    ),
                     onPressed: () async {
                       try {
                         setState(() {

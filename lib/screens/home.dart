@@ -26,12 +26,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<Widget> _pages = [
-    QuetionsPage(),
-    MyQuestions(),
-    MySaves(),
-    StackOverflowScreen(),
-  ];
+  // List<Widget> _pages = [
+  //   HomePage(),
+  //   MyQuestions(),
+  //   MySaves(),
+  //   StackOverflowScreen(),
+  // ];
   int _current = 0;
   void _rebuild() {
     setState(() {});
@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
       builder: (ctx, BoxConstraints constraints) => Scaffold(
         
         
-        body: QuetionsPage(),
+        body: HomePage(),
         floatingActionButton: FloatingActionButton(
           //backgroundColor: Color(0xff2f3b47),
           onPressed: () {

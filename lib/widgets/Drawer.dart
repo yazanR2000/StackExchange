@@ -20,7 +20,8 @@ class _AppDrawerState extends State<AppDrawer> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
-        return Drawer(
+        return Container(
+          color: Color(0xff222831),
           child: Column(
             children: [
               UserAccountsDrawerHeader(
@@ -28,7 +29,7 @@ class _AppDrawerState extends State<AppDrawer> {
                   _user.userData['Full name'],
                   style: TextStyle(fontSize: 24),
                 ),
-                decoration: BoxDecoration(color: Color(0xff2f3b47)),
+                //decoration: BoxDecoration(color: Color(0xff2f3b47)),
                 accountEmail: Text(
                   FirebaseAuth.instance.currentUser!.email!,
                 ),
@@ -72,9 +73,12 @@ class _AppDrawerState extends State<AppDrawer> {
               ListTile(
                 title: Text(
                   "My profile",
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
-                trailing: const Icon(Icons.person),
+                leading: const Icon(Icons.person),
                 onTap: () {
                   Navigator.of(context)
                       .pushNamed('/profile', arguments: _user.userData.id);
@@ -83,9 +87,12 @@ class _AppDrawerState extends State<AppDrawer> {
               ListTile(
                 title: Text(
                   "My questions",
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
-                trailing: const Icon(Icons.my_library_books),
+                leading: const Icon(Icons.my_library_books),
                 onTap: () {
                   Navigator.of(context).pushNamed('/my_questions');
                 },
@@ -93,9 +100,12 @@ class _AppDrawerState extends State<AppDrawer> {
               ListTile(
                 title: Text(
                   "My Saves",
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
-                trailing: const Icon(Icons.bookmark),
+                leading: const Icon(Icons.bookmark),
                 onTap: () {
                   Navigator.of(context).pushNamed('/my_saves');
                 },
@@ -103,59 +113,76 @@ class _AppDrawerState extends State<AppDrawer> {
               ListTile(
                 title: Text(
                   "Search on Stackoverflow",
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(fontWeight: FontWeight.bold),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
-                trailing: const FaIcon(FontAwesomeIcons.stackOverflow),
+                leading: const FaIcon(FontAwesomeIcons.stackOverflow),
                 onTap: () {
                   Navigator.of(context).pushNamed('/stackoverflow');
                 },
               ),
-              ListTile(
-                title: Text(
-                  "Logout",
-                  style: Theme.of(context).textTheme.bodyText2!.copyWith(fontWeight: FontWeight.bold),
-                ),
-                trailing: Icon(
-                  Icons.logout,
-                ),
-                onTap: () async {
-                  await FirebaseAuth.instance.signOut();
-                  await GoogleSignIn().signOut();
-                  Navigator.of(context).pop();
-                },
-              ),
+
+              // ListTile(
+              // title: Text(
+              //   "Logout",
+              //   style: Theme.of(context).textTheme.bodyText2!.copyWith(fontWeight: FontWeight.bold),
+              // ),
+              // leading: Icon(
+              //   Icons.logout,
+              // ),
+              //   onTap: () async {
+              //     await FirebaseAuth.instance.signOut();
+              //     await GoogleSignIn().signOut();
+              //     Navigator.of(context).pop();
+              //   },
+              // ),
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListTile(
-                      onTap: () async {
-                        await Navigator.of(context).pushNamed('/Contact_Us');
-                      },
-                      title: Text(
-                        "Contact us",
-                        style: Theme.of(context).textTheme.bodyText2,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ListTile(
+                        onTap: () async {
+                          await Navigator.of(context).pushNamed('/Contact_Us');
+                        },
+                        title: Text(
+                          "Contact us",
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        leading: Icon(Icons.contact_support_outlined),
                       ),
-                      trailing: Icon(Icons.contact_support_outlined),
-                    ),
-                    ListTile(
-                      onTap: () {},
-                      title: Text(
-                        "See our guide",
-                        style: Theme.of(context).textTheme.bodyText2,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: OutlinedButton.icon(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.logout,
+                            color: Colors.white,
+                          ),
+                          label: Text(
+                            "Logout",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
-                      //trailing: FaIcon(FontAwesomeIcons.how),
-                    ),
-                    // SizedBox(
-                    //   height: constraints.maxHeight * 0.1,
-                    //   child: VerticalDivider(
-                    //     indent: 30,
-                    //     endIndent: 10,
-                    //     color: Colors.black,
-                    //   ),
-                    // ),
-                  ],
+                
+                      // SizedBox(
+                      //   height: constraints.maxHeight * 0.1,
+                      //   child: VerticalDivider(
+                      //     indent: 30,
+                      //     endIndent: 10,
+                      //     color: Colors.black,
+                      //   ),
+                      // ),
+                    ],
+                  ),
                 ),
               )
             ],

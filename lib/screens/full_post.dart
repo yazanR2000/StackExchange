@@ -121,25 +121,21 @@ class _FullPostState extends State<FullPost> {
                       details['question']['code'],
                       details['question']['type'],
                     ),
-                  Wrap(
-                    direction: Axis.horizontal,
+                  
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      
                       Chip(
-                        //backgroundColor: Colors.blueGrey.shade50,
                         label: Text(
                           details['question']['type'],
                           style: TextStyle(
                             fontSize: 15,
-                            //color: Colors.blueGrey.shade200,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  if (details['question']['code'] != "null")
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
+                      if (details['question']['code'] != "null")
                         ElevatedButton.icon(
                           onPressed: () async {
                             final Uri codeURL = Uri.parse(
@@ -160,8 +156,8 @@ class _FullPostState extends State<FullPost> {
                           icon: Icon(Icons.play_arrow),
                           label: Text("Run Code"),
                         ),
-                      ],
-                    ),
+                    ],
+                  ),
                   SizedBox(
                     height: 5,
                   ),

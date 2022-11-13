@@ -86,7 +86,7 @@ class _CommentComponentState extends State<CommentComponent> {
                           color: Colors.white,
                         ),
                       ),
-                      //backgroundColor: Colors.green,
+                      backgroundColor: Colors.green.withOpacity(0.3),
                     ),
                     trailing: Icon(Icons.push_pin),
                   ),
@@ -179,7 +179,7 @@ class _CommentComponentState extends State<CommentComponent> {
                   );
                 }
                 return Container(
-                  color: Colors.blueGrey.shade50,
+                  //color: Colors.blueGrey.shade50,
                   padding: EdgeInsets.all(15),
                   child: ListView.separated(
                     padding: EdgeInsets.only(top: 10),
@@ -191,9 +191,11 @@ class _CommentComponentState extends State<CommentComponent> {
                     ),
                     itemBuilder: (context, index) => Container(
                       padding: EdgeInsets.all(15),
+                      margin: EdgeInsets.only(left: 30),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white),
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.grey,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

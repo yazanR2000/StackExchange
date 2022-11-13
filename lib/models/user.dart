@@ -138,7 +138,7 @@ class User {
           .collection("Questions")
           .doc(questionId)
           .set({
-        "type": details['type'],
+        "type": _getSyntax(details['type']),
         "userId": FirebaseAuth.instance.currentUser!.uid,
         "userFullName": _userData!['Full name'],
         "userImageUrl": _userData!['User image'],
@@ -160,6 +160,43 @@ class User {
     } catch (err) {
       throw err;
     }
+  }
+   String _getSyntax(String type) {
+    switch (type) {
+      case "Flutter":
+        {
+          return "dart";
+        }
+      case "C++":
+        {
+          return "cpp";
+        }
+      case "Java":
+        {
+          return "java";
+        }
+      case "C#":
+        {
+          return "csharp";
+        }
+      case "IOS":
+        {
+          return "swift";
+        }
+      case "Desktop":
+        {
+          return "c#";
+        }
+      case "React native":
+        {
+          return "javascript";
+        }
+      case "Others":
+        {
+          return "dart";
+        }
+    }
+    return "Syntax.C";
   }
 }
 

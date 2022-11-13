@@ -1,11 +1,49 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/config.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/home_provider.dart';
 import '../widgets/Drawer.dart';
 import '../widgets/home_questions.dart';
 import '../widgets/waiting_questions.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+
+final ZoomDrawerController z = ZoomDrawerController();
+
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return  ZoomDrawer(
+      controller: z,
+      menuScreen: MenuScreen(),
+      mainScreen: QuetionsPage(),
+      borderRadius: 24.0,
+      showShadow: false,
+      angle: 0.0,
+      drawerShadowsBackgroundColor: Colors.grey.shade300,
+      slideWidth: MediaQuery.of(context).size.width * 0.65,
+    );
+  }
+}
+
+class MenuScreen extends StatelessWidget {
+  const MenuScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: ThemeData.dark(),
+      child: Scaffold(
+        backgroundColor: Colors.indigo,
+        body: AppDrawer(),
+      ),
+    );
+  }
+}
+
 
 class QuetionsPage extends StatefulWidget {
   const QuetionsPage({super.key});
@@ -22,7 +60,7 @@ class _QuetionsPageState extends State<QuetionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AppDrawer(),
+      //drawer: AppDrawer(),
       appBar: AppBar(
         actions: [
           if (FirebaseAuth.instance.currentUser!.email == 'qcode2022@gmail.com')
@@ -46,6 +84,12 @@ class _QuetionsPageState extends State<QuetionsPage> {
         ],
         title: Text(
           "Feeds",
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            z.toggle!();
+          },
         ),
       ),
       body: RefreshIndicator(

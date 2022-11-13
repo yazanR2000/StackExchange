@@ -73,7 +73,7 @@ class _QuestionComponentState extends State<QuestionComponent> {
             ),
             trailing: widget._post['solvedComment'] != "null"
                 ? Chip(
-                    //backgroundColor: Colors.green,
+                    backgroundColor: Colors.green.withOpacity(0.3),
                     label: Text(
                       "Solved",
                       style: TextStyle(fontSize: 10, color: Colors.white),
@@ -109,7 +109,7 @@ class _QuestionComponentState extends State<QuestionComponent> {
             direction: Axis.horizontal,
             children: [
               Chip(
-                //backgroundColor: Colors.blueGrey.shade50,
+                
                 label: Text(
                   widget._post['type'],
                   style:
