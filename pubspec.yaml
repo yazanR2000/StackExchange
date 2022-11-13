@@ -55,6 +55,7 @@ dependencies:
   pluto_code_editor: ^0.1.1
   flutter_syntax_view: ^4.0.0
   persistent_bottom_nav_bar: ^5.0.2
+  flutter_zoom_drawer: ^3.0.3
 
 
 flutter_icons:
