@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  ZoomDrawer(
+    return ZoomDrawer(
       controller: z,
       menuScreen: MenuScreen(),
       mainScreen: QuetionsPage(),
@@ -37,13 +37,12 @@ class MenuScreen extends StatelessWidget {
     return Theme(
       data: ThemeData.dark(),
       child: Scaffold(
-        backgroundColor: Colors.indigo,
+        //backgroundColor: Colors.amber,
         body: AppDrawer(),
       ),
     );
   }
 }
-
 
 class QuetionsPage extends StatefulWidget {
   const QuetionsPage({super.key});

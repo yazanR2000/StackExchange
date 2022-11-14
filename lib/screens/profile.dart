@@ -168,7 +168,7 @@ class _ProfileState extends State<Profile> {
                                                                               textInputAction: TextInputAction.next,
                                                                               decoration: InputDecoration(
                                                                                 border: UnderlineInputBorder(),
-                                                                                hintText: _userData!['Phone number'],
+                                                                                hintText: '${p.isChange2.isEmpty ? _userData!['Phone number'] : p.isChange2}',
                                                                                 labelText: 'Phone number',
                                                                               ),
                                                                             ),
@@ -204,13 +204,16 @@ class _ProfileState extends State<Profile> {
                                                                               height: 150,
                                                                               fit: BoxFit.cover,
                                                                             )
-                                                                          : Image
-                                                                              .network(
-                                                                              _userData!['User image'],
-                                                                              width: 150,
-                                                                              height: 150,
-                                                                              fit: BoxFit.cover,
-                                                                            ),
+                                                                          : Consumer<ProfileProvider>(builder: (context,
+                                                                              p,
+                                                                              _) {
+                                                                              return Image.network(
+                                                                                p.isChange3.isEmpty ? _userData!['User image'] : p.isChange3,
+                                                                                width: 150,
+                                                                                height: 150,
+                                                                                fit: BoxFit.cover,
+                                                                              );
+                                                                            }),
                                                                       SizedBox(
                                                                         height:
                                                                             30,
@@ -218,14 +221,10 @@ class _ProfileState extends State<Profile> {
                                                                       ElevatedButton(
                                                                         onPressed:
                                                                             () async {
-                                                                          final userId = FirebaseAuth
-                                                                              .instance
-                                                                              .currentUser!
-                                                                              .uid;
                                                                           FirebaseStorage
                                                                               storage =
-                                                                              FirebaseStorage.instance;
-                                                                          Reference ref = storage
+                                                                              await FirebaseStorage.instance;
+                                                                          Reference ref = await storage
                                                                               .ref()
                                                                               .child("Users")
                                                                               .child(userId);
@@ -255,7 +254,10 @@ class _ProfileState extends State<Profile> {
 
                                                                           Provider.of<ProfileProvider>(context, listen: false).isChange =
                                                                               fullnameController.text;
-
+                                                                          Provider.of<ProfileProvider>(context, listen: false).isChange2 =
+                                                                              phoneNumberController.text;
+                                                                          Provider.of<ProfileProvider>(context, listen: false).isChange3 =
+                                                                              imageUrl.toString();
                                                                           phoneNumberController
                                                                               .clear();
                                                                           fullnameController
@@ -323,9 +325,12 @@ class _ProfileState extends State<Profile> {
                                                           dense: true,
                                                           leading:
                                                               Icon(Icons.call),
-                                                          title: SelectableText(
-                                                              _userData![
-                                                                  'Phone number']),
+                                                          title: SelectableText(p
+                                                                  .isChange2
+                                                                  .isEmpty
+                                                              ? _userData![
+                                                                  'Phone number']
+                                                              : p.isChange2),
                                                         );
                                                       }),
                                                       ListTile(
@@ -361,7 +366,9 @@ class _ProfileState extends State<Profile> {
                             builder: (context, p, _) {
                               return UserInformation(
                                 '${p.isChange.isEmpty ? _userData!['Full name'] : p.isChange}',
-                                _userData!['User image'],
+                                p.isChange3.isEmpty
+                                    ? _userData!['User image']
+                                    : p.isChange3,
                               );
                             },
                           ),

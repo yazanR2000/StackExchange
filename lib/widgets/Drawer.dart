@@ -133,7 +133,11 @@ class _AppDrawerState extends State<AppDrawer> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: OutlinedButton.icon(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                      await GoogleSignIn().signOut();
+                      Navigator.of(context).pop();
+                    },
                     icon: Icon(
                       Icons.logout,
                       color: Colors.white,
