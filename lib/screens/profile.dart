@@ -1,19 +1,12 @@
-import 'dart:io';
-
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:stackexchange/providers.dart/profile_provider.dart';
 import 'package:stackexchange/widgets/user_info.dart';
 import 'package:stackexchange/widgets/user_problems.dart';
-// import '../widgets/user_info.dart';
-import '../widgets/edit_profile.dart';
 import '../widgets/user_statistic.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:io' as i;
 import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
@@ -37,21 +30,9 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  TextEditingController fullnameController = TextEditingController();
+  TextEditingController userEmailController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
   GlobalKey<FormState> myFormKey = GlobalKey();
-  File? _image;
-  Future getImage() async {
-    final image = await ImagePicker().pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 50,
-    );
-    if (image == null) return;
-    final imageTemporary = File(image.path);
-    setState(() {
-      this._image = imageTemporary;
-    });
-  }
 
   bool changeNum = false;
   @override
@@ -74,15 +55,10 @@ class _ProfileState extends State<Profile> {
                       );
                     }
                     return SingleChildScrollView(
-                      //padding: const EdgeInsets.all(15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ListTile(
-                            // title: Text(
-                            //   _userData!['Full name'],
-                            //   style: const TextStyle(color: Colors.white),
-                            // ),
                             leading: IconButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
@@ -131,6 +107,18 @@ class _ProfileState extends State<Profile> {
                                                                         .onDrag,
                                                                 child: Column(
                                                                     children: [
+                                                                      Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.all(10.0),
+                                                                        child:
+                                                                            Text(
+                                                                          "Edit Your Contact",
+                                                                          style: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodyText2!
+                                                                              .copyWith(fontWeight: FontWeight.bold, fontSize: 20),
+                                                                        ),
+                                                                      ),
                                                                       Consumer<
                                                                           ProfileProvider>(
                                                                         builder: (context,
@@ -141,13 +129,13 @@ class _ProfileState extends State<Profile> {
                                                                                 const EdgeInsets.all(20.0),
                                                                             child:
                                                                                 TextFormField(
-                                                                              controller: fullnameController,
+                                                                              controller: userEmailController,
                                                                               keyboardType: TextInputType.name,
                                                                               textInputAction: TextInputAction.next,
                                                                               decoration: InputDecoration(
                                                                                 border: UnderlineInputBorder(),
-                                                                                hintText: '${p.isChange.isEmpty ? _userData!['Full name'] : p.isChange}',
-                                                                                labelText: 'Username',
+                                                                                hintText: '${p.isChange.isEmpty ? _userData!['User Email'] : p.isChange}',
+                                                                                labelText: 'Contact Email',
                                                                               ),
                                                                             ),
                                                                           );
@@ -175,109 +163,63 @@ class _ProfileState extends State<Profile> {
                                                                           );
                                                                         },
                                                                       ),
-                                                                      ListTile(
-                                                                        title:
-                                                                            Text(
-                                                                          "New profile image",
-                                                                          style:
-                                                                              TextStyle(color: Colors.grey),
-                                                                        ),
-                                                                        onTap:
-                                                                            () async {
-                                                                          await getImage();
-                                                                        },
-                                                                        // dense: true,
-                                                                        trailing:
-                                                                            Icon(
-                                                                          Icons
-                                                                              .upload_outlined,
-                                                                          size:
-                                                                              40,
-                                                                        ),
-                                                                      ),
-                                                                      _image !=
-                                                                              null
-                                                                          ? Image
-                                                                              .file(
-                                                                              _image!,
-                                                                              width: 150,
-                                                                              height: 150,
-                                                                              fit: BoxFit.cover,
-                                                                            )
-                                                                          : Consumer<ProfileProvider>(builder: (context,
-                                                                              p,
-                                                                              _) {
-                                                                              return Image.network(
-                                                                                p.isChange3.isEmpty ? _userData!['User image'] : p.isChange3,
-                                                                                width: 150,
-                                                                                height: 150,
-                                                                                fit: BoxFit.cover,
-                                                                              );
-                                                                            }),
                                                                       SizedBox(
                                                                         height:
                                                                             30,
                                                                       ),
-                                                                      ElevatedButton(
+                                                                      ElevatedButton
+                                                                          .icon(
+                                                                        icon: Icon(
+                                                                            Icons.edit_outlined),
                                                                         onPressed:
                                                                             () async {
-                                                                          FirebaseStorage
-                                                                              storage =
-                                                                              await FirebaseStorage.instance;
-                                                                          Reference ref = await storage
-                                                                              .ref()
-                                                                              .child("Users")
-                                                                              .child(userId);
-                                                                          String?
-                                                                              imageUrl;
-                                                                          if (_userData!['image']
-                                                                              .isNotEmpty) {
-                                                                            await ref.putFile(i.File(_userData!['image']));
-                                                                            imageUrl =
-                                                                                await ref.getDownloadURL();
-                                                                          }
                                                                           await FirebaseFirestore
                                                                               .instance
                                                                               .collection('Users')
                                                                               .doc(userId)
                                                                               .update({
-                                                                            "User image": _image == null
-                                                                                ? _userData!['User image']
-                                                                                : imageUrl,
-                                                                            'Full name': fullnameController.text == ''
-                                                                                ? _userData!['Full name']
-                                                                                : fullnameController.text,
+                                                                            'User Email': userEmailController.text == ''
+                                                                                ? _userData!['User Email']
+                                                                                : userEmailController.text,
                                                                             'Phone number': phoneNumberController.text == ''
                                                                                 ? _userData!['Phone number']
                                                                                 : phoneNumberController.text,
                                                                           });
 
                                                                           Provider.of<ProfileProvider>(context, listen: false).isChange =
-                                                                              fullnameController.text;
+                                                                              userEmailController.text;
                                                                           Provider.of<ProfileProvider>(context, listen: false).isChange2 =
                                                                               phoneNumberController.text;
-                                                                          Provider.of<ProfileProvider>(context, listen: false).isChange3 =
-                                                                              imageUrl.toString();
+
                                                                           phoneNumberController
                                                                               .clear();
-                                                                          fullnameController
+                                                                          userEmailController
                                                                               .clear();
                                                                           Navigator.pop(
                                                                               context);
                                                                         },
-                                                                        child: Text(
-                                                                            'Done'),
+                                                                        label:
+                                                                            Text(
+                                                                          'Edit',
+                                                                          style: Theme.of(context)
+                                                                              .textTheme
+                                                                              .bodyText2!
+                                                                              .copyWith(fontSize: 15),
+                                                                        ),
                                                                       )
                                                                     ])),
                                                       ); //whatever you're returning, does not have to be a Container
                                                     });
                                               });
                                         }),
-                                        icon: Icon(Icons.settings_outlined))
+                                        icon: Icon(Icons.edit_outlined))
                                     : TextButton(
                                         child: Text(
-                                          "Contact",
-                                          style: TextStyle(color: Colors.blue),
+                                          "Contact Me",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText2!
+                                              .copyWith(color: Colors.blue),
                                         ),
                                         onPressed: () async {
                                           final Uri Phone_url = Uri.parse(
@@ -306,7 +248,16 @@ class _ProfileState extends State<Profile> {
                                               return AlertDialog(
                                                 title: Row(
                                                   children: [
-                                                    Text('Contact'),
+                                                    Text(
+                                                      'Contact',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText2!
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                    ),
                                                     SizedBox(
                                                       width: constraints
                                                               .maxHeight *
@@ -325,22 +276,40 @@ class _ProfileState extends State<Profile> {
                                                           dense: true,
                                                           leading:
                                                               Icon(Icons.call),
-                                                          title: SelectableText(p
-                                                                  .isChange2
-                                                                  .isEmpty
-                                                              ? _userData![
-                                                                  'Phone number']
-                                                              : p.isChange2),
+                                                          title: SelectableText(
+                                                            p.isChange2.isEmpty
+                                                                ? _userData![
+                                                                    'Phone number']
+                                                                : p.isChange2,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyText2!
+                                                                .copyWith(),
+                                                          ),
                                                         );
                                                       }),
-                                                      ListTile(
-                                                        onTap: Email,
-                                                        dense: true,
-                                                        leading:
-                                                            Icon(Icons.email),
-                                                        title: SelectableText(
-                                                            '${_userData!['User Email']}'),
-                                                      ),
+                                                      Consumer<ProfileProvider>(
+                                                          builder:
+                                                              (context, p, _) {
+                                                        return ListTile(
+                                                          onTap: Email,
+                                                          dense: true,
+                                                          leading:
+                                                              Icon(Icons.email),
+                                                          title: SelectableText(
+                                                            p.isChange.isEmpty
+                                                                ? _userData![
+                                                                    'User Email']
+                                                                : p.isChange,
+                                                            style: Theme.of(
+                                                                    context)
+                                                                .textTheme
+                                                                .bodyText2!
+                                                                .copyWith(),
+                                                          ),
+                                                        );
+                                                      })
                                                     ],
                                                   ),
                                                 ),
@@ -362,16 +331,8 @@ class _ProfileState extends State<Profile> {
                           const SizedBox(
                             height: 10,
                           ),
-                          Consumer<ProfileProvider>(
-                            builder: (context, p, _) {
-                              return UserInformation(
-                                '${p.isChange.isEmpty ? _userData!['Full name'] : p.isChange}',
-                                p.isChange3.isEmpty
-                                    ? _userData!['User image']
-                                    : p.isChange3,
-                              );
-                            },
-                          ),
+                          UserInformation(_userData!['Full name'],
+                              _userData!['User image']),
                           const SizedBox(
                             height: 20,
                           ),
