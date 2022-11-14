@@ -16,12 +16,12 @@ class UserSatistic extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!
-                  .copyWith(color: Colors.white),
+                  
             ),
             const Text(
               "Questions",
               style: TextStyle(
-                color: Colors.white,
+                //color: Colors.white,
               ),
             ),
           ],
@@ -30,7 +30,7 @@ class UserSatistic extends StatelessWidget {
           height: 20,
           width: 10,
           child: VerticalDivider(
-            color: Colors.white,
+            //color: Colors.white,
             thickness: 1,
           ),
         ),
@@ -41,12 +41,11 @@ class UserSatistic extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .bodyText1!
-                  .copyWith(color: Colors.white),
             ),
             const Text(
               "Points",
               style: TextStyle(
-                color: Colors.white,
+                //color: Colors.white,
               ),
             ),
           ],

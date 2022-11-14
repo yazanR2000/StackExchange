@@ -76,7 +76,7 @@ class _QuestionComponentState extends State<QuestionComponent> {
                     backgroundColor: Colors.green.withOpacity(0.3),
                     label: Text(
                       "Solved",
-                      style: TextStyle(fontSize: 10, color: Colors.white),
+                      style: TextStyle(fontSize: 10, color: Colors.green),
                     ),
                   )
                 : SizedBox(),
@@ -113,7 +113,7 @@ class _QuestionComponentState extends State<QuestionComponent> {
                 label: Text(
                   widget._post['type'],
                   style:
-                      TextStyle(fontSize: 15, color: Colors.blueGrey.shade200),
+                      TextStyle(fontSize: 15, color: Colors.blueGrey.shade300),
                 ),
               ),
             ],

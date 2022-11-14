@@ -96,7 +96,7 @@ class _StackOverflowScreenState extends State<StackOverflowScreen> {
                                 "Solved",
                                 style: TextStyle(
                                   fontSize: 10,
-                                  color: Colors.white,
+                                  color: Colors.green,
                                 ),
                               ),
                               backgroundColor: Colors.green.withOpacity(0.3),

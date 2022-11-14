@@ -58,7 +58,7 @@ class _StartScreenState extends State<StartScreen> {
                         width: double.infinity,
                         fit: BoxFit.cover,
                         image: AssetImage(
-                          "images/logo-removebg.png",
+                          "images/large1.png",
                         ),
                       ),
                     ),

@@ -39,8 +39,7 @@ class UserInformation extends StatelessWidget {
         _fullName,
         style: Theme.of(context)
             .textTheme
-            .bodyText1!
-            .copyWith(color: Colors.white),
+            .bodyText1!,
       ),
     );
   }

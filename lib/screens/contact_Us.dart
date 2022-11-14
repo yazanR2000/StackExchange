@@ -34,14 +34,16 @@ class _Contact_UsState extends State<Contact_Us> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset("images/logo-removebg.png",
-                            height: constraints.maxHeight * 0.2),
+                        Image.asset(
+                          "images/large1.png",
+                          height: constraints.maxHeight * 0.2,
+                        ),
                         Text(
                           "CONTACT US",
                           style: TextStyle(
                             fontSize: constraints.maxHeight * 0.05,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            //color: Colors.white,
                           ),
                         ),
                         SizedBox(height: 16),
@@ -55,13 +57,12 @@ class _Contact_UsState extends State<Contact_Us> {
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.name,
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(16)),
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText: "Name",
-                            hintStyle: TextStyle(color: Colors.black)
-                          ),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16)),
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: "Name",
+                              hintStyle: TextStyle(color: Colors.black)),
                         ),
                         SizedBox(height: 16),
                         TextFormField(
@@ -77,13 +78,12 @@ class _Contact_UsState extends State<Contact_Us> {
                           keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                           decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(16)),
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText: "Email",
-                            hintStyle: TextStyle(color: Colors.black)
-                          ),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16)),
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: "Email",
+                              hintStyle: TextStyle(color: Colors.black)),
                         ),
                         SizedBox(height: 16),
                         TextFormField(
@@ -92,15 +92,15 @@ class _Contact_UsState extends State<Contact_Us> {
                           keyboardType: TextInputType.multiline,
                           textInputAction: TextInputAction.newline,
                           decoration: InputDecoration(
-                            isDense: true, // important line
-                            contentPadding: EdgeInsets.fromLTRB(10, 70, 20, 70),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(16)),
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText: "Massege",
-                            hintStyle: TextStyle(color: Colors.black)
-                          ),
+                              isDense: true, // important line
+                              contentPadding:
+                                  EdgeInsets.fromLTRB(10, 70, 20, 70),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(16)),
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: "Massege",
+                              hintStyle: TextStyle(color: Colors.black)),
                         ),
                         SizedBox(height: 16),
                         ElevatedButton(
@@ -125,8 +125,9 @@ class _Contact_UsState extends State<Contact_Us> {
                             child: Text(
                               "SUBMIT",
                               style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,),
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ))
                       ],
                     ),

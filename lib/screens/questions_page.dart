@@ -18,14 +18,14 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ZoomDrawer(
       controller: z,
-      menuBackgroundColor: Colors.black,
+      menuBackgroundColor: Colors.grey.shade100,
       menuScreen: MenuScreen(),
       mainScreen: QuetionsPage(),
       borderRadius: 24.0,
       showShadow: false,
       angle: 0.0,
-      drawerShadowsBackgroundColor: Colors.grey.shade300,
-      slideWidth: MediaQuery.of(context).size.width * 0.65,
+      //drawerShadowsBackgroundColor: Colors.grey.shade300,
+      slideWidth: MediaQuery.of(context).size.width * 0.72,
     );
   }
 }
@@ -35,12 +35,9 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: ThemeData.dark(),
-      child: Scaffold(
+    return Scaffold(
         //backgroundColor: Colors.amber,
         body: AppDrawer(),
-      ),
     );
   }
 }

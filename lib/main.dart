@@ -58,23 +58,23 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           //primarySwatch: Colors.blue,
           fontFamily: "Poppins",
-          brightness: Brightness.dark,
+          brightness: Brightness.light,
           //scaffoldBackgroundColor: Colors.white,
-          // appBarTheme: const AppBarTheme(
-          //   backgroundColor: Color(0xff2f3b47),
-          //   elevation: 0,
-          //   actionsIconTheme: IconThemeData(
-          //     color: Colors.white,
-          //   ),
-          //   iconTheme: IconThemeData(
-          //     color: Colors.white,
-          //   ),
-          //   titleTextStyle: TextStyle(
-          //     color: Colors.white,
-          //     fontSize: 20,
-          //     fontWeight: FontWeight.bold,
-          //   ),
-          // ),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Color(0xff4B6587),
+            // elevation: 0,
+            // actionsIconTheme: IconThemeData(
+            //   color: Colors.white,
+            // ),
+            // iconTheme: IconThemeData(
+            //   color: Colors.white,
+            // ),
+            // titleTextStyle: TextStyle(
+            //   color: Colors.white,
+            //   fontSize: 20,
+            //   fontWeight: FontWeight.bold,
+            // ),
+          ),
           // elevatedButtonTheme: ElevatedButtonThemeData(
           //   style: ElevatedButton.styleFrom(
           //     backgroundColor: const Color(0xff34B3F1),
@@ -102,9 +102,9 @@ class MyApp extends StatelessWidget {
           //     side: const BorderSide(color: Colors.black, width: 2),
           //   ),
           // ),
-          // floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          //   backgroundColor: Color(0xff34B3F1),
-          // ),
+          floatingActionButtonTheme: const FloatingActionButtonThemeData(
+            backgroundColor: Color(0xff4B6587),
+          ),
           textTheme: TextTheme(
             bodyText1: TextStyle(
               fontWeight: FontWeight.bold,

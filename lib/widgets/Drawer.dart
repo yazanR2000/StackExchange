@@ -21,7 +21,10 @@ class _AppDrawerState extends State<AppDrawer> {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return Container(
-          color: Colors.black,
+          
+          color: Colors.white,
+          height: double.infinity,
+          padding: EdgeInsets.all(20),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -29,14 +32,22 @@ class _AppDrawerState extends State<AppDrawer> {
                 UserAccountsDrawerHeader(
                   accountName: Text(
                     _user.userData['Full name'],
-                    style: TextStyle(fontSize: 24),
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black
+                    ),
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                   accountEmail: Text(
                     FirebaseAuth.instance.currentUser!.email!,
+                    style: TextStyle(
+                      color: Colors.grey
+                    ),
                   ),
+                  currentAccountPictureSize: Size(60,60),
                   currentAccountPicture: InkWell(
                     onTap: () {
                       showDialog(
@@ -70,11 +81,14 @@ class _AppDrawerState extends State<AppDrawer> {
                       );
                     },
                     child: CircleAvatar(
+                      radius: 5,
+                      //maxRadius: 15,
                       backgroundImage:
                           NetworkImage(_user.userData['User image']),
                     ),
                   ),
                 ),
+                //Divider(),
                 ListTile(
                   title: Text(
                     "My profile",
@@ -83,7 +97,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         .bodyText2!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
-                  leading: const Icon(Icons.person),
+                  leading: const Icon(Icons.person_outline),
                   onTap: () {
                     Navigator.of(context)
                         .pushNamed('/profile', arguments: _user.userData.id);
@@ -97,7 +111,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         .bodyText2!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
-                  leading: const Icon(Icons.my_library_books),
+                  leading: const Icon(Icons.my_library_books_outlined),
                   onTap: () {
                     Navigator.of(context).pushNamed('/my_questions');
                   },
@@ -110,7 +124,7 @@ class _AppDrawerState extends State<AppDrawer> {
                         .bodyText2!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
-                  leading: const Icon(Icons.bookmark),
+                  leading: const Icon(Icons.bookmark_border_outlined),
                   onTap: () {
                     Navigator.of(context).pushNamed('/my_saves');
                   },
@@ -128,9 +142,10 @@ class _AppDrawerState extends State<AppDrawer> {
                     Navigator.of(context).pushNamed('/stackoverflow');
                   },
                 ),
-                SizedBox(
-                  height: constraints.maxHeight * 0.368,
-                ),
+                SizedBox(height: 20),
+                Divider(),
+                SizedBox(height: 30),
+                //Spacer(),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -138,11 +153,11 @@ class _AppDrawerState extends State<AppDrawer> {
                     onPressed: () async {
                       await FirebaseAuth.instance.signOut();
                       await GoogleSignIn().signOut();
-                      Navigator.of(context).pop();
+                      
                     },
                     icon: Icon(
                       Icons.logout,
-                      color: Colors.white,
+                      color: Colors.grey,
                     ),
                     label: Text(
                       "Logout",

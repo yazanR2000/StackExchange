@@ -88,9 +88,9 @@ class _HomeQuestionsState extends State<HomeQuestions> {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             separatorBuilder: (context, index) => Divider(
-              thickness: 10,
-              height: 10,
-              //color: Colors.blueGrey.shade50,
+              thickness: 5,
+              height: 5,
+              color: Colors.grey.shade100,
             ),
             itemCount: _filter!.length,
             itemBuilder: (context, index) => QuestionComponent(

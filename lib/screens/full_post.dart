@@ -130,9 +130,8 @@ class _FullPostState extends State<FullPost> {
                       Chip(
                         label: Text(
                           details['question']['type'],
-                          style: TextStyle(
-                            fontSize: 15,
-                          ),
+                          style:
+                      TextStyle(fontSize: 15, color: Colors.blueGrey.shade300),
                         ),
                       ),
                       if (details['question']['code'] != "null")

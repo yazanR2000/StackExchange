@@ -65,7 +65,7 @@ class _ProfileState extends State<Profile> {
                               },
                               icon: const Icon(
                                 Icons.arrow_back_ios,
-                                color: Colors.white,
+                                //color: Colors.white,
                               ),
                             ),
                             trailing:
@@ -98,8 +98,7 @@ class _ProfileState extends State<Profile> {
                                                     builder: (context,
                                                         scrollController) {
                                                       return Container(
-                                                        color: Color.fromARGB(
-                                                            255, 44, 46, 48),
+                                                        color: Colors.white,
                                                         child:
                                                             SingleChildScrollView(
                                                                 keyboardDismissBehavior:
@@ -167,45 +166,54 @@ class _ProfileState extends State<Profile> {
                                                                         height:
                                                                             30,
                                                                       ),
-                                                                      ElevatedButton
-                                                                          .icon(
-                                                                        icon: Icon(
-                                                                            Icons.edit_outlined),
-                                                                        onPressed:
-                                                                            () async {
-                                                                          await FirebaseFirestore
-                                                                              .instance
-                                                                              .collection('Users')
-                                                                              .doc(userId)
-                                                                              .update({
-                                                                            'User Email': userEmailController.text == ''
-                                                                                ? _userData!['User Email']
-                                                                                : userEmailController.text,
-                                                                            'Phone number': phoneNumberController.text == ''
-                                                                                ? _userData!['Phone number']
-                                                                                : phoneNumberController.text,
-                                                                          });
-
-                                                                          Provider.of<ProfileProvider>(context, listen: false).isChange =
-                                                                              userEmailController.text;
-                                                                          Provider.of<ProfileProvider>(context, listen: false).isChange2 =
-                                                                              phoneNumberController.text;
-
-                                                                          phoneNumberController
-                                                                              .clear();
-                                                                          userEmailController
-                                                                              .clear();
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                        },
-                                                                        label:
-                                                                            Text(
-                                                                          'Edit',
-                                                                          style: Theme.of(context)
-                                                                              .textTheme
-                                                                              .bodyText2!
-                                                                              .copyWith(fontSize: 15),
-                                                                        ),
+                                                                      Row(
+                                                                        children: [
+                                                                          Expanded(
+                                                                            child: Padding(
+                                                                              padding: const EdgeInsets.symmetric(horizontal: 60),
+                                                                              child: ElevatedButton
+                                                                                  .icon(
+                                                                                icon: Icon(
+                                                                                    Icons.edit_outlined),
+                                                                                onPressed:
+                                                                                    () async {
+                                                                                  await FirebaseFirestore
+                                                                                      .instance
+                                                                                      .collection('Users')
+                                                                                      .doc(userId)
+                                                                                      .update({
+                                                                                    'User Email': userEmailController.text == ''
+                                                                                        ? _userData!['User Email']
+                                                                                        : userEmailController.text,
+                                                                                    'Phone number': phoneNumberController.text == ''
+                                                                                        ? _userData!['Phone number']
+                                                                                        : phoneNumberController.text,
+                                                                                  });
+                                                                                                                                                      
+                                                                                  Provider.of<ProfileProvider>(context, listen: false).isChange =
+                                                                                      userEmailController.text;
+                                                                                  Provider.of<ProfileProvider>(context, listen: false).isChange2 =
+                                                                                      phoneNumberController.text;
+                                                                                                                                                      
+                                                                                  phoneNumberController
+                                                                                      .clear();
+                                                                                  userEmailController
+                                                                                      .clear();
+                                                                                  Navigator.pop(
+                                                                                      context);
+                                                                                },
+                                                                                label:
+                                                                                    Text(
+                                                                                  'Edit',
+                                                                                  style: Theme.of(context)
+                                                                                      .textTheme
+                                                                                      .bodyText2!
+                                                                                      .copyWith(color: Colors.white),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
                                                                       )
                                                                     ])),
                                                       ); //whatever you're returning, does not have to be a Container
