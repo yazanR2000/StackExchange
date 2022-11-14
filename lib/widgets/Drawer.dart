@@ -21,7 +21,6 @@ class _AppDrawerState extends State<AppDrawer> {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return Container(
-          
           color: Colors.white,
           height: double.infinity,
           padding: EdgeInsets.all(20),
@@ -33,21 +32,18 @@ class _AppDrawerState extends State<AppDrawer> {
                   accountName: Text(
                     _user.userData['Full name'],
                     style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black
-                    ),
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
                   ),
                   decoration: BoxDecoration(
                     color: Colors.white,
                   ),
                   accountEmail: Text(
                     FirebaseAuth.instance.currentUser!.email!,
-                    style: TextStyle(
-                      color: Colors.grey
-                    ),
+                    style: TextStyle(color: Colors.grey),
                   ),
-                  currentAccountPictureSize: Size(60,60),
+                  currentAccountPictureSize: Size(60, 60),
                   currentAccountPicture: InkWell(
                     onTap: () {
                       showDialog(
@@ -153,7 +149,6 @@ class _AppDrawerState extends State<AppDrawer> {
                     onPressed: () async {
                       await FirebaseAuth.instance.signOut();
                       await GoogleSignIn().signOut();
-                      
                     },
                     icon: Icon(
                       Icons.logout,

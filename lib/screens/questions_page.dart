@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
       showShadow: false,
       angle: 0.0,
       //drawerShadowsBackgroundColor: Colors.grey.shade300,
-      slideWidth: MediaQuery.of(context).size.width * 0.72,
+      slideWidth: MediaQuery.of(context).size.width * 0.73,
     );
   }
 }
@@ -36,8 +36,8 @@ class MenuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //backgroundColor: Colors.amber,
-        body: AppDrawer(),
+      //backgroundColor: Colors.amber,
+      body: AppDrawer(),
     );
   }
 }
