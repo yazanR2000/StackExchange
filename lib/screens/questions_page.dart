@@ -18,6 +18,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ZoomDrawer(
       controller: z,
+      menuBackgroundColor: Colors.black,
       menuScreen: MenuScreen(),
       mainScreen: QuetionsPage(),
       borderRadius: 24.0,

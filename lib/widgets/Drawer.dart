@@ -21,7 +21,7 @@ class _AppDrawerState extends State<AppDrawer> {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return Container(
-          color: Color(0xff222831),
+          color: Colors.black,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +31,9 @@ class _AppDrawerState extends State<AppDrawer> {
                     _user.userData['Full name'],
                     style: TextStyle(fontSize: 24),
                   ),
-                  //decoration: BoxDecoration(color: Color(0xff2f3b47)),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                  ),
                   accountEmail: Text(
                     FirebaseAuth.instance.currentUser!.email!,
                   ),
