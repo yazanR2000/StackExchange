@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class UserInformation extends StatelessWidget {
   final String _imageUrl, _fullName;
-  UserInformation(this._fullName, this._imageUrl);
+  final int _points;
+  UserInformation(this._fullName, this._imageUrl, this._points);
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -35,11 +36,21 @@ class UserInformation extends StatelessWidget {
           backgroundImage: NetworkImage(_imageUrl),
         ),
       ),
-      title: Text(
-        _fullName,
-        style: Theme.of(context)
-            .textTheme
-            .bodyText1!,
+      title: Row(
+        children: [
+          Text(
+            _fullName,
+            style: Theme.of(context).textTheme.bodyText1!,
+          ),
+          if (_points >= 20)
+            SizedBox(width: 6,),
+          if (_points >= 20)
+            Icon(
+              Icons.verified,
+              color: Colors.blue,
+              size: 20,
+            )
+        ],
       ),
     );
   }

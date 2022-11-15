@@ -93,12 +93,29 @@ class _CommentComponentState extends State<CommentComponent> {
                 ListTile(
                   dense: true,
                   leading: CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(widget._comment['userProfileImage']),
+                    backgroundImage: NetworkImage(
+                      widget._comment['userProfileImage'],
+                    ),
                   ),
                   contentPadding: EdgeInsets.zero,
                   title: Text(widget._comment['userFullName']),
-                  subtitle: Text(_getTime(widget._comment['date'].toString())),
+                  subtitle: Text(
+                    _getTime(
+                      widget._comment['date'].toString(),
+                    ),
+                  ),
+                  trailing:
+                      widget._question['userId'] == widget._comment['userId']
+                          ? Chip(
+                              label: Text(
+                                "auther",
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            )
+                          : SizedBox(),
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 15),
@@ -207,8 +224,23 @@ class _CommentComponentState extends State<CommentComponent> {
                             ),
                             contentPadding: EdgeInsets.zero,
                             title: Text(data[index]['userFullName']),
-                            subtitle:
-                                Text(_getTime(data[index]['date'].toString())),
+                            subtitle: Text(
+                              _getTime(
+                                data[index]['date'].toString(),
+                              ),
+                            ),
+                            trailing: widget._question['userId'] ==
+                                    data[index]['userId']
+                                ? Chip(
+                                    label: Text(
+                                      "auther",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox(),
                           ),
                           Container(
                             child: SelectableText(

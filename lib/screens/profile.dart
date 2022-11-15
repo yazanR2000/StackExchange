@@ -169,46 +169,27 @@ class _ProfileState extends State<Profile> {
                                                                       Row(
                                                                         children: [
                                                                           Expanded(
-                                                                            child: Padding(
+                                                                            child:
+                                                                                Padding(
                                                                               padding: const EdgeInsets.symmetric(horizontal: 60),
-                                                                              child: ElevatedButton
-                                                                                  .icon(
-                                                                                icon: Icon(
-                                                                                    Icons.edit_outlined),
-                                                                                onPressed:
-                                                                                    () async {
-                                                                                  await FirebaseFirestore
-                                                                                      .instance
-                                                                                      .collection('Users')
-                                                                                      .doc(userId)
-                                                                                      .update({
-                                                                                    'User Email': userEmailController.text == ''
-                                                                                        ? _userData!['User Email']
-                                                                                        : userEmailController.text,
-                                                                                    'Phone number': phoneNumberController.text == ''
-                                                                                        ? _userData!['Phone number']
-                                                                                        : phoneNumberController.text,
+                                                                              child: ElevatedButton.icon(
+                                                                                icon: Icon(Icons.edit_outlined),
+                                                                                onPressed: () async {
+                                                                                  await FirebaseFirestore.instance.collection('Users').doc(userId).update({
+                                                                                    'User Email': userEmailController.text == '' ? _userData!['User Email'] : userEmailController.text,
+                                                                                    'Phone number': phoneNumberController.text == '' ? _userData!['Phone number'] : phoneNumberController.text,
                                                                                   });
-                                                                                                                                                      
-                                                                                  Provider.of<ProfileProvider>(context, listen: false).isChange =
-                                                                                      userEmailController.text;
-                                                                                  Provider.of<ProfileProvider>(context, listen: false).isChange2 =
-                                                                                      phoneNumberController.text;
-                                                                                                                                                      
-                                                                                  phoneNumberController
-                                                                                      .clear();
-                                                                                  userEmailController
-                                                                                      .clear();
-                                                                                  Navigator.pop(
-                                                                                      context);
+
+                                                                                  Provider.of<ProfileProvider>(context, listen: false).isChange = userEmailController.text;
+                                                                                  Provider.of<ProfileProvider>(context, listen: false).isChange2 = phoneNumberController.text;
+
+                                                                                  phoneNumberController.clear();
+                                                                                  userEmailController.clear();
+                                                                                  Navigator.pop(context);
                                                                                 },
-                                                                                label:
-                                                                                    Text(
+                                                                                label: Text(
                                                                                   'Edit',
-                                                                                  style: Theme.of(context)
-                                                                                      .textTheme
-                                                                                      .bodyText2!
-                                                                                      .copyWith(color: Colors.white),
+                                                                                  style: Theme.of(context).textTheme.bodyText2!.copyWith(color: Colors.white),
                                                                                 ),
                                                                               ),
                                                                             ),
@@ -339,8 +320,11 @@ class _ProfileState extends State<Profile> {
                           const SizedBox(
                             height: 10,
                           ),
-                          UserInformation(_userData!['Full name'],
-                              _userData!['User image']),
+                          UserInformation(
+                            _userData!['Full name'],
+                            _userData!['User image'],
+                            _userData!['solutions'],
+                          ),
                           const SizedBox(
                             height: 20,
                           ),
