@@ -58,8 +58,10 @@ class _forgotPasswordState extends State<forgotPassword> {
                             ),
                             textAlign: TextAlign.start),
                         SizedBox(
-                          height: 150,
+                          height: constraints.maxHeight * 0.2,
                         ),
+                        Text(
+                            "Enter your email and we'll send you a link to reset your password"),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
