@@ -1,4 +1,5 @@
 
+
 # QCode
 
 Our project is a Community for helping programmers for posting their problems and get suggested solutions from others, and it has many characteristics that distinguish it from others, as it combines many things that help in finding the best solution in the fastest way possible.
@@ -33,8 +34,8 @@ https://api.stackexchange.com/docs/
 
 | Color             | Hex                                                                |
 | ----------------- | ------------------------------------------------------------------ |
-| AppBar  | ![#4B6587](https://via.placeholder.com/10/0a192f?text=+) #4B6587|
-| Chip | ![#4CAF50](https://via.placeholder.com/10/4CAF50?text=+) #4CAF50 |
+| AppBar  | #4B6587|
+| Chip |  #4CAF50 |
 
 
 
@@ -78,4 +79,6 @@ If you have any feedback, please reach out to us at qcode2022@gmail.com
 ## Support
 
 For support, email vengeanceteam2022@gmail.com or join our Slack channel.
+
+
 
